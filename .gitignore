@@ -1,0 +1,14 @@
+# Ignore Debug and Build Files
+bin/
+obj/
+
+# Ignore JetBrains Rider and IntelliJ IDEA settings
+.idea/
+*.iml
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore logs and user-specific files
+*.log
+*.swp
