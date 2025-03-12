@@ -69,6 +69,34 @@
               "target": "Package",
               "version": "[9.0.1, )",
               "autoReferenced": true
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Supabase.Core": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Supabase.Functions": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Supabase.Gotrue": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Supabase.Postgrest": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Supabase.Realtime": {
+              "target": "Package",
+              "version": "[7.1.0, )"
+            },
+            "Supabase.Storage": {
+              "target": "Package",
+              "version": "[2.0.2, )"
             }
           },
           "imports": [
@@ -114,6 +142,34 @@
               "target": "Package",
               "version": "[9.0.1, )",
               "autoReferenced": true
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Supabase.Core": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Supabase.Functions": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Supabase.Gotrue": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Supabase.Postgrest": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Supabase.Realtime": {
+              "target": "Package",
+              "version": "[7.1.0, )"
+            },
+            "Supabase.Storage": {
+              "target": "Package",
+              "version": "[2.0.2, )"
             }
           },
           "imports": [
@@ -159,6 +215,34 @@
               "target": "Package",
               "version": "[9.0.1, )",
               "autoReferenced": true
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Supabase.Core": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Supabase.Functions": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Supabase.Gotrue": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
+            "Supabase.Postgrest": {
+              "target": "Package",
+              "version": "[4.1.0, )"
+            },
+            "Supabase.Realtime": {
+              "target": "Package",
+              "version": "[7.1.0, )"
+            },
+            "Supabase.Storage": {
+              "target": "Package",
+              "version": "[2.0.2, )"
             }
           },
           "imports": [
@@ -191,16 +275,7 @@
         }
       },
       "runtimes": {
-        "android-arm64": {
-          "#import": []
-        },
-        "android-x64": {
-          "#import": []
-        },
         "iossimulator-arm64": {
-          "#import": []
-        },
-        "maccatalyst-arm64": {
           "#import": []
         }
       }

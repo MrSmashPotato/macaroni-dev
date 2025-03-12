@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("macaroni-dev")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+9fa0a06b6ca3ea9951bf8fa1ff9724204e47475c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+835a00da78d8ea9500eade8ea96a48ff0f926839")]
 [assembly: System.Reflection.AssemblyProductAttribute("macaroni-dev")]
 [assembly: System.Reflection.AssemblyTitleAttribute("macaroni-dev")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - /Users/nykuluz/Projects/Github/macaroni-dev/bin/Debug/net9.0-ios/iossimulator-arm64/macaroni-dev.app/libSystem.IO.Compression.Native.dylib

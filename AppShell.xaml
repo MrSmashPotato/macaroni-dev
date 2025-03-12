@@ -6,10 +6,12 @@
     xmlns:local="clr-namespace:macaroni_dev"
     Shell.FlyoutBehavior="Flyout"
     Title="macaroni_dev">
-
+   
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+    <ShellContent 
+        Title="Login" 
+        ContentTemplate="{DataTemplate local:LoginPage}" />
 </Shell>
