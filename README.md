@@ -1,6 +1,6 @@
 # **Project Macaroni**
 
-Jobilis is a gig economy and job search mobile platform application designed to seamlessly connect job seekers and employers. Whether you’re looking for freelance gigs or full-time opportunities, Jobilis makes job hunting and hiring effortless—all from the comfort of your phone. With just a few taps, users can create opportunities, discover talent, and build connections anytime, anywhere.
+A gig economy and job search mobile platform application designed to seamlessly connect job seekers and employers. Whether you’re looking for freelance gigs or full-time opportunities, Jobilis makes job hunting and hiring effortless—all from the comfort of your phone. With just a few taps, users can create opportunities, discover talent, and build connections anytime, anywhere.
 
 ## **Technology Stack**
 
