@@ -1,5 +1,6 @@
 using macaroni_dev.Services;
 using Microsoft.Maui.Controls;
+using Supabase.Gotrue;
 using Supabase.Postgrest.Exceptions;
 
 namespace macaroni_dev
@@ -40,7 +41,27 @@ namespace macaroni_dev
                 }
             }
         }
+        private async void OnGoogleSignInClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                bool isSuccess = await _authService.SignInWithGoogleAsync();
 
+                if (isSuccess)
+                {
+                    Console.WriteLine("Google SignIn Success");
+                    await Navigation.PushAsync(new HomePage());
+                }
+                else
+                {
+                    StatusLabel.Text = "Google Sign-In failed. Try again.";
+                }
+            }
+            catch (Exception m)
+            {
+               Console.WriteLine(m.Message);
+            }
+        }
         private async void OnGoToRegisterClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegisterPage());

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-
+using macaroni_dev.Services;
 namespace macaroni_dev;
 
 public static class MauiProgram

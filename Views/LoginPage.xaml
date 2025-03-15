@@ -10,6 +10,7 @@
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
 
         <Button Text="Sign In" Clicked="OnSignInClicked" />
+        <Button Text="Sign in with Google" Clicked="OnGoogleSignInClicked" />
         <Button Text="Go to Register" Clicked="OnGoToRegisterClicked" />
         <Label x:Name="StatusLabel" Text="" TextColor="Red" />
     </VerticalStackLayout>

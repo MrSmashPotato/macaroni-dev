@@ -24,7 +24,7 @@
 		<ApplicationTitle>macaroni-dev</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.macaronidev</ApplicationId>
+		<ApplicationId>com.xylo.jobilis</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -60,6 +60,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Google.Apis" Version="1.69.0" />
+		<PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 		<PackageReference Include="Supabase" Version="1.1.1" />
@@ -70,7 +72,7 @@
 		<PackageReference Include="Supabase.Realtime" Version="7.1.0" />
 		<PackageReference Include="Supabase.Storage" Version="2.0.2" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 	  <MauiXaml Update="Views\MainPage.xaml">
 	    <SubType>Designer</SubType>
@@ -89,6 +91,10 @@
 	    <DependentUpon>OtpVerificationPage.xaml</DependentUpon>
 	    <SubType>Code</SubType>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+	  <PackageReference Include="Xamarin.AndroidX.Activity" Version="1.10.1" />
 	</ItemGroup>
 
 </Project>

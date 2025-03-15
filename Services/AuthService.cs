@@ -2,6 +2,16 @@ using Supabase;
 using Supabase.Gotrue;
 using System;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Util.Store;
+using Supabase;
+using System;
+using System.Threading.Tasks;
+
 
 namespace macaroni_dev.Services
 {
@@ -24,6 +34,7 @@ namespace macaroni_dev.Services
                 var client = await SupabaseClientProvider.GetClientAsync();
                 _instance = new AuthService(client);
             }
+
             return _instance;
         }
 
@@ -37,7 +48,7 @@ namespace macaroni_dev.Services
                 if (response.User != null)
                 {
                     Console.WriteLine("Sign-up successful. Verification email sent.");
-                    return response.User;  // User created but still unverified
+                    return response.User; // User created but still unverified
                 }
             }
             catch (Exception ex)
@@ -45,7 +56,7 @@ namespace macaroni_dev.Services
                 Console.WriteLine("Signup Error: " + ex.Message);
             }
 
-            return null;  // Signup failed
+            return null; // Signup failed
         }
 
         // Sign In 
@@ -63,6 +74,7 @@ namespace macaroni_dev.Services
                 return null;
             }
         }
+
         public async Task<bool> VerifyEmailOtpAsync(string email, string otpCode)
         {
             try
@@ -82,6 +94,7 @@ namespace macaroni_dev.Services
 
             return false;
         }
+
         // Logout
         public async Task<bool> SignOutAsync()
         {
@@ -108,20 +121,41 @@ namespace macaroni_dev.Services
         {
             return _supabaseClient.Auth.CurrentUser;
         }
+        //Third
+
 
         // Third Party Sign in
-        public async Task<bool> SignInWithProviderAsync(Constants.Provider provider)
+        public async Task<bool> SignInWithGoogleAsync()
         {
             try
             {
-                await _supabaseClient.Auth.SignIn(provider);
-                return true;
+                var auth = await _supabaseClient.Auth.SignIn(Supabase.Gotrue.Constants.Provider.Google);
+                String oAuthToken;
+
+                WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
+                    auth.Uri,
+                    new Uri("jobilis://callback"));
+                if (authResult.AccessToken != null)
+                {
+                    return true;
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                Console.WriteLine("User canceled authentication.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"OAuth Error: {ex.Message}");
-                return false;
             }
+
+            return false;
+        }
+
+        public async Task<bool> SignInWithFacebookAsync()
+        {
+            
+            return false;
         }
     }
 }
