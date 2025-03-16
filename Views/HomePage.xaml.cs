@@ -10,6 +10,14 @@ namespace macaroni_dev
         {
             InitializeComponent();
             _authService = AuthService.GetInstanceAsync().Result;
+            try
+            {
+                Console.WriteLine(_authService?.GetCurrentUser()?.Email);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private async void OnSignOutClicked(object sender, EventArgs e)

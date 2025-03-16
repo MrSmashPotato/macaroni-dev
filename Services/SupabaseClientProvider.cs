@@ -14,7 +14,8 @@ namespace macaroni_dev.Services
             {
                 var options = new Supabase.SupabaseOptions
                 {
-                    AutoConnectRealtime = true
+                    AutoRefreshToken = true,
+                    AutoConnectRealtime = true,
                 };
 
                 _supabaseClient = new Client(

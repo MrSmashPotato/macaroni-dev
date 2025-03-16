@@ -20,11 +20,10 @@ namespace macaroni_dev
             try
             {
                 var user = await _authService.SignInAsync(EmailEntry.Text, PasswordEntry.Text);
-                
-                if (user != null)
-                {
-                    await Navigation.PushAsync(new HomePage());
-                }
+
+                if (user == null) return;
+                Console.WriteLine(user.Email);
+                await Navigation.PushAsync(new HomePage());
             }
             catch (Exception ex)
             {
@@ -41,20 +40,43 @@ namespace macaroni_dev
                 }
             }
         }
-        private async void OnGoogleSignInClicked(object sender, EventArgs e)
+        private void PartySignInClicked(object sender, EventArgs e)
+        {
+            if (sender is Button button && button.CommandParameter is string provider)
+            {
+                Constants.Provider TProvider;
+                if (provider == "Google")
+                {
+                    TProvider = Constants.Provider.Google;
+                }
+                else if (provider == "Facebook")
+                {
+                    TProvider = Constants.Provider.Facebook;
+                }
+                else if (provider == "Github")
+                {
+                    TProvider = Constants.Provider.Github;
+                }
+                else
+                {
+                    return;
+                }
+                SignInWithProvider(TProvider);
+            }
+        }
+        private async void SignInWithProvider(Constants.Provider provider)
         {
             try
             {
-                bool isSuccess = await _authService.SignInWithGoogleAsync();
-
-                if (isSuccess)
+                var user = await _authService.SignInWithThirdPartyAsync(provider);
+                if (user != null)
                 {
-                    Console.WriteLine("Google SignIn Success");
+                    Console.WriteLine("Third Party SignIn Success");
                     await Navigation.PushAsync(new HomePage());
                 }
                 else
                 {
-                    StatusLabel.Text = "Google Sign-In failed. Try again.";
+                    StatusLabel.Text = "Third Party Sign-In failed. Try again.";
                 }
             }
             catch (Exception m)
@@ -62,6 +84,7 @@ namespace macaroni_dev
                Console.WriteLine(m.Message);
             }
         }
+      
         private async void OnGoToRegisterClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegisterPage());

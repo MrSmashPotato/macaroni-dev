@@ -125,19 +125,25 @@ namespace macaroni_dev.Services
 
 
         // Third Party Sign in
-        public async Task<bool> SignInWithGoogleAsync()
+        public async Task<User?> SignInWithThirdPartyAsync(Supabase.Gotrue.Constants.Provider provider)
         {
             try
             {
-                var auth = await _supabaseClient.Auth.SignIn(Supabase.Gotrue.Constants.Provider.Google);
-                String oAuthToken;
+                var authService = await GetInstanceAsync();
 
-                WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
-                    auth.Uri,
-                    new Uri("jobilis://callback"));
-                if (authResult.AccessToken != null)
+                var auth = await _supabaseClient.Auth.SignIn(provider);
+                if (auth == null || auth.Uri == null) throw new Exception("Failed to initiate OAuth flow.");
+
+                var result = await WebAuthenticator.Default.AuthenticateAsync(auth.Uri, new Uri("jobilis://callback"));
+
+                if (!string.IsNullOrEmpty(result?.AccessToken))
                 {
-                    return true;
+                    // Attempt to retrieve the session from the callback URL
+                    await _supabaseClient.Auth.GetSessionFromUrl(result.CallbackUri);
+
+                    // Fetch the updated session
+                    var session = _supabaseClient.Auth.CurrentSession;
+                    return session?.User;
                 }
             }
             catch (TaskCanceledException)
@@ -149,13 +155,8 @@ namespace macaroni_dev.Services
                 Console.WriteLine($"OAuth Error: {ex.Message}");
             }
 
-            return false;
+            return null; // Return null instead of an empty user to indicate failure
         }
-
-        public async Task<bool> SignInWithFacebookAsync()
-        {
-            
-            return false;
-        }
+        
     }
 }
