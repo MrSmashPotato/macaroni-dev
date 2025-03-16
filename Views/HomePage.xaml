@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="macaroni_dev.HomePage">
-
-    <VerticalStackLayout Padding="20">
-        <Label Text="Welcome to Home Page!" FontSize="24" HorizontalOptions="Center" />
-        <Button Text="Sign Out" Clicked="OnSignOutClicked" />
-        <Label x:Name="StatusLabel" Text="" TextColor="Red" />
-    </VerticalStackLayout>
+             Shell.TitleColor="White"
+             Shell.BackgroundColor="MediumAquamarine"
+             x:Class="macaroni_dev.Views.HomePage">
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Welcome to Home Page!" FontSize="24" HorizontalOptions="Center" />
+            <Label x:Name="StatusLabel" Text="" TextColor="Red" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
 </ContentPage>

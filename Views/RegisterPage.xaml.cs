@@ -1,15 +1,19 @@
 using macaroni_dev.Services;
 
-namespace macaroni_dev
+namespace macaroni_dev.Views
 {
     public partial class RegisterPage : ContentPage
     {
-        private readonly AuthService _authService;
+        private AuthService _authService;
 
         public RegisterPage()
         {
             InitializeComponent();
-            _authService = AuthService.GetInstanceAsync().Result;
+            LoadAuthService();
+        }
+        private async void LoadAuthService()
+        {
+            _authService = await AuthService.GetInstanceAsync();
         }
 
         private async void OnSignUpClicked(object sender, EventArgs e)

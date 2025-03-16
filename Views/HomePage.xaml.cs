@@ -1,15 +1,15 @@
 using macaroni_dev.Services;
 
-namespace macaroni_dev
+namespace macaroni_dev.Views
 {
     public partial class HomePage : ContentPage
     {
-        private readonly AuthService _authService;
+        private AuthService _authService;
 
         public HomePage()
         {
             InitializeComponent();
-            _authService = AuthService.GetInstanceAsync().Result;
+            LoadAuthService();
             try
             {
                 Console.WriteLine(_authService?.GetCurrentUser()?.Email);
@@ -19,18 +19,10 @@ namespace macaroni_dev
                 Console.WriteLine(ex.Message);
             }
         }
-
-        private async void OnSignOutClicked(object sender, EventArgs e)
+        private async void LoadAuthService()
         {
-            bool success = await _authService.SignOutAsync();
-            if (success)
-            {
-                await Navigation.PushAsync(new LoginPage());
-            }
-            else
-            {
-                StatusLabel.Text = "Sign-out failed.";
-            }
+            _authService = await AuthService.GetInstanceAsync();
         }
+        
     }
 }

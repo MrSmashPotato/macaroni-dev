@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net9.0-android;net9.0-ios;</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
@@ -74,19 +74,12 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <MauiXaml Update="Views\MainPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\OtpVerificationPage.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\MainPage.xaml.cs">
-	    <DependentUpon>MainPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
 	  <Compile Update="Views\OtpVerificationPage.xaml.cs">
 	    <DependentUpon>OtpVerificationPage.xaml</DependentUpon>
 	    <SubType>Code</SubType>

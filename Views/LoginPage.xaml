@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="macaroni_dev.LoginPage">
+             x:Class="macaroni_dev.Views.LoginPage"
+             Title="Login">
+    <ContentPage.Content>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center" Padding="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /> <!-- Empty space for centering -->
+                    <ColumnDefinition Width="Auto" /> <!-- Title & Icon -->
+                    <ColumnDefinition Width="*" /> <!-- Empty space for centering -->
+                </Grid.ColumnDefinitions>
 
-    <VerticalStackLayout Padding="20">
-        <Label Text="Login" FontSize="24" HorizontalOptions="Center" />
-    
-        <Entry x:Name="EmailEntry" Placeholder="Email" />
-        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Image Source="sample.png" HeightRequest="24" WidthRequest="24" />
+                    <Label Text="Jobilis" FontSize="20" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+            <Entry x:Name="EmailEntry" Placeholder="Email" />
+            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
 
-        <Button Text="Sign In" Clicked="OnSignInClicked" />
-        <Button Text="Sign in with Google" Clicked="PartySignInClicked" CommandParameter="Google" />
-        <Button Text="Sign in with Facebook" Clicked="PartySignInClicked" CommandParameter="Facebook" />
-        <Button Text="Sign in with Github" Clicked="PartySignInClicked" CommandParameter="Github" />
+            <Button Text="Sign In" Clicked="OnSignInClicked" />
+            <Button Text="Sign in with Google" Clicked="PartySignInClicked" CommandParameter="Google" />
+            <Button Text="Sign in with Facebook" Clicked="PartySignInClicked" CommandParameter="Facebook" />
+            <Button Text="Sign in with Github" Clicked="PartySignInClicked" CommandParameter="Github" />
 
-        <Button Text="Go to Register" Clicked="OnGoToRegisterClicked" />
-        <Label x:Name="StatusLabel" Text="" TextColor="Red" />
-    </VerticalStackLayout>
+            <Button Text="Go to Register" Clicked="OnGoToRegisterClicked" />
+            <Label x:Name="StatusLabel" Text="" TextColor="Red" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+   
 </ContentPage>

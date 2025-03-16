@@ -3,18 +3,21 @@ using Microsoft.Maui.Controls;
 using Supabase.Gotrue;
 using Supabase.Postgrest.Exceptions;
 
-namespace macaroni_dev
+namespace macaroni_dev.Views
 {
     public partial class LoginPage : ContentPage
     {
-        private readonly AuthService _authService;
+        private AuthService _authService;
 
         public LoginPage()
         {
             InitializeComponent();
-            _authService = AuthService.GetInstanceAsync().Result; 
+            LoadAuthService();
         }
-
+        private async void LoadAuthService()
+        {
+            _authService = await AuthService.GetInstanceAsync();
+        }
         private async void OnSignInClicked(object sender, EventArgs e)
         {
             try
@@ -23,7 +26,7 @@ namespace macaroni_dev
 
                 if (user == null) return;
                 Console.WriteLine(user.Email);
-                await Navigation.PushAsync(new HomePage());
+                Application.Current.MainPage = new AppShell();
             }
             catch (Exception ex)
             {
@@ -72,7 +75,7 @@ namespace macaroni_dev
                 if (user != null)
                 {
                     Console.WriteLine("Third Party SignIn Success");
-                    await Navigation.PushAsync(new HomePage());
+                    Application.Current.MainPage = new AppShell();
                 }
                 else
                 {
