@@ -4,13 +4,11 @@ using System;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Responses;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Auth.OAuth2.Responses;
 using Google.Apis.Auth.OAuth2.Flows;
 using Google.Apis.Util.Store;
-using Supabase;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Maui.Storage;
 
 
 namespace macaroni_dev.Services
@@ -65,15 +63,37 @@ namespace macaroni_dev.Services
             try
             {
                 var result = await _supabaseClient.Auth.SignIn(email, password);
-                return result.User;
+                if (result != null)
+                {
+                    await SecureStorage.SetAsync("session_token", result.AccessToken);
+                    await SecureStorage.SetAsync("refresh_token", result.RefreshToken);
+
+                    return result.User;
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Login Error: " + ex.Message);
                 throw new Exception(ex.Message);
-                return null;
+                
             }
+            return null;
         }
+        public async Task<User?> RestoreSessionAsync(string sessionToken, string refreshToken)
+        {
+            try
+            {
+                var session = await _supabaseClient.Auth.SetSession(sessionToken, refreshToken);
+                return session?.User;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Restore Session Error: " + ex.Message);
+            }
+
+            return null;
+        }
+
 
         public async Task<bool> VerifyEmailOtpAsync(string email, string otpCode)
         {
@@ -101,6 +121,8 @@ namespace macaroni_dev.Services
             try
             {
                 await _supabaseClient.Auth.SignOut();
+                SecureStorage.Remove("session_token");
+                SecureStorage.Remove("refresh_token");
                 return true;
             }
             catch (Exception ex)
@@ -143,7 +165,12 @@ namespace macaroni_dev.Services
 
                     // Fetch the updated session
                     var session = _supabaseClient.Auth.CurrentSession;
-                    return session?.User;
+                    if (session != null)
+                    {
+                        await SecureStorage.SetAsync("session_token", session.AccessToken);
+                        await SecureStorage.SetAsync("refresh_token", session.RefreshToken);
+                        return session.User;
+                    }
                 }
             }
             catch (TaskCanceledException)
@@ -157,6 +184,10 @@ namespace macaroni_dev.Services
 
             return null; // Return null instead of an empty user to indicate failure
         }
-        
+
+        //internal async Task RestoreSessionAsync(Session session)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

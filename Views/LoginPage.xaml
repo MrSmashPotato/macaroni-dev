@@ -5,7 +5,7 @@
              Title="Login">
     <ContentPage.Content>
         <VerticalStackLayout Padding="20" Spacing="10">
-            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center" Padding="10">
+            <Grid HorizontalOptions = "FillAndExpand" VerticalOptions="Center" Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /> <!-- Empty space for centering -->
                     <ColumnDefinition Width="Auto" /> <!-- Title & Icon -->

@@ -3,26 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace macaroni_dev.Views;
 using macaroni_dev.Services;
-public partial class LoadingPage : ContentPage
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+
+namespace macaroni_dev.Views
 {
-    public LoadingPage()
+    public partial class LoadingPage : ContentPage
     {
-        InitializeComponent();
-        CheckLoginStatus();
+        public LoadingPage()
+        {
+            InitializeComponent();
+            CheckLoginStatus();
+        }
+
+        private async void CheckLoginStatus()
+        {
+            var sessionToken = await SecureStorage.GetAsync("session_token");
+            var refreshToken = await SecureStorage.GetAsync("refresh_token");
+            if (!string.IsNullOrEmpty(sessionToken) && !string.IsNullOrEmpty(refreshToken))
+            {
+                var authService = await AuthService.GetInstanceAsync();
+                var user = await authService.RestoreSessionAsync(sessionToken, refreshToken);
+                if (user != null)
+                {
+                    Console.WriteLine(user.Email);
+                    Application.Current.MainPage = new AppShell();
+                    return;
+                }
+            }
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
+        }
     }
-
-    private async void CheckLoginStatus()
-    {
-        var authService = await AuthService.GetInstanceAsync(); // Get your service instance
-
-        bool isLoggedIn = authService.IsUserLoggedIn(); // Implement this in AuthService
-
-        // Navigate to the correct page
-        if (isLoggedIn)
-            Application.Current.MainPage = new AppShell();
-        else
-            Application.Current.MainPage = new NavigationPage(new LoginPage());    }
 }
