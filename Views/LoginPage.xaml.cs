@@ -2,13 +2,14 @@ using macaroni_dev.Services;
 using Microsoft.Maui.Controls;
 using Supabase.Gotrue;
 using Supabase.Postgrest.Exceptions;
+using macaroni_dev.Models;
 
 namespace macaroni_dev.Views
 {
     public partial class LoginPage : ContentPage
     {
         private AuthService _authService;
-
+        
         public LoginPage()
         {
             InitializeComponent();
@@ -26,7 +27,18 @@ namespace macaroni_dev.Views
 
                 if (user == null) return;
                 Console.WriteLine(user.Email);
-                Application.Current.MainPage = new AppShell();
+                var isEmailRegistered = await IsEmailRegisteredAsync(user.Email);
+
+                if (isEmailRegistered)
+                {
+                    // Navigate to AppShell if the email is already registered
+                    Application.Current.MainPage = new AppShell();
+                }
+                else
+                {
+                    // Navigate to CompleteRegistrationPage if the email is not registered
+                    await Navigation.PushAsync(new CompleteRegistrationPage());
+                }
             }
             catch (Exception ex)
             {
@@ -43,6 +55,24 @@ namespace macaroni_dev.Views
                 }
             }
         }
+        private async Task<bool> IsEmailRegisteredAsync(string email)
+        {
+            try
+            {
+                // Query the public.User table for the email
+                var users = await _authService.GetSupabaseClient()
+                    .From<Models.User>() // Use the correct User model
+                    .Filter("EmailAddress", Supabase.Postgrest.Constants.Operator.Equals, email)
+                    .Get();
+
+                return users.Models.Count > 0; // Return true if the user exists, false otherwise
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error checking email registration: {ex.Message}");
+                return false;
+            }
+        }
         private void PartySignInClicked(object sender, EventArgs e)
         {
             if (sender is Button button && button.CommandParameter is string provider)
@@ -55,10 +85,6 @@ namespace macaroni_dev.Views
                 else if (provider == "Facebook")
                 {
                     TProvider = Constants.Provider.Facebook;
-                }
-                else if (provider == "Github")
-                {
-                    TProvider = Constants.Provider.Github;
                 }
                 else
                 {
@@ -75,7 +101,18 @@ namespace macaroni_dev.Views
                 if (user != null)
                 {
                     Console.WriteLine("Third Party SignIn Success");
-                    Application.Current.MainPage = new AppShell();
+                    var isEmailRegistered = await IsEmailRegisteredAsync(user.Email);
+
+                    if (isEmailRegistered)
+                    {
+                        // Navigate to AppShell if the email is already registered
+                        Application.Current.MainPage = new AppShell();
+                    }
+                    else
+                    {
+                        // Navigate to CompleteRegistrationPage if the email is not registered
+                        await Navigation.PushAsync(new CompleteRegistrationPage());
+                    }
                 }
                 else
                 {

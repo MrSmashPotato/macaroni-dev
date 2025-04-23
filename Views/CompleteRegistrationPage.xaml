@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             x:Class="macaroni_dev.Views.CompleteRegistrationPage"
+             Title="Complete Registration">
+    <ContentPage.BindingContext>
+        <vm:CompleteRegistrationViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Complete Your Registration" 
+                   FontSize="24" 
+                   HorizontalOptions="Center" />
+
+            <!-- Username -->
+            <Label Text="Username" />
+            <Entry Text="{Binding Username}" Placeholder="Enter your username" />
+
+            
+            <!-- Password -->
+            <Label Text="Password" />
+            <Entry Text="{Binding Password}" Placeholder="Enter your password" IsPassword="True" />
+
+            <!-- First Name -->
+            <Label Text="First Name" />
+            <Entry Text="{Binding FirstName}" Placeholder="Enter your first name" />
+
+            <!-- Middle Name -->
+            <Label Text="Middle Name" />
+            <Entry Text="{Binding MiddleName}" Placeholder="Enter your middle name" />
+
+            <!-- Last Name -->
+            <Label Text="Last Name" />
+            <Entry Text="{Binding LastName}" Placeholder="Enter your last name" />
+
+            <!-- Submit Button -->
+            <Button Text="Submit" 
+                    Command="{Binding SubmitCommand}" 
+                    BackgroundColor="#007AFF" 
+                    TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

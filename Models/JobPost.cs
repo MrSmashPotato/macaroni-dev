@@ -31,6 +31,8 @@ namespace macaroni_dev.Models
 
         [Column("UserID")]
         public int UserID { get; set; }
+        [Column("Salary")]
+        public decimal Salary { get; set; }
     }
 }
 

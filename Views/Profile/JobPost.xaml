@@ -14,27 +14,34 @@
 
             <!-- Job Title -->
             <Entry Placeholder="Job Title" Text="{Binding JobTitle}" />
+            <Label Text="{Binding JobTitleError}" TextColor="Red" IsVisible="{Binding JobTitleError, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <!-- Job Description -->
             <Editor Placeholder="Job Description" Text="{Binding JobDetail}" HeightRequest="100" />
+            <Label Text="{Binding JobDetailError}" TextColor="Red" IsVisible="{Binding JobDetailError, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <!-- Location -->
             <Entry Placeholder="Location" Text="{Binding Location}" />
+            <Label Text="{Binding LocationError}" TextColor="Red" IsVisible="{Binding LocationError, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <!-- Salary -->
+            <Entry Placeholder="Salary" Text="{Binding Salary, Converter={StaticResource DecimalConverter}}" Keyboard="Numeric" />
+            <Label Text="{Binding SalaryError}" TextColor="Red" IsVisible="{Binding SalaryError, Converter={StaticResource StringToVisibilityConverter}}" />
+
+            <!-- Skill -->
             <Label Text="Select a Skill" FontSize="16" />
-            <Frame BorderColor="Gray" CornerRadius="5" Padding="0">
-                <Grid>
-                    <Entry Placeholder="Search skills..." Text="{Binding SearchText}" />
-                    <CollectionView ItemsSource="{Binding FilteredSkills}" SelectionMode="Single" SelectedItem="{Binding SelectedSkill}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Label Text="{Binding}" Padding="10" />
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
-            </Frame>
-            <!-- Submit Button -->
-            
+            <Entry Placeholder="Type a skill..." Text="{Binding SearchText}" />
+            <CollectionView ItemsSource="{Binding FilteredSkills}" SelectionMode="Single" 
+                IsVisible="{Binding IsSuggestionsVisible}" 
+                SelectedItem="{Binding SelectedSkill}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding SkillName}" Padding="10" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Text="{Binding SkillError}" TextColor="Red" IsVisible="{Binding SkillError, Converter={StaticResource StringToVisibilityConverter}}" />
+
             <Button Text="Submit" BackgroundColor="#007AFF" TextColor="White" Command="{Binding SubmitCommand}" />
         </StackLayout>
     </ScrollView>

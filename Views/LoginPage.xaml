@@ -23,7 +23,6 @@
             <Button Text="Sign In" Clicked="OnSignInClicked" />
             <Button Text="Sign in with Google" Clicked="PartySignInClicked" CommandParameter="Google" />
             <Button Text="Sign in with Facebook" Clicked="PartySignInClicked" CommandParameter="Facebook" />
-            <Button Text="Sign in with Github" Clicked="PartySignInClicked" CommandParameter="Github" />
 
             <Button Text="Go to Register" Clicked="OnGoToRegisterClicked" />
             <Label x:Name="StatusLabel" Text="" TextColor="Red" />

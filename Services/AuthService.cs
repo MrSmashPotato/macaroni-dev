@@ -131,6 +131,10 @@ namespace macaroni_dev.Services
                 return false;
             }
         }
+        public Supabase.Client GetSupabaseClient()
+        {
+            return _supabaseClient;
+        }
 
         // Check if user is logged in
         public bool IsUserLoggedIn()
@@ -189,5 +193,22 @@ namespace macaroni_dev.Services
         //{
         //    throw new NotImplementedException();
         //}
+        public async Task<int?> GetCurrentUserIdAsync()
+        {
+            try
+            {
+                var userIdString = await SecureStorage.GetAsync(macaroni_dev.Models.GlobalVariables.CurrentUserID);
+                if (!string.IsNullOrEmpty(userIdString) && int.TryParse(userIdString, out var userId))
+                {
+                    return userId;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving UserID from SecureStorage: {ex.Message}");
+            }
+
+            return null; // Return null if the UserID is not found or invalid
+        }
     }
 }
