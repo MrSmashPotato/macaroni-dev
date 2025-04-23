@@ -23,6 +23,10 @@ namespace macaroni_dev.Views
         {
             _authService = await AuthService.GetInstanceAsync();
         }
-        
+        private async void OnProfileButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ProfilePage());
+        }
+
     }
 }

@@ -13,7 +13,7 @@ A gig economy and job search mobile platform application designed to seamlessly 
 | ------------------------- | ----------------- |
 | MC.010.000                | 2025-02-23        |
 | MC.010.001                | 2025-03-12        |
-| ...                       | ...               |
+| MC.010.002                | 2025-04-23        |
 
 ## MC.010.000 Release Notes
 
@@ -34,6 +34,14 @@ A gig economy and job search mobile platform application designed to seamlessly 
 - 1. Environment variables are still not handled meaning the database api is still exposed(though it is just a test account api its still a bad practice)
 - 2. UI and UX of each pages are still not styled and designed yet.
 - 3. Navigation still have issues, A bug happens if Login page is made to be the first page in the navigation stack (possible solution: https://www.youtube.com/watch?v=Jl2xUIUsZLI)
+## MC.010.002 Release Notes
+
+- Implemented the following pages:
+  - Profile Page
+  - Job Post Page
+- Implemented Session Handling:
+  - User session is now saved in the device to avoid re-login
+  - User session is now saved in the database to avoid re-login
 
 ## Important Links:
 

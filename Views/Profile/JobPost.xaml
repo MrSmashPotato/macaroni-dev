@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             x:Class="macaroni_dev.Views.Profile.JobPost"
+             Title="JobPost">
+    <ContentPage.BindingContext>
+        <vm:JobPostViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="20">
+            <Label Text="Post a Job" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <!-- Job Title -->
+            <Entry Placeholder="Job Title" Text="{Binding JobTitle}" />
+
+            <!-- Job Description -->
+            <Editor Placeholder="Job Description" Text="{Binding JobDetail}" HeightRequest="100" />
+
+            <!-- Location -->
+            <Entry Placeholder="Location" Text="{Binding Location}" />
+            <Label Text="Select a Skill" FontSize="16" />
+            <Frame BorderColor="Gray" CornerRadius="5" Padding="0">
+                <Grid>
+                    <Entry Placeholder="Search skills..." Text="{Binding SearchText}" />
+                    <CollectionView ItemsSource="{Binding FilteredSkills}" SelectionMode="Single" SelectedItem="{Binding SelectedSkill}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Label Text="{Binding}" Padding="10" />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Frame>
+            <!-- Submit Button -->
+            
+            <Button Text="Submit" BackgroundColor="#007AFF" TextColor="White" Command="{Binding SubmitCommand}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

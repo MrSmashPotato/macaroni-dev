@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+            x:Class="macaroni_dev.Views.ProfilePage"  
+            Title="ProfilePage">  
+
+   <ScrollView>  
+       <StackLayout Padding="20" BackgroundColor="#F5F5F5">  
+
+           <!-- Profile Section -->  
+           <Border BackgroundColor="White" Padding="15" Margin="0,0,0,20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10" />
+                </Border.StrokeShape>
+                <StackLayout>  
+                   <Image Source="profile_picture.png"   
+                          HeightRequest="100"   
+                          WidthRequest="100"   
+                          HorizontalOptions="Center"   
+                          VerticalOptions="Center" />  
+
+                   <Label Text="Ysmael Jaballa"   
+                          FontSize="24"   
+                          HorizontalOptions="Center"   
+                          FontAttributes="Bold" />  
+
+                   <Label Text="Brgy Pangasugan Baybay City, Leyte"   
+                          FontSize="14"   
+                          HorizontalOptions="Center"   
+                          TextColor="Gray" />  
+
+                   <Button Text="Edit Profile"   
+                           BackgroundColor="#007AFF"   
+                           TextColor="White"   
+                           Margin="0,10"   
+                           HorizontalOptions="Center" />  
+
+                   <Label Text="Hiring manager at Xylo Corp"   
+                          FontSize="14"   
+                          HorizontalOptions="Center"   
+                          TextColor="Gray" />  
+               </StackLayout>  
+           </Border>  
+
+           <!-- Job Post Management Section -->  
+           <Label Text="Job Post Management"   
+                  FontSize="20"   
+                  FontAttributes="Bold"   
+                  Margin="0,20,0,10" />  
+
+           <StackLayout BackgroundColor="White" Padding="10" Margin="0,0,0,20">
+                <StackLayout>
+                    <Button Text="Post a Job" 
+                        Command="{Binding PostJobCommand}" 
+                        BackgroundColor="#007AFF" 
+                        TextColor="White" 
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,5" />
+                    <Label Text="Attract the right talent" 
+                       FontSize="12" 
+                       TextColor="Gray" 
+                       Margin="10,0,0,10" />
+                </StackLayout>
+
+                <StackLayout>
+                    <Button Text="Manage Jobs" 
+                        Command="{Binding ManageJobsCommand}" 
+                        BackgroundColor="#007AFF" 
+                        TextColor="White" 
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,5" />
+                    <Label Text="View and edit your job postings" 
+                           FontSize="12" 
+                           TextColor="Gray" 
+                           Margin="10,0,0,10" />
+                </StackLayout>
+
+                <StackLayout>
+                    <Button Text="Applicants" 
+                        Command="{Binding ApplicantsCommand}" 
+                        BackgroundColor="#007AFF" 
+                        TextColor="White" 
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,5" />
+                    <Label Text="Manage applicants for your jobs" 
+                       FontSize="12" 
+                       TextColor="Gray" 
+                       Margin="10,0,0,10" />
+                </StackLayout>
+
+                <StackLayout>
+                    <Button Text="Upload Resume" 
+                        Command="{Binding UploadResumeCommand}" 
+                        BackgroundColor="#007AFF" 
+                        TextColor="White" 
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,5" />
+                    <Label Text="Impress your employer" 
+                       FontSize="12" 
+                       TextColor="Gray" 
+                       Margin="10,0,0,10" />
+                </StackLayout>
+
+            </StackLayout>  
+       </StackLayout>  
+   </ScrollView>  
+</ContentPage>
