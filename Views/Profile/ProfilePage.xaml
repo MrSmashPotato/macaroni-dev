@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
             x:Class="macaroni_dev.Views.ProfilePage"  
-            Title="ProfilePage">  
+            Shell.BackgroundColor="MediumAquamarine"
+            Title="Profile Page"
+            xmlns:vm="clr-namespace:macaroni_dev.ViewModels">  
 
    <ScrollView>  
        <StackLayout Padding="20" BackgroundColor="#F5F5F5">  
@@ -51,6 +53,7 @@
            <StackLayout BackgroundColor="White" Padding="10" Margin="0,0,0,20">
                 <StackLayout>
                     <Button Text="Post a Job" 
+                            x:DataType="vm:ProfileViewModel"
                         Command="{Binding PostJobCommand}" 
                         BackgroundColor="#007AFF" 
                         TextColor="White" 
@@ -64,6 +67,7 @@
 
                 <StackLayout>
                     <Button Text="Manage Jobs" 
+                            x:DataType="vm:ProfileViewModel"
                         Command="{Binding ManageJobsCommand}" 
                         BackgroundColor="#007AFF" 
                         TextColor="White" 
@@ -77,6 +81,7 @@
 
                 <StackLayout>
                     <Button Text="Applicants" 
+                            x:DataType="vm:ProfileViewModel"
                         Command="{Binding ApplicantsCommand}" 
                         BackgroundColor="#007AFF" 
                         TextColor="White" 
@@ -90,6 +95,7 @@
 
                 <StackLayout>
                     <Button Text="Upload Resume" 
+                            x:DataType="vm:ProfileViewModel"
                         Command="{Binding UploadResumeCommand}" 
                         BackgroundColor="#007AFF" 
                         TextColor="White" 

@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Shell.TitleColor="White"
              Shell.BackgroundColor="MediumAquamarine"
+             Title=""
              x:Class="macaroni_dev.Views.HomePage">
     <ContentPage.Content>
         <VerticalStackLayout Padding="20">
             <Label Text="Welcome to Home Page!" FontSize="24" HorizontalOptions="Center" />
             <Label x:Name="StatusLabel" Text="" TextColor="Red" />
-            <Button Text="Profile" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnProfileButtonClicked" />
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

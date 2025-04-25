@@ -12,12 +12,8 @@ namespace macaroni_dev
             InitializeComponent();
             _email = email;
             Console.WriteLine(_email);
-        }
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            _authService = await AuthService.GetInstanceAsync();
-        }
+            _authService = ServiceHelper.GetService<AuthService>();
+        } 
         private async void OnVerifyClicked(object sender, EventArgs e)
         {
             string otpCode = OtpEntry.Text;
@@ -32,8 +28,7 @@ namespace macaroni_dev
 
             if (isVerified)
             {
-                StatusLabel.Text = "✅ Verification successful! You can now sign in.";
-                await Navigation.PopToRootAsync(); // Go back to MainPage
+                Application.Current.MainPage = new AppShell();
             }
             else
             {

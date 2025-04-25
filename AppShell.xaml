@@ -10,14 +10,49 @@
     Padding="15"
     Shell.FlyoutWidth="300">
     
-    <Shell.FlyoutHeader>
-        <Grid>
-        </Grid>
-    </Shell.FlyoutHeader>
-    <ShellContent 
-        Title="Job Feed"
-        ContentTemplate="{DataTemplate views:HomePage}"
-        Route="home"/>
+    <ShellContent Route="loading" 
+                  ContentTemplate="{DataTemplate views:LoadingPage}"
+                  FlyoutItemIsVisible="False"
+                  />
+    <ShellContent
+        Title="Job Search"
+        Icon="job_search"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        FlyoutItemIsVisible="False"
+        Route="loginPage"
+    />
+	<FlyoutItem FlyoutDisplayOptions="AsSingleItem" Title="Dashboard">
+        <ShellContent
+            Title="Job Search"
+            Icon="job_search"
+            ContentTemplate="{DataTemplate views:HomePage}"
+            FlyoutItemIsVisible="False"
+            Route="homePage"
+            />
+        <ShellContent
+            Title="Applied"
+            Icon="applied"
+            ContentTemplate="{DataTemplate views:AppliedJobsPage}"
+            FlyoutItemIsVisible="False"
+            Route="appliedPage"
+            />
+        <ShellContent
+            Title="Messages"
+            Icon="messages"
+            ContentTemplate="{DataTemplate views:MessagesPage}"
+            FlyoutItemIsVisible="False"
+            Route="messagesPage"
+        />
+        <ShellContent
+            Title="Profile"
+            Icon="profile"
+            ContentTemplate="{DataTemplate views:ProfilePage}"
+            FlyoutItemIsVisible="False"
+            Route="profilePage"
+        />
+        
+    </FlyoutItem>
+   
     <Shell.FlyoutFooter>
         <Button Clicked="OnLogoutClicked" Text="Logout" HorizontalOptions="Center" Padding="10" Margin="15,15,15,25"/>
     </Shell.FlyoutFooter>

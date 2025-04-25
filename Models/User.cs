@@ -5,28 +5,30 @@ using Supabase.Postgrest.Models;
 
 namespace macaroni_dev.Models
 {
-    [Table ("User")]
+    [Table ("users")]
     public class User : BaseModel
     {
-        [PrimaryKey("UserID", false)]
-        public int UserID { get; set; }
-        [Column("Username")]
+        [PrimaryKey("id", false)]
+        public Guid ID { get; set; }
+        [Column("username")]
         public string Username { get; set; }
-        [Column("EmailAddress")]
+        [Column("email")]
         public string EmailAddress { get; set; } = "";
-        [Column("Password")]
-        public string Password { get; set; } = "";
-        [Column("FirstName")]
+        [Column("first_name")]
         public string FirstName { get; set; } = "";
 
-        [Column("MiddleName")]
+        [Column("middle_name")]
         public string MiddleName { get; set; } = "";
 
-        [Column("LastName")]
+        [Column("last_name")]
         public string LastName { get; set; } = "";
-        [Column("IsArchived")]
+        [Column("is_archived")]
         public bool IsArchived { get; set; }
-        [Column("CreatedAt")]
+        [Column("created_at")]
         public DateTime CreatedAt { get; set; }
+        [Column("is_complete")]
+        public bool IsComplete { get; set; }
+        [Column("profile_image")]
+        public string ProfileImage { get; set; } = "";
     }
 }

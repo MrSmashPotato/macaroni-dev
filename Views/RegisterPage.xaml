@@ -6,8 +6,9 @@
 
     <VerticalStackLayout Padding="20" Spacing="10">
     
-        <Entry x:Name="EmailEntry" Placeholder="Email" />
+        <Entry x:Name="UserEntry" Placeholder="Username"/>
         <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+        <Entry x:Name="EmailEntry" Placeholder="Recovery Email" />
 
         <Button Text="Sign Up" Clicked="OnSignUpClicked" />
         <Button Text="Go to Login" Clicked="OnGoToLoginClicked" />
