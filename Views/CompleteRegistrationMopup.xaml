@@ -2,15 +2,18 @@
 <mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             BackgroundInputTransparent="True"
+             CloseWhenBackgroundIsClicked="True"
+             BackgroundClicked="Exit"
              xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
              x:Class="macaroni_dev.Views.CompleteRegistrationMopup"
              Title="Complete Registration">
     <ContentPage.BindingContext>
         <vm:CompleteRegistrationViewModel />
     </ContentPage.BindingContext>
-    <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="350" HeightRequest="700" BackgroundColor="Aquamarine">
+    <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="400" HeightRequest="800" BackgroundColor="Aquamarine">
         <Border.StrokeShape>
-            <RoundRectangle CornerRadius="40,0,0,40"/>
+            <RoundRectangle CornerRadius="40,40,40,40"/>
         </Border.StrokeShape>
         <ScrollView>
             <VerticalStackLayout Padding="20" Spacing="15">
@@ -20,7 +23,7 @@
             
                 <!-- Profile Image with Preview -->
                 <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                    <Border WidthRequest="200" HeightRequest="200" StrokeThickness="10">
+                    <Border WidthRequest="150" HeightRequest="150" StrokeThickness="10">
                         <Border.StrokeShape>
                             <Ellipse/>
                         </Border.StrokeShape>
@@ -49,8 +52,19 @@
                 <Label Text="Last Name" />
                 <Entry Text="{Binding LastName}" Placeholder="Enter your last name" />
 
+                <Label Text="Location" />
+                <Entry Text="{Binding Location}" Placeholder="Enter your location" />
+                
+                <Label Text="Occupation" />
+                <HorizontalStackLayout>
+                    <Entry Text="{Binding Occupation}" Placeholder="Enter your occupation" />
+                    <Label Text="at" VerticalOptions="Center"/>
+                    <Entry Text="{Binding OccupationLocation}" Placeholder="Enter occupation location"/>
+
+                </HorizontalStackLayout>
                 <!-- Submit Button -->
                 <Button Text="Submit" 
+                        Clicked="Exit"
                         Command="{Binding SubmitCommand}" 
                         BackgroundColor="#007AFF" 
                         TextColor="White" />

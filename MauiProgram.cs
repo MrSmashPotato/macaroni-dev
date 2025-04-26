@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using macaroni_dev.Services;
+using Sharpnado.MaterialFrame;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.Toolkit.Hosting;
 using UraniumUI;
+using Xe.AcrylicView;
 
 namespace macaroni_dev;
 
@@ -15,8 +17,10 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
+			.UseAcrylicView()  //*********2.添加此扩展方法使用 | Usage
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
+			.UseSharpnadoMaterialFrame(loggerEnable: false)
 			.ConfigureSyncfusionCore()
 			.ConfigureSyncfusionToolkit()
 			
