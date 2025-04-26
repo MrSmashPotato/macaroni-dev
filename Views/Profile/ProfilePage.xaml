@@ -15,18 +15,24 @@
                     <RoundRectangle CornerRadius="10" />
                 </Border.StrokeShape>
                 <StackLayout>  
-                   <Image Source="profile_picture.png"   
+                   <Image 
+                          x:DataType="vm:ProfileViewModel"
+                          Source="{Binding ProfileImageUrl}"   
                           HeightRequest="100"   
                           WidthRequest="100"   
                           HorizontalOptions="Center"   
                           VerticalOptions="Center" />  
 
-                   <Label Text="Ysmael Jaballa"   
+                   <Label x:DataType="vm:ProfileViewModel"
+                          Text="{Binding Name}"
+                          HorizontalTextAlignment="Center"
                           FontSize="24"   
-                          HorizontalOptions="Center"   
+                          HorizontalOptions="Center"
+                          FontAutoScalingEnabled="True"
+                          
                           FontAttributes="Bold" />  
 
-                   <Label Text="Brgy Pangasugan Baybay City, Leyte"   
+                   <Label Text="{Binding Location}"   
                           FontSize="14"   
                           HorizontalOptions="Center"   
                           TextColor="Gray" />  
@@ -37,7 +43,10 @@
                            Margin="0,10"   
                            HorizontalOptions="Center" />  
 
-                   <Label Text="Hiring manager at Xylo Corp"   
+                   
+                   <Label 
+                       x:DataType="vm:ProfileViewModel"
+                            Text="{Binding Occupation}"   
                           FontSize="14"   
                           HorizontalOptions="Center"   
                           TextColor="Gray" />  

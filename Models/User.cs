@@ -28,6 +28,13 @@ namespace macaroni_dev.Models
         public DateTime CreatedAt { get; set; }
         [Column("is_complete")]
         public bool IsComplete { get; set; }
+        [Column("location")]
+        public string Location { get; set; } = "";
+        [Column("occupation")]
+        public string Occupation { get; set; } = "";
+        [Column("occupation_location")]
+        public string OccupationLocation { get; set; } = "";
+        
         [Column("profile_image")]
         public string ProfileImage { get; set; } = "";
     }
