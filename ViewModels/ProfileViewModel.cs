@@ -24,7 +24,7 @@ namespace macaroni_dev.ViewModels
             _profile = ServiceHelper.GetService<ProfileService>().CurrentUser;
             ProfileImageUrl = _profile.ProfileImage;
             Name = _profile.FirstName + " " + _profile.MiddleName + " " + _profile.LastName;
-            Occupation = _profile.Occupation + " at " + _profile.OccupationLocation;
+            Occupation = _profile.Occupation + " at " + _profile.Company;
             Location = _profile.Location;
             Console.WriteLine("ProfileViewModel");
         }

@@ -32,8 +32,8 @@ namespace macaroni_dev.Models
         public string Location { get; set; } = "";
         [Column("occupation")]
         public string Occupation { get; set; } = "";
-        [Column("occupation_location")]
-        public string OccupationLocation { get; set; } = "";
+        [Column("company")]
+        public string Company { get; set; } = "";
         
         [Column("profile_image")]
         public string ProfileImage { get; set; } = "";

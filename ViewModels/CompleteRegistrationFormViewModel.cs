@@ -21,7 +21,7 @@ namespace macaroni_dev.ViewModels
         [ObservableProperty] private string _lastName;
         [ObservableProperty] private string _location;
         [ObservableProperty] private string _occupation;
-        [ObservableProperty] private string _occupationLocation;
+        [ObservableProperty] private string _company;
         [ObservableProperty] private ImageSource _profileImage;
         private MemoryStream _memoryStream = new MemoryStream();
         private string _imageFileName;
@@ -66,6 +66,8 @@ namespace macaroni_dev.ViewModels
                 currentUserProfile.MiddleName = MiddleName;
                 currentUserProfile.LastName = LastName;
                 currentUserProfile.Location = Location;
+                currentUserProfile.Occupation = Occupation;
+                currentUserProfile.Company = Company;
                 
                 var supabaseClient = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
                 var model = await supabaseClient

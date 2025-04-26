@@ -56,10 +56,10 @@
                 <Entry Text="{Binding Location}" Placeholder="Enter your location" />
                 
                 <Label Text="Occupation" />
-                <HorizontalStackLayout>
+                <HorizontalStackLayout Spacing="10">
                     <Entry Text="{Binding Occupation}" Placeholder="Enter your occupation" />
                     <Label Text="at" VerticalOptions="Center"/>
-                    <Entry Text="{Binding OccupationLocation}" Placeholder="Enter occupation location"/>
+                    <Entry Text="{Binding Company}" Placeholder="Company Name" WidthRequest="180"/>
 
                 </HorizontalStackLayout>
                 <!-- Submit Button -->
