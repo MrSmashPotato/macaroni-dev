@@ -54,6 +54,7 @@ A gig economy and job search mobile platform application designed to seamlessly 
 - Feature added:
   - Upload Profile Picture now is available in Complete Registration Popup
   - Dynamic Profile Page based on individual profile refering to Supabase's values
+  - Tab Menu items are now implemented (Job Search, Applied Jobs, Messages, Profile) in the Dashboard.
 - UI/UX Improvements:
   - Changed the overall look of the Job management Section of Profile Page
 - Backend Improvements:
