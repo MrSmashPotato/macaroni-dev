@@ -58,6 +58,9 @@ A gig economy and job search mobile platform application designed to seamlessly 
   - Changed the overall look of the Job management Section of Profile Page
 - Backend Improvements:
   - Restructed Dependency Injection and Services to use proper singleton adhering to standard practice improving scalability
+  - Restructed User Authentication to rely on Supabase's auth password encryption, avoiding storing native string passwords stored in users table in the database and removing redundant data.
+*Known Issues:
+  - Third Party Login is for now not working due to lack of adjustment towards the new Auth process
 
 ## Important Links:
 
