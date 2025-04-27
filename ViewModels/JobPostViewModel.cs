@@ -165,6 +165,7 @@ namespace macaroni_dev.ViewModels
 
             SelectedSkill = SelectedSkillObj.ID;
 
+            
             try
             {
                 bool isSaved = await SaveJobPostToDatabaseAsync(jobPost);
