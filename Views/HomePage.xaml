@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
              Shell.TitleColor="White"
              Shell.BackgroundColor="MediumAquamarine"
+             xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
+             Title=""
              x:Class="macaroni_dev.Views.HomePage">
     <ContentPage.Content>
-        <VerticalStackLayout Padding="20">
-            <Label Text="Welcome to Home Page!" FontSize="24" HorizontalOptions="Center" />
-            <Label x:Name="StatusLabel" Text="" TextColor="Red" />
-            <Button Text="Profile" HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnProfileButtonClicked" />
-        </VerticalStackLayout>
+            <Grid>
+                <Label Text="Welcome to Home Page!" FontSize="24" HorizontalOptions="Center" />
+                <Label x:Name="StatusLabel" Text="" TextColor="Red" />
+                <ui:AcrylicView
+                    EffectStyle="Dark"
+                    HorizontalOptions="Fill"
+                    x:DataType="vm:HomePageViewModel"
+                    IsVisible="{Binding Blur}"
+                    Margin="0"
+                    TintOpacity=".15 "
+                    VerticalOptions="Fill"
+                />
+            </Grid>
     </ContentPage.Content>
 </ContentPage>

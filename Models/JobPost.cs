@@ -4,34 +4,34 @@ using Supabase.Postgrest.Models;
 
 namespace macaroni_dev.Models
 {
-    [Table("JobPost")] 
+    [Table("job_post")] 
     public class JobPost : BaseModel
     {
-        [PrimaryKey("JobId", false)]
-        public int JobId { get; set; }
+        [PrimaryKey("Id", false)]
+        public int Id { get; set; }
 
 
-        [Column("CreatedAt")]
+        [Column("created_at")]
         public DateTime CreatedAt { get; set; }
 
-        [Column("JobName")]
+        [Column("name")]
         public string JobName { get; set; } = "";
 
-        [Column("JobDetail")]
+        [Column("detail")]
         public string JobDetail { get; set; } = "";
-
-        [Column("Location")]
+    
+        [Column("location")]
         public string Location { get; set; } = "";
 
-        [Column("IsDone")]
+        [Column("is_done")]
         public bool IsDone { get; set; }
 
-        [Column("IsArchived")]
+        [Column("is_archived")]
         public bool IsArchived { get; set; }
 
-        [Column("UserID")]
-        public int UserID { get; set; }
-        [Column("Salary")]
+        [Column("user_id")]
+        public Guid UserID { get; set; }
+        [Column("salary")]
         public decimal Salary { get; set; }
     }
 }

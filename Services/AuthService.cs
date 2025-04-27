@@ -11,41 +11,37 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Storage;
 
 
-namespace macaroni_dev.Services
-{
+namespace macaroni_dev.Services;
     public class AuthService
     {
-        private static AuthService? _instance;
         private readonly Supabase.Client _supabaseClient;
 
         // Private constructor to prevent direct instantiation
-        private AuthService(Supabase.Client supabaseClient)
+        public AuthService(Supabase.Client supabaseClient)
         {
             _supabaseClient = supabaseClient;
         }
 
         // Singleton Instance Getter
-        public static async Task<AuthService> GetInstanceAsync()
-        {
-            if (_instance == null)
-            {
-                var client = await SupabaseClientProvider.GetClientAsync();
-                _instance = new AuthService(client);
-            }
-
-            return _instance;
-        }
-
+    
         // Sign Up 
-        public async Task<User?> SignUpAsync(string email, string password)
+        public async Task<User?> SignUpAsync(string username,string email, string password)
         {
             try
             {
-                var response = await _supabaseClient.Auth.SignUp(email, password);
+                var options = new SignUpOptions
+                {
+                    Data = new Dictionary<string, object>
+                    {
+                        { "username", username }
+                    }
+                };
+                var response = await _supabaseClient.Auth.SignUp(email, password, options);
 
                 if (response.User != null)
                 {
-                    Console.WriteLine("Sign-up successful. Verification email sent.");
+                    Console.WriteLine("Sign-up successful. Verification email sent. Please Check your email.");
+                    
                     return response.User; // User created but still unverified
                 }
             }
@@ -131,11 +127,7 @@ namespace macaroni_dev.Services
                 return false;
             }
         }
-        public Supabase.Client GetSupabaseClient()
-        {
-            return _supabaseClient;
-        }
-
+       
         // Check if user is logged in
         public bool IsUserLoggedIn()
         {
@@ -155,8 +147,6 @@ namespace macaroni_dev.Services
         {
             try
             {
-                var authService = await GetInstanceAsync();
-
                 var auth = await _supabaseClient.Auth.SignIn(provider);
                 if (auth == null || auth.Uri == null) throw new Exception("Failed to initiate OAuth flow.");
 
@@ -211,4 +201,3 @@ namespace macaroni_dev.Services
             return null; // Return null if the UserID is not found or invalid
         }
     }
-}

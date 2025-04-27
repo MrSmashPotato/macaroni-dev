@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
             x:Class="macaroni_dev.Views.ProfilePage"  
-            Title="ProfilePage">  
+            Shell.BackgroundColor="MediumAquamarine"
+            Title="Profile Page"
+            xmlns:vm="clr-namespace:macaroni_dev.ViewModels">  
 
    <ScrollView>  
        <StackLayout Padding="20" BackgroundColor="#F5F5F5">  
@@ -13,18 +15,24 @@
                     <RoundRectangle CornerRadius="10" />
                 </Border.StrokeShape>
                 <StackLayout>  
-                   <Image Source="profile_picture.png"   
+                   <Image 
+                          x:DataType="vm:ProfileViewModel"
+                          Source="{Binding ProfileImageUrl}"   
                           HeightRequest="100"   
                           WidthRequest="100"   
                           HorizontalOptions="Center"   
                           VerticalOptions="Center" />  
 
-                   <Label Text="Ysmael Jaballa"   
+                   <Label x:DataType="vm:ProfileViewModel"
+                          Text="{Binding Name}"
+                          HorizontalTextAlignment="Center"
                           FontSize="24"   
-                          HorizontalOptions="Center"   
+                          HorizontalOptions="Center"
+                          FontAutoScalingEnabled="True"
+                          
                           FontAttributes="Bold" />  
 
-                   <Label Text="Brgy Pangasugan Baybay City, Leyte"   
+                   <Label Text="{Binding Location}"   
                           FontSize="14"   
                           HorizontalOptions="Center"   
                           TextColor="Gray" />  
@@ -35,7 +43,10 @@
                            Margin="0,10"   
                            HorizontalOptions="Center" />  
 
-                   <Label Text="Hiring manager at Xylo Corp"   
+                   
+                   <Label 
+                       x:DataType="vm:ProfileViewModel"
+                            Text="{Binding Occupation}"   
                           FontSize="14"   
                           HorizontalOptions="Center"   
                           TextColor="Gray" />  
@@ -43,63 +54,146 @@
            </Border>  
 
            <!-- Job Post Management Section -->  
-           <Label Text="Job Post Management"   
-                  FontSize="20"   
-                  FontAttributes="Bold"   
-                  Margin="0,20,0,10" />  
+           <HorizontalStackLayout>
+               <Image Source="job_manage" HeightRequest="20" WidthRequest="20"></Image>
+               <Label Text="Job Post Management"   
+                      FontSize="20"   
+                      FontAttributes="Bold"   
+                      Margin="0,20,0,10" />  
+           </HorizontalStackLayout>
+       
 
-           <StackLayout BackgroundColor="White" Padding="10" Margin="0,0,0,20">
-                <StackLayout>
-                    <Button Text="Post a Job" 
-                        Command="{Binding PostJobCommand}" 
-                        BackgroundColor="#007AFF" 
-                        TextColor="White" 
-                        HorizontalOptions="FillAndExpand" 
-                        Margin="0,5" />
-                    <Label Text="Attract the right talent" 
-                       FontSize="12" 
-                       TextColor="Gray" 
-                       Margin="10,0,0,10" />
-                </StackLayout>
+           <StackLayout BackgroundColor="Transparent" Padding="10" Margin="0,0,0,20" Spacing="10">
+              <!-- Post Job -->
+               <Frame 
+                   BorderColor="LightGray" 
+                   CornerRadius="10" 
+                   HasShadow="True"
+                   BackgroundColor="White"
+                   Padding="15">
+        
+                   <Grid ColumnDefinitions="*, Auto">
+                       <StackLayout>
+                           <Label Text="Post a Job" 
+                                  FontSize="18"
+                                  FontAttributes="Bold"
+                                  TextColor="Black"/>
+                           <Label Text="Attract the right talent" 
+                                  FontSize="12" 
+                                  TextColor="Gray" 
+                                  Margin="0,5,0,0"/>
+                       </StackLayout>
+            
+                       <Image Source="arrow_right.png" 
+                              WidthRequest="24" 
+                              HorizontalOptions="End"
+                              HeightRequest="24"
+                              VerticalOptions="Center"/>
+                   </Grid>
 
+                   <Frame.GestureRecognizers>
+                       <TapGestureRecognizer 
+                           Command="{Binding PostJobCommand}" />
+                   </Frame.GestureRecognizers>
+        
+               </Frame>
+
+               <!-- Manage Jobs -->
+        <Frame 
+            BorderColor="LightGray" 
+            CornerRadius="10" 
+            HasShadow="True"
+            BackgroundColor="White"
+            Padding="15">
+            
+            <Grid ColumnDefinitions="*, Auto">
                 <StackLayout>
-                    <Button Text="Manage Jobs" 
-                        Command="{Binding ManageJobsCommand}" 
-                        BackgroundColor="#007AFF" 
-                        TextColor="White" 
-                        HorizontalOptions="FillAndExpand" 
-                        Margin="0,5" />
+                    <Label Text="Manage Jobs" 
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
                     <Label Text="View and edit your job postings" 
                            FontSize="12" 
                            TextColor="Gray" 
-                           Margin="10,0,0,10" />
+                           Margin="0,5,0,0"/>
                 </StackLayout>
 
+                <Image Source="arrow_right.png" 
+                       WidthRequest="24" 
+                       HeightRequest="24"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End"/>
+            </Grid>
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ManageJobsCommand}" />
+            </Frame.GestureRecognizers>
+        </Frame>
+
+        <!-- Applicants -->
+        <Frame 
+            BorderColor="LightGray" 
+            CornerRadius="10" 
+            HasShadow="True"
+            BackgroundColor="White"
+            Padding="15">
+            
+            <Grid ColumnDefinitions="*, Auto">
                 <StackLayout>
-                    <Button Text="Applicants" 
-                        Command="{Binding ApplicantsCommand}" 
-                        BackgroundColor="#007AFF" 
-                        TextColor="White" 
-                        HorizontalOptions="FillAndExpand" 
-                        Margin="0,5" />
+                    <Label Text="Applicants" 
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="Black"/>
                     <Label Text="Manage applicants for your jobs" 
-                       FontSize="12" 
-                       TextColor="Gray" 
-                       Margin="10,0,0,10" />
+                           FontSize="12" 
+                           TextColor="Gray" 
+                           Margin="0,5,0,0"/>
                 </StackLayout>
 
-                <StackLayout>
-                    <Button Text="Upload Resume" 
-                        Command="{Binding UploadResumeCommand}" 
-                        BackgroundColor="#007AFF" 
-                        TextColor="White" 
-                        HorizontalOptions="FillAndExpand" 
-                        Margin="0,5" />
-                    <Label Text="Impress your employer" 
+                <Image Source="arrow_right.png" 
+                       WidthRequest="24" 
+                       HeightRequest="24"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End"/>
+            </Grid>
+
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ApplicantsCommand}" />
+            </Frame.GestureRecognizers>
+        </Frame>
+
+    <!-- Upload Resume -->
+    <Frame 
+        BorderColor="LightGray" 
+        CornerRadius="10" 
+        HasShadow="True"
+        BackgroundColor="White"
+        Padding="15">
+        
+        <Grid ColumnDefinitions="*, Auto">
+            <StackLayout>
+                <Label Text="Upload Resume" 
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="Black"/>
+                <Label Text="Impress your employer" 
                        FontSize="12" 
                        TextColor="Gray" 
-                       Margin="10,0,0,10" />
-                </StackLayout>
+                       Margin="0,5,0,0"/>
+            </StackLayout>
+
+            <Image Source="arrow_right.png" 
+                   WidthRequest="24" 
+                   HeightRequest="24"
+                   VerticalOptions="Center"
+                   HorizontalOptions="End"/>
+        </Grid>
+
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding UploadResumeCommand}" />
+        </Frame.GestureRecognizers>
+    </Frame>
+
 
             </StackLayout>  
        </StackLayout>  

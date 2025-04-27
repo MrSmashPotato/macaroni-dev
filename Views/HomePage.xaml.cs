@@ -1,32 +1,14 @@
 using macaroni_dev.Services;
+using macaroni_dev.ViewModels;
 
 namespace macaroni_dev.Views
 {
     public partial class HomePage : ContentPage
     {
-        private AuthService _authService;
-
         public HomePage()
         {
+            BindingContext = new HomePageViewModel();
             InitializeComponent();
-            LoadAuthService();
-            try
-            {
-                Console.WriteLine(_authService?.GetCurrentUser()?.Email);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
-        private async void LoadAuthService()
-        {
-            _authService = await AuthService.GetInstanceAsync();
-        }
-        private async void OnProfileButtonClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ProfilePage());
-        }
-
     }
 }

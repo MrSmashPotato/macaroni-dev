@@ -7,19 +7,19 @@ using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 namespace macaroni_dev.Models
 {
-    [Table ("JobSkill")]
+    [Table ("job_skill")]
     public class JobSkill : BaseModel
     {
 
-        [PrimaryKey("JobSkillID", false)]
-        public int JobSkillID { get; set; }
-        [Column("JobID")]
+        [PrimaryKey("id", false)]
+        public int ID { get; set; }
+        [Column("job_id")]
         public int JobID { get; set; }
-        [Column("SkillID")]
+        [Column("skill_id")]
         public int SkillID { get; set; }
-        [Column("CreatedAt")]
+        [Column("created_at")]
         public DateTime CreatedAt { get; set; }
-        [Column("IsArchived")]
+        [Column("is_archived")]
         public bool IsArchived { get; set; }
     }
 }
