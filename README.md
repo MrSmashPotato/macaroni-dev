@@ -14,6 +14,8 @@ A gig economy and job search mobile platform application designed to seamlessly 
 | MC.010.000                | 2025-02-23        |
 | MC.010.001                | 2025-03-12        |
 | MC.010.002                | 2025-04-23        |
+| MC.010.003                | 2025-04-27        |
+
 
 ## MC.010.000 Release Notes
 
@@ -42,6 +44,25 @@ A gig economy and job search mobile platform application designed to seamlessly 
 - Implemented Session Handling:
   - User session is now saved in the device to avoid re-login
   - User session is now saved in the database to avoid re-login
+ 
+## MC.010.003 Release Notes
+
+- Implemented the following page/s:
+  - Registration Completion Popup Page
+- Revised the following page/s:
+  - Complete Registration Page --> Turned into Popup
+- Feature added:
+  - Upload Profile Picture now is available in Complete Registration Popup
+  - Dynamic Profile Page based on individual profile refering to Supabase's values
+  - Tab Menu items are now implemented (Job Search, Applied Jobs, Messages, Profile) in the Dashboard.
+- UI/UX Improvements:
+  - Changed the overall look of the Job management Section of Profile Page
+- Backend Improvements:
+  - Restructed Dependency Injection and Services to use proper singleton adhering to standard practice improving scalability
+  - Restructed User Authentication to rely on Supabase's auth password encryption, avoiding storing native string passwords stored in users table in the database and removing redundant data.
+
+**Known Issues**:
+  - Third Party Login is for now not working due to lack of adjustment towards the new Auth process
 
 ## Important Links:
 
