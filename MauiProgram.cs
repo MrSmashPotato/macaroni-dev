@@ -30,6 +30,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFontAwesomeIconFonts(); 
 				fonts.AddMaterialIconFonts();
+				fonts.AddMaterialSymbolsFonts(); // 👈 Add this line
+
 
 			});
 		var options = new Supabase.SupabaseOptions

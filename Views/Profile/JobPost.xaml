@@ -4,11 +4,13 @@
               xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
               xmlns:converters="clr-namespace:macaroni_dev.Converters"
               xmlns:models="clr-namespace:macaroni_dev.Models"
+              xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+              xmlns:ms="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+
               x:Class="macaroni_dev.Views.Profile.JobPost"
              Title="JobPost">
-    <ContentPage.BindingContext>
-        <vm:JobPostViewModel />
-    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -17,28 +19,144 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView>
-        <StackLayout Padding="20">
-            <Label Text="Post a Job" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
-
+        <StackLayout Padding="20" Spacing="15">
+            <Label Text="Post a Job" FontSize="24" x:Name="CreateLabel" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="Edit Job Post" FontSize="24" x:Name="EditLabel" FontAttributes="Bold" HorizontalOptions="Center" />
+            
             <!-- Job Title -->
-            <Entry x:DataType="vm:JobPostViewModel" Placeholder="Job Title" Text="{Binding JobTitle}" />
+            <Label Text="Identify Job Tittle" FontAttributes="Bold" FontSize="16" />
+
+            <material:TextField
+                x:DataType="vm:JobPostViewModel"
+                Title="Title"
+                Text="{Binding JobTitle}"
+                AllowClear="True"
+                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Title}}">
+                <material:TextField.Attachments>
+                    <Button
+                        StyleClass="TextButton"
+                        Command="{Binding ClearTitleCommand}"
+                        >
+                        <Button.ImageSource>
+                            <FontImageSource
+                                Color=" Black"
+                                FontFamily="MaterialSharp"
+                                Glyph="{x:Static m:MaterialRounded.Close}"
+                                Size="30" />
+                        </Button.ImageSource>
+                    </Button>
+                </material:TextField.Attachments>
+            </material:TextField>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding JobTitleError}" TextColor="Red" IsVisible="{Binding JobTitleError, Converter={StaticResource StringToVisibilityConverter}}" />
 
-            <!-- Job Description -->
-            <Editor x:DataType="vm:JobPostViewModel" Placeholder="Job Description" Text="{Binding JobDetail}" HeightRequest="100" />
-            <Label x:DataType="vm:JobPostViewModel" Text="{Binding JobDetailError}" TextColor="Red" IsVisible="{Binding JobDetailError, Converter={StaticResource StringToVisibilityConverter}}" />
 
+            <!-- Job Description -->
+            <Label Text="Identify Job Description" FontAttributes="Bold" FontSize="16" />
+
+                    <material:EditorField 
+                        x:DataType="vm:JobPostViewModel"
+                        Title="Description" 
+                        Text="{Binding JobDetail}"
+                        Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Description}}">
+                        <material:EditorField.Attachments>
+                            <!-- The button is inside the EditorField's InputView -->
+                            <Grid HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                                <Button
+                                    StyleClass="TextButton"
+                                    Command="{Binding ClearDetailCommand}"
+                                    BackgroundColor="Transparent">
+                                    <Button.ImageSource>
+                                        <FontImageSource
+                                            Color="Black"
+                                            FontFamily="MaterialSharp"
+                                            Glyph="{x:Static m:MaterialRounded.Close}"
+                                            Size="30" />
+                                    </Button.ImageSource>
+                                </Button>
+                            </Grid>
+                        </material:EditorField.Attachments>
+                    </material:EditorField>
+
+                    <Label x:DataType="vm:JobPostViewModel" Text="{Binding JobDetailError}" TextColor="Red" IsVisible="{Binding JobDetailError, Converter={StaticResource StringToVisibilityConverter}}" />
+
+             
+            
             <!-- Location -->
-            <Entry x:DataType="vm:JobPostViewModel" Placeholder="Location" Text="{Binding Location}" />
+            <Label Text="Identify Work Location" FontAttributes="Bold" FontSize="16" />
+
+            <material:TextField
+                x:DataType="vm:JobPostViewModel"
+                Title="Location"
+                Text="{Binding Location}"
+                AllowClear="True"
+                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Location_city}}">
+                <material:TextField.Attachments>
+                    <Button
+                        StyleClass="TextButton"
+                        Command="{Binding ClearLocationCommand}"
+                    >
+                        <Button.ImageSource>
+                            <FontImageSource
+                                Color=" Black"
+                                FontFamily="MaterialSharp"
+                                Glyph="{x:Static m:MaterialRounded.Close}"
+                                Size="30" />
+                        </Button.ImageSource>
+                    </Button>
+                </material:TextField.Attachments>
+            </material:TextField>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding LocationError}" TextColor="Red" IsVisible="{Binding LocationError, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <!-- Salary -->
-            <Entry x:DataType="vm:JobPostViewModel" Placeholder="Salary" Text="{Binding Salary, Converter={StaticResource DecimalConverter}}" Keyboard="Numeric" />
+            <Label Text="Identify Salary Offering" FontAttributes="Bold" FontSize="16" />
+
+            <material:TextField
+                x:DataType="vm:JobPostViewModel"
+                Title="Salary"
+                Keyboard="Numeric"
+                Text="{Binding Salary, Converter={StaticResource DecimalConverter}}"
+                AllowClear="True"
+                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Money}}">
+                <material:TextField.Attachments>
+                    <Button
+                        StyleClass="TextButton"
+                        Command="{Binding ClearSalaryCommand}"
+                    >
+                        <Button.ImageSource>
+                            <FontImageSource
+                                Color=" Black"
+                                FontFamily="MaterialSharp"
+                                Glyph="{x:Static m:MaterialRounded.Close}"
+                                Size="30" />
+                        </Button.ImageSource>
+                    </Button>
+                </material:TextField.Attachments>
+            </material:TextField>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding SalaryError}" TextColor="Red" IsVisible="{Binding SalaryError, Converter={StaticResource StringToVisibilityConverter}}" />
 
             <!-- Skill -->
-            <Label Text="Select a Skill" FontSize="16" />
-            <Entry x:DataType="vm:JobPostViewModel" Placeholder="Type a skill..." Text="{Binding SearchText}" />
+            <Label Text="Select a Skill" FontAttributes="Bold" FontSize="16" />
+            <material:TextField
+                x:DataType="vm:JobPostViewModel"
+                Title="Skill"
+                Text="{Binding SearchText}"
+                AllowClear="True"
+                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Add}}">
+                <material:TextField.Attachments>
+                    <Button
+                        StyleClass="TextButton"
+                        Command="{Binding ClearSkillsCommand}"
+                    >
+                        <Button.ImageSource>
+                            <FontImageSource
+                                Color=" Black"
+                                FontFamily="MaterialSharp"
+                                Glyph="{x:Static m:MaterialRounded.Close}"
+                                Size="30" />
+                        </Button.ImageSource>
+                    </Button>
+                </material:TextField.Attachments>
+            </material:TextField>
             <CollectionView x:DataType="vm:JobPostViewModel" ItemsSource="{Binding FilteredSkills}" SelectionMode="Single" 
                             IsVisible="{Binding IsSuggestionsVisible}" 
                             SelectedItem="{Binding SelectedSkillObj}">
@@ -49,8 +167,24 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding SkillError}" TextColor="Red" IsVisible="{Binding SkillError, Converter={StaticResource StringToVisibilityConverter}}" />
+            <Button x:DataType="vm:JobPostViewModel" x:Name="CreateButton" IsVisible="False" Text="Submit" BackgroundColor="#007AFF" TextColor="White"  IsEnabled="{Binding IsButtonEnabled}"  Command="{Binding SubmitCommand}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /> 
+                    <ColumnDefinition Width="*" /> 
+                </Grid.ColumnDefinitions>
 
-            <Button x:DataType="vm:JobPostViewModel" Text="Submit" BackgroundColor="#007AFF" TextColor="White" Command="{Binding SubmitCommand}" />
+                <Button 
+                    Grid.Column="0"
+                    x:DataType="vm:JobPostViewModel"
+                    Margin="15,15"
+                    x:Name="EditButton" IsVisible="False" Text="Update" BackgroundColor="Goldenrod" TextColor="White" IsEnabled="{Binding IsButtonEnabled}" Command="{Binding UpdateCommand}"/>
+                <Button
+                    Grid.Column="1"
+                    Margin="15,15"
+                    x:DataType="vm:JobPostViewModel" x:Name="DeleteButton" IsVisible="False" Text="Delete" BackgroundColor="Firebrick" TextColor="White" IsEnabled="{Binding IsButtonEnabled}" Command="{Binding DeleteCommand}"/>
+            </Grid>
+   
         </StackLayout>
     </ScrollView>
 </ContentPage>

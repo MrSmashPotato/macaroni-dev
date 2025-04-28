@@ -7,7 +7,7 @@ namespace macaroni_dev.Models
     [Table("job_post")] 
     public class JobPost : BaseModel
     {
-        [PrimaryKey("Id", false)]
+        [PrimaryKey("id", false)]
         public int Id { get; set; }
 
 

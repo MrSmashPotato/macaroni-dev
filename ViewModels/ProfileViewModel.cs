@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using macaroni_dev.Services;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Internals;
+using Microsoft.Maui.Platform;
 using Supabase.Gotrue;
 using User = macaroni_dev.Models.User;
 
@@ -39,7 +40,7 @@ namespace macaroni_dev.ViewModels
         [RelayCommand]
         private async void ManageJobs()
         {
-            
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.Profile.ManageJobs());
         }
 
         [RelayCommand]
