@@ -103,6 +103,7 @@ namespace macaroni_dev.Views
                 if (user != null)
                 {
                     Console.WriteLine("Third Party SignIn Success");
+                    Application.Current.MainPage = new AppShell();
                     await Shell.Current.GoToAsync("//homePage");
     
                 }
