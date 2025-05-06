@@ -46,7 +46,7 @@ namespace macaroni_dev.ViewModels
         [RelayCommand]
         private async void Applicants()
         {
-            
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.Profile.JobApplicants());
         }
 
         [RelayCommand]

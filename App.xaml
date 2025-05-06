@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:local="clr-namespace:macaroni_dev"
+             xmlns:global="clr-namespace:"
              x:Class="macaroni_dev.App">
     <Application.Resources>
         <ResourceDictionary>
+            <global:InvertedBooleanToVisibilityConverter x:Key="InvertedBoolToVis"/>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary x:Name="appStyles" Source="Resources/Styles/Styles.xaml" />

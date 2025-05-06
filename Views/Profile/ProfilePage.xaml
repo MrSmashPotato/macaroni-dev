@@ -29,7 +29,6 @@
                           FontSize="24"   
                           HorizontalOptions="Center"
                           FontAutoScalingEnabled="True"
-                          
                           FontAttributes="Bold" />  
 
                    <Label Text="{Binding Location}"   

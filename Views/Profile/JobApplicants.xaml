@@ -4,12 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
              xmlns:m="clr-namespace:macaroni_dev.Models"
-             Shell.BackgroundColor="MediumAquamarine"
-             Title="Job Applications"
-             x:Class="macaroni_dev.Views.AppliedJobsPage">
+             x:Class="macaroni_dev.Views.Profile.JobApplicants">
     <ContentPage.Content>
-         <StackLayout>
-        <CollectionView x:DataType="vm:AppliedJobsViewmodel" ItemsSource="{Binding AppliedJobs}">
+          <StackLayout>
+        <Label Text="Job Posts" FontSize="30" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="0,0,0,50" VerticalTextAlignment="Start"/>
+        <CollectionView x:DataType="vm:JobApplicantsViewModel" ItemsSource="{Binding MyPosts}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:JobPost">
                     <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto">
@@ -27,14 +26,12 @@
                                 <Label Text="{Binding JobDetail}" FontSize="11" />
                                 <Label Text="{Binding Location, StringFormat='📍 {0}'}"/>
                                 <Label Text="{Binding Salary, StringFormat='Salary: ₱ {0}'}" TextColor="RoyalBlue" />
-                                <Label Text="{Binding Application.Status, StringFormat='Status: {0}'}" FontSize="15" />
-
                             </StackLayout>
                         </Frame>
                         <Button Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="20" ClassId="FilledButton" 
                                 WidthRequest="100" BackgroundColor="WhiteSmoke"
-                                TextColor="Black" FontAttributes="Bold" Text="Withdraw"
-                                Command="{Binding WithdrawCommand, Source={RelativeSource AncestorType={x:Type vm:AppliedJobsViewmodel}}}"
+                                TextColor="Black" FontAttributes="Bold" Text="Check"
+                                Command="{Binding CheckCommand, Source={RelativeSource AncestorType={x:Type vm:JobApplicantsViewModel}}}"
                                 CommandParameter="{Binding .}"
                                 />
 
@@ -48,7 +45,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Label Text="No Applied Jobs Yet" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" IsVisible="{Binding HaveApplied, Converter={StaticResource InvertedBoolToVis}}"/>
+        <Label Text="No Created Posts Yet" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" IsVisible="{Binding NoPost}"/>
     </StackLayout>
     </ContentPage.Content>
 </ContentPage>

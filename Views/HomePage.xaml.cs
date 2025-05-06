@@ -5,10 +5,18 @@ namespace macaroni_dev.Views
 {
     public partial class HomePage : ContentPage
     {
+        private HomePageViewModel vm;
         public HomePage()
         {
-            BindingContext = new HomePageViewModel();
+            vm = new HomePageViewModel();
+            BindingContext = vm;
             InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await vm.FetchAsync();
         }
     }
 }

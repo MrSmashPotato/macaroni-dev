@@ -8,6 +8,8 @@
     Shell.FlyoutBehavior="Flyout"
     FlyoutBackground="#B3E5FC"
     Padding="15"
+    TabBarForegroundColor="RoyalBlue"
+    TabBarTitleColor="RoyalBlue"
     Shell.FlyoutWidth="300">
     
     <ShellContent Route="loading" 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material;assembly=UraniumUI.Material"
+
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             x:Class="macaroni_dev.Views.PostApplyPage">
+    <ContentPage.Content>
+        <Grid>
+              <ScrollView>
+             <VerticalStackLayout Padding="10">
+            <Grid>
+                <Label FontAttributes="Bold" FontSize="25" HorizontalOptions="Center" HorizontalTextAlignment="Center" x:DataType="vm:PostApplyViewModel" Text="{Binding Job.JobName}"/>
+                
+                <Button Text="Save"
+                        StyleClass="TextButton"
+                        TextColor="Black"
+                        BackgroundColor="GreenYellow"
+                        IsVisible="{Binding Saveable}"
+                        x:DataType="vm:PostApplyViewModel"
+                        Command="{Binding SaveCommand}"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Margin="0,0,10,0"/>
+                <Button Text="Saved"
+                        StyleClass="TextButton"
+                        TextColor="White"
+                        IsEnabled="False"
+                        IsVisible="{Binding Saveable, Converter={StaticResource InvertedBoolToVis}}"
+                        x:DataType="vm:PostApplyViewModel"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Margin="0,0,10,0"/>
+            </Grid>
+            <VerticalStackLayout Spacing="15">
+                <BoxView HeightRequest="2" BackgroundColor="Grey"
+                         Margin="-10,10"
+                         />
+                <Label FontAttributes="Bold" FontSize="30" HorizontalTextAlignment="Start" x:DataType="vm:PostApplyViewModel" Text="{Binding Job.JobName}"/>
+                <Label HorizontalTextAlignment="Justify" x:DataType="vm:PostApplyViewModel" Text="{Binding Job.JobDetail}" TextColor="Grey"/>
+                <BoxView HeightRequest="0.5" BackgroundColor="Grey"
+                         Margin="0,10"
+                />  
+                <Label FontAttributes="Bold" FontSize="18" HorizontalTextAlignment="Start" x:DataType="vm:PostApplyViewModel" Text="Requirements"/>
+
+                <HorizontalStackLayout Spacing="20">
+                    <VerticalStackLayout>
+                        <Label TextColor="Grey" Text="Location"/>
+                        <Label TextColor="Black" x:DataType="vm:PostApplyViewModel" Text="{Binding Job.Location}"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <Label TextColor="Grey" Text="Skill"/>
+                        <Label TextColor="Black" x:DataType="vm:PostApplyViewModel" Text="{Binding Skill.Name}"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                
+                <BoxView HeightRequest="0.5" BackgroundColor="Grey"
+                         Margin="0,10"
+                />  
+                <VerticalStackLayout Spacing="3">
+                    <Label TextColor="Black" FontAttributes="Bold" FontSize="25" Text="Salary"/>
+                    <Label TextColor="RoyalBlue" FontSize="20" x:DataType="vm:PostApplyViewModel"  Text="{Binding Job.Salary, StringFormat='₱ {0}'}"/>
+                </VerticalStackLayout>
+                
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+        </ScrollView>
+            <Button VerticalOptions="End" Margin="10" Text="Apply Now" StyleClass="FilledButton"
+                    x:DataType="vm:PostApplyViewModel"
+                    Command="{Binding ApplyCommand}"
+                    TextColor="White" BackgroundColor="CornflowerBlue"/>
+
+        </Grid>
+      
+       
+    </ContentPage.Content>
+</ContentPage>

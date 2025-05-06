@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Runtime.Serialization;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -37,5 +38,7 @@ namespace macaroni_dev.Models
         
         [Column("profile_image")]
         public string ProfileImage { get; set; } = "";
+        [IgnoreDataMember]
+        public JobApplication? Application { get; set; }
     }
 }

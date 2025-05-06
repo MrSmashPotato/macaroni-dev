@@ -28,7 +28,7 @@ namespace macaroni_dev.ViewModels
         [ObservableProperty] private ObservableCollection<Skill> _skills = new();
         [ObservableProperty] private ObservableCollection<Skill> _filteredSkills = new();
         //Storing the actual selected object
-        [ObservableProperty] private Skill _selectedSkillObj = new();
+        [ObservableProperty] private Skill _selectedSkillObj;
         [ObservableProperty] private bool _isSuggestionsVisible;
 
         [ObservableProperty] private string _jobTitleError = string.Empty;
@@ -336,7 +336,6 @@ namespace macaroni_dev.ViewModels
 
             try
             {
-                // 1. Fetch the latest JobPost from Supabase
                 var jobPost = await supabaseClient
                     .From<JobPost>()
                     .Where(x => x.Id == nonEditedJobPost.Id)
