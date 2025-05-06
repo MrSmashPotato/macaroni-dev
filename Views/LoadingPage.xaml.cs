@@ -16,6 +16,8 @@ namespace macaroni_dev.Views
         public LoadingPage()
         {
             InitializeComponent();
+            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
+            Shell.SetNavBarIsVisible(this, false);
             CheckLoginStatus();
         }
 

@@ -98,13 +98,13 @@
                         </Frame>
                         <VerticalStackLayout  Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="20" Spacing="5">
                             <Button  ClassId="FilledButton" 
-                                    WidthRequest="100" BackgroundColor="WhiteSmoke"
+                                    WidthRequest="100" BackgroundColor="CornflowerBlue"
                                     TextColor="Black" FontAttributes="Bold" Text="Apply Now"
                                     Command="{Binding ApplyCommand, Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}}"
                                     CommandParameter="{Binding .}"
                             />
                             <Button  ClassId="FilledButton" 
-                                    WidthRequest="100" BackgroundColor="WhiteSmoke"
+                                    WidthRequest="100" BackgroundColor="PaleVioletRed"
                                     TextColor="Black" FontAttributes="Bold" Text="Remove"
                                     Command="{Binding RemoveSavedCommand, Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}}"
                                     CommandParameter="{Binding .}"

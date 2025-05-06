@@ -21,9 +21,10 @@ public partial class HomePageViewModel : ObservableObject
     
 
     [ObservableProperty]
-    private bool _blur = false;
+    private bool _blur;
     public HomePageViewModel()
     {
+        Blur = false;
         var profile = ServiceHelper.GetService<ProfileService>();
         var user = profile.CurrentUser;
         if (user != null && user.IsComplete == false)

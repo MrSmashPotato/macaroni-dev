@@ -36,6 +36,7 @@ namespace macaroni_dev.Views
                 }
                 else
                 {
+                    Application.Current.MainPage = new AppShell();
                     await Shell.Current.GoToAsync("//homePage");
 
                 }

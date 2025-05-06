@@ -13,6 +13,11 @@ public partial class CompleteRegistrationMopup
 		InitializeComponent();
 	}
 
+	protected override void OnDisappearing()
+	{
+		_homePageViewModel.Blur = false;
+	}
+
 	public void Exit(Object o, EventArgs e)
 	{
 		_homePageViewModel.Blur = false;
