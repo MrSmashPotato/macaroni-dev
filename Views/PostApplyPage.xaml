@@ -11,7 +11,7 @@
               <ScrollView>
              <VerticalStackLayout Padding="10">
             <Grid>
-                <Label FontAttributes="Bold" FontSize="25" HorizontalOptions="Center" HorizontalTextAlignment="Center" x:DataType="vm:PostApplyViewModel" Text="{Binding Job.JobName}"/>
+                <Label FontAttributes="Bold" FontSize="20" HorizontalOptions="Center" HorizontalTextAlignment="Center" x:DataType="vm:PostApplyViewModel" Text="{Binding Job.JobName}"/>
                 
                 <Button Text="Save"
                         StyleClass="TextButton"

@@ -29,6 +29,8 @@ namespace macaroni_dev.Views
 
                 if (user == null) return;
                 Console.WriteLine(user.Email);
+                var profile = ServiceHelper.GetService<ProfileService>();
+                await profile.InitializeProfileAsync(user.Id);
                 var curruser = _authService.GetCurrentUser();
                 if (curruser.ConfirmedAt == null)
                 {
@@ -75,6 +77,7 @@ namespace macaroni_dev.Views
                 return false;
             }
         }
+
         private void PartySignInClicked(object sender, EventArgs e)
         {
             if (sender is Button button && button.CommandParameter is string provider)
@@ -103,6 +106,8 @@ namespace macaroni_dev.Views
                 if (user != null)
                 {
                     Console.WriteLine("Third Party SignIn Success");
+                    var profile = ServiceHelper.GetService<ProfileService>();
+                    await profile.InitializeProfileAsync(user.Id);
                     Application.Current.MainPage = new AppShell();
                     await Shell.Current.GoToAsync("//homePage");
     
