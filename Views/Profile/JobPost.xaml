@@ -5,11 +5,15 @@
               xmlns:converters="clr-namespace:macaroni_dev.Converters"
               xmlns:models="clr-namespace:macaroni_dev.Models"
               xmlns:m="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+              xmlns:sf="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
               xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+              xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+
               xmlns:ms="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:messengers="clr-namespace:macaroni_dev.Messengers"
 
-              x:Class="macaroni_dev.Views.Profile.JobPost"
+             x:Class="macaroni_dev.Views.Profile.JobPost"
              Title="JobPost">
 
     <ContentPage.Resources>
@@ -18,155 +22,175 @@
             <converters:DecimalConverter x:Key="DecimalConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView>
+    <ScrollView x:Name="MainScrollView">
         <StackLayout Padding="20" Spacing="15">
             <Label Text="Post a Job" FontSize="24" x:Name="CreateLabel" FontAttributes="Bold" HorizontalOptions="Center" />
             <Label Text="Edit Job Post" FontSize="24" x:Name="EditLabel" FontAttributes="Bold" HorizontalOptions="Center" />
             
-            <!-- Job Title -->
-            <Label Text="Identify Job Tittle" FontAttributes="Bold" FontSize="16" />
+            <!-- Skill -->
+            <Label Text="Select a Skill" FontAttributes="Bold" FontSize="16" />
 
-            <material:TextField
-                x:DataType="vm:JobPostViewModel"
-                Title="Title"
-                Text="{Binding JobTitle}"
-                AllowClear="True"
-                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Title}}">
-                <material:TextField.Attachments>
-                    <Button
-                        StyleClass="TextButton"
-                        Command="{Binding ClearTitleCommand}"
-                        >
-                        <Button.ImageSource>
-                            <FontImageSource
-                                Color=" Black"
-                                FontFamily="MaterialSharp"
-                                Glyph="{x:Static m:MaterialRounded.Close}"
-                                Size="30" />
-                        </Button.ImageSource>
-                    </Button>
-                </material:TextField.Attachments>
-            </material:TextField>
+            <sf:SfTextInputLayout Hint="Skill" 
+                                  x:DataType="vm:JobPostViewModel"
+                                  ContainerType="Outlined">
+                
+                <editors:SfComboBox
+                    Text="{Binding SearchTextSkill, Mode=TwoWay}"
+                    IsEditable="True"
+IsFilteringEnabled="True"
+                    DisplayMemberPath="Name"
+                    SelectionMode="Single"
+                    TextMemberPath="Name"
+                    SelectedItem="{Binding SelectedSkillObj, Mode=TwoWay}"
+                    ItemsSource="{Binding Skills, Mode=TwoWay}">
+                    <editors:SfComboBox.FilterBehavior>
+                        <messengers:SkillsFilteringBehavior/>
+                    </editors:SfComboBox.FilterBehavior>
+                </editors:SfComboBox>
+            </sf:SfTextInputLayout>
+            
+       
+            <Label x:DataType="vm:JobPostViewModel" Text="{Binding SkillError}" TextColor="Red" IsVisible="{Binding SkillError, Converter={StaticResource StringToVisibilityConverter}}" />
+            
+            <!-- Job Title -->
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Identify Job Title" FontAttributes="Bold" FontSize="16" />
+                <Label Text="Maximum 25 characters"  FontSize="10" />
+            </VerticalStackLayout>
+            <sf:SfTextInputLayout Hint="Title" TrailingViewPosition="Inside"
+                                  x:DataType="vm:JobPostViewModel"
+                                  HeightRequest="60"
+                                  ContainerType="Outlined" ContainerBackground="Transparent"
+                                  ReserveSpaceForAssistiveLabels="False"
+            >
+                <Entry Text="{Binding JobTitle}" MaxLength="30" />
+                <sf:SfTextInputLayout.LeadingView>
+                    <Label 
+                        Text="&#xe264;" 
+                        FontFamily="MaterialRegular"
+                        FontSize="20"/>
+                </sf:SfTextInputLayout.LeadingView>
+                <sf:SfTextInputLayout.TrailingView>
+                    <Label 
+                        Text="&#xe5c9;" 
+                        FontFamily="MaterialOutlined"
+                        FontSize="20">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearTitleCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </sf:SfTextInputLayout.TrailingView>
+                
+            </sf:SfTextInputLayout>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding JobTitleError}" TextColor="Red" IsVisible="{Binding JobTitleError, Converter={StaticResource StringToVisibilityConverter}}" />
 
 
             <!-- Job Description -->
-            <Label Text="Identify Job Description" FontAttributes="Bold" FontSize="16" />
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Identify Job Description" FontAttributes="Bold" FontSize="16" />
+                <Label Text="Maximum 1000 characters (every manual line break is 40 characters)"  FontSize="10" />
+            </VerticalStackLayout>
 
-                    <material:EditorField 
-                        x:DataType="vm:JobPostViewModel"
-                        Title="Description" 
-                        Text="{Binding JobDetail}"
-                        Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Description}}">
-                        <material:EditorField.Attachments>
-                            <!-- The button is inside the EditorField's InputView -->
-                            <Grid HorizontalOptions="EndAndExpand" VerticalOptions="Center">
-                                <Button
-                                    StyleClass="TextButton"
-                                    Command="{Binding ClearDetailCommand}"
-                                    BackgroundColor="Transparent">
-                                    <Button.ImageSource>
-                                        <FontImageSource
-                                            Color="Black"
-                                            FontFamily="MaterialSharp"
-                                            Glyph="{x:Static m:MaterialRounded.Close}"
-                                            Size="30" />
-                                    </Button.ImageSource>
-                                </Button>
-                            </Grid>
-                        </material:EditorField.Attachments>
-                    </material:EditorField>
+            <sf:SfTextInputLayout Hint="Description" TrailingViewPosition="Inside"
+                                  x:DataType="vm:JobPostViewModel"
+                                  MinimumHeightRequest="60"
+                                  ContainerType="Outlined" ContainerBackground="Transparent"
+                                  ReserveSpaceForAssistiveLabels="False"
+            >
+                <Editor Text="{Binding JobDetail}" AutoSize="TextChanges" MaxLength="1000"/>
 
+                <sf:SfTextInputLayout.LeadingView>
+                    <Label 
+                        Text="&#xe873;" 
+                        FontFamily="MaterialRegular"
+                        FontSize="20"/>
+                </sf:SfTextInputLayout.LeadingView>
+                <sf:SfTextInputLayout.TrailingView>
+                    <Label 
+                        Text="&#xe5c9;" 
+                        FontFamily="MaterialOutlined"
+                        FontSize="20">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearDetailCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </sf:SfTextInputLayout.TrailingView>
+                
+            </sf:SfTextInputLayout>
                     <Label x:DataType="vm:JobPostViewModel" Text="{Binding JobDetailError}" TextColor="Red" IsVisible="{Binding JobDetailError, Converter={StaticResource StringToVisibilityConverter}}" />
 
              
             
             <!-- Location -->
-            <Label Text="Identify Work Location" FontAttributes="Bold" FontSize="16" />
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Identify Work Location" FontAttributes="Bold" FontSize="16" />
+                <Label Text="Maximum 25 characters"  FontSize="10" />
+            </VerticalStackLayout>
+           
 
-            <material:TextField
-                x:DataType="vm:JobPostViewModel"
-                Title="Location"
-                Text="{Binding Location}"
-                AllowClear="True"
-                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Location_city}}">
-                <material:TextField.Attachments>
-                    <Button
-                        StyleClass="TextButton"
-                        Command="{Binding ClearLocationCommand}"
-                    >
-                        <Button.ImageSource>
-                            <FontImageSource
-                                Color=" Black"
-                                FontFamily="MaterialSharp"
-                                Glyph="{x:Static m:MaterialRounded.Close}"
-                                Size="30" />
-                        </Button.ImageSource>
-                    </Button>
-                </material:TextField.Attachments>
-            </material:TextField>
+
+            <sf:SfTextInputLayout Hint="Location" TrailingViewPosition="Inside"
+                                  x:DataType="vm:JobPostViewModel"
+                                  HeightRequest="60"
+                                  ContainerType="Outlined" ContainerBackground="Transparent"
+                                  ReserveSpaceForAssistiveLabels="False"
+                                 >
+                <Entry Text="{Binding Location}" MaxLength="30" />
+                <sf:SfTextInputLayout.LeadingView>
+                    <Label 
+                        Text="&#xe7f1;" 
+                        FontFamily="MaterialRegular"
+                        FontSize="20"/>
+                </sf:SfTextInputLayout.LeadingView>
+                <sf:SfTextInputLayout.TrailingView>
+                    <Label 
+                        Text="&#xe5c9;" 
+                        FontFamily="MaterialOutlined"
+                        FontSize="20">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearLocationCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </sf:SfTextInputLayout.TrailingView>
+                
+            </sf:SfTextInputLayout>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding LocationError}" TextColor="Red" IsVisible="{Binding LocationError, Converter={StaticResource StringToVisibilityConverter}}" />
+            
 
             <!-- Salary -->
             <Label Text="Identify Salary Offering" FontAttributes="Bold" FontSize="16" />
 
-            <material:TextField
-                x:DataType="vm:JobPostViewModel"
-                Title="Salary"
-                Keyboard="Numeric"
-                Text="{Binding Salary, Converter={StaticResource DecimalConverter}}"
-                AllowClear="True"
-                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Money}}">
-                <material:TextField.Attachments>
-                    <Button
-                        StyleClass="TextButton"
-                        Command="{Binding ClearSalaryCommand}"
-                    >
-                        <Button.ImageSource>
-                            <FontImageSource
-                                Color=" Black"
-                                FontFamily="MaterialSharp"
-                                Glyph="{x:Static m:MaterialRounded.Close}"
-                                Size="30" />
-                        </Button.ImageSource>
-                    </Button>
-                </material:TextField.Attachments>
-            </material:TextField>
+            <sf:SfTextInputLayout Hint="Salary" TrailingViewPosition="Inside"
+                                  x:DataType="vm:JobPostViewModel"
+                                  HeightRequest="60"
+                                  ContainerType="Outlined" ContainerBackground="Transparent"
+                                  ReserveSpaceForAssistiveLabels="False"
+            >
+           
+                    <editors:SfNumericEntry 
+                        Value="{Binding Salary}" 
+                        ShowClearButton="False"
+                        AllowNull="False"/>
+                <sf:SfTextInputLayout.LeadingView>
+                    <Label 
+                        Text="&#xef63;" 
+                        FontFamily="MaterialRegular"
+                        FontSize="20"/>
+                </sf:SfTextInputLayout.LeadingView>
+                <sf:SfTextInputLayout.TrailingView>
+                    <Label 
+                        Text="&#xe5c9;" 
+                        FontFamily="MaterialOutlined"
+                        FontSize="20">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearSalaryCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </sf:SfTextInputLayout.TrailingView>
+            </sf:SfTextInputLayout>
             <Label x:DataType="vm:JobPostViewModel" Text="{Binding SalaryError}" TextColor="Red" IsVisible="{Binding SalaryError, Converter={StaticResource StringToVisibilityConverter}}" />
 
-            <!-- Skill -->
-            <Label Text="Select a Skill" FontAttributes="Bold" FontSize="16" />
-            <material:TextField
-                x:DataType="vm:JobPostViewModel"
-                Title="Skill"
-                Text="{Binding SearchText}"
-                AllowClear="True"
-                Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static ms:MaterialRounded.Add}}">
-                <material:TextField.Attachments>
-                    <Button
-                        StyleClass="TextButton"
-                        Command="{Binding ClearSkillsCommand}"
-                    >
-                        <Button.ImageSource>
-                            <FontImageSource
-                                Color=" Black"
-                                FontFamily="MaterialSharp"
-                                Glyph="{x:Static m:MaterialRounded.Close}"
-                                Size="30" />
-                        </Button.ImageSource>
-                    </Button>
-                </material:TextField.Attachments>
-            </material:TextField>
-            <CollectionView x:DataType="vm:JobPostViewModel" ItemsSource="{Binding FilteredSkills}" SelectionMode="Single" 
-                            IsVisible="{Binding IsSuggestionsVisible}" 
-                            SelectedItem="{Binding SelectedSkillObj}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Skill">
-                        <Label  Text="{Binding Name}" Padding="10" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            <Label x:DataType="vm:JobPostViewModel" Text="{Binding SkillError}" TextColor="Red" IsVisible="{Binding SkillError, Converter={StaticResource StringToVisibilityConverter}}" />
+           
             <Button x:DataType="vm:JobPostViewModel" x:Name="CreateButton" IsVisible="False" Text="Submit" BackgroundColor="#007AFF" TextColor="White"  IsEnabled="{Binding IsButtonEnabled}"  Command="{Binding SubmitCommand}" />
             <Grid>
                 <Grid.ColumnDefinitions>

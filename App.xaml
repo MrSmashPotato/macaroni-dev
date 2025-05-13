@@ -4,10 +4,13 @@
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:local="clr-namespace:macaroni_dev"
              xmlns:global="clr-namespace:"
+             xmlns:converters="clr-namespace:macaroni_dev.Converters"
              x:Class="macaroni_dev.App">
     <Application.Resources>
         <ResourceDictionary>
             <global:InvertedBooleanToVisibilityConverter x:Key="InvertedBoolToVis"/>
+
+            <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="appColors" Source="Resources/Styles/Colors.xaml" />

@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Maui.Core.Views;
+using CommunityToolkit.Mvvm.Messaging;
+using macaroni_dev.Messengers;
 using macaroni_dev.Views.LoadingPopup;
 using Mopups.Services;
 
@@ -19,6 +21,7 @@ namespace macaroni_dev.ViewModels
         [ObservableProperty] private string _jobTitle = string.Empty;
         [ObservableProperty] private string _jobDetail = string.Empty;
         [ObservableProperty] private string _location = string.Empty;
+        [ObservableProperty] private bool _salaryFocused = false;
         [ObservableProperty] private bool _isButtonEnabled = true;
         [ObservableProperty] private decimal _salary;
         
@@ -26,10 +29,10 @@ namespace macaroni_dev.ViewModels
         [ObservableProperty] private int _selectedSkill;
 
         [ObservableProperty] private ObservableCollection<Skill> _skills = new();
-        [ObservableProperty] private ObservableCollection<Skill> _filteredSkills = new();
+
+        [ObservableProperty] private ObservableCollection<Skill> _filteredSkills;
         //Storing the actual selected object
         [ObservableProperty] private Skill _selectedSkillObj;
-        [ObservableProperty] private bool _isSuggestionsVisible;
 
         [ObservableProperty] private string _jobTitleError = string.Empty;
         [ObservableProperty] private string _jobDetailError  = string.Empty;
@@ -37,11 +40,34 @@ namespace macaroni_dev.ViewModels
         [ObservableProperty] private string _salaryError  = string.Empty;
         [ObservableProperty] private string _skillError  = string.Empty;
 
-        [ObservableProperty] private string _searchText = string.Empty;
+        private bool _isSuggestionsVisible;
+        public bool IsSuggestionsVisible
+        {
+            get => _isSuggestionsVisible;
+            set
+            {
+                if (_isSuggestionsVisible != value)
+                {
+                    _isSuggestionsVisible = value;
+                    OnPropertyChanged();
+
+                    if (value)
+                    {
+                        WeakReferenceMessenger.Default.Send(new ScrollToSuggestionsMessage(true));
+                    }
+                }
+            }
+        }
+        [ObservableProperty] private string _searchTextSkill = string.Empty;
 
         private Skill nonEditedSkill;
         private JobPost nonEditedJobPost;
-        
+
+        [RelayCommand]
+        private async Task FocusSalary()
+        {
+            SalaryFocused = true;
+        }
         
         [RelayCommand]
         private async Task ClearTitle()
@@ -59,7 +85,7 @@ namespace macaroni_dev.ViewModels
         [RelayCommand]
         private async Task ClearSkills()
         {
-            SearchText = string.Empty;
+            SearchTextSkill = string.Empty;
             SelectedSkillObj = null; // <- clear the selected skill too
 
             SkillError = string.Empty;
@@ -77,12 +103,25 @@ namespace macaroni_dev.ViewModels
             LocationError = string.Empty;
         }
         // This method is automatically called when SearchText changes.
-        partial void OnSearchTextChanged(string oldValue, string newValue)
+
+        partial void OnSearchTextSkillChanged(string oldValue, string newValue)
         {
-            SelectedSkillObj = null;
-            FilterSkills();
+            if (newValue == null)
+                return;
+            
+            
         }
 
+        partial void OnSalaryChanged(decimal oldValue, decimal newValue)
+        {
+            if (newValue > 10000000)
+            {
+                // Revert the change or notify the user
+                Salary = oldValue; // Assuming you're in a property that allows setting Salary
+                // Optionally, log or show an error
+                SalaryError = "Salary cannot exceed 10,000,000.";
+            }
+        }
         partial void OnJobDetailChanged(string oldValue, string newValue)
         {
             if (newValue == null)
@@ -147,17 +186,20 @@ namespace macaroni_dev.ViewModels
 
         public JobPostViewModel(JobPost jobPost, Skill skill)
         {
-            this.nonEditedJobPost = jobPost;
-            this.nonEditedSkill = skill;
+            nonEditedJobPost = jobPost;
+            nonEditedSkill = skill;
             JobTitle = jobPost.JobName;
             JobDetail = jobPost.JobDetail;
             Location = jobPost.Location;
             Salary = jobPost.Salary;
-            SelectedSkillObj = skill;
-            SearchText = skill.Name;
+            SearchTextSkill = skill.Name;
+
             try
             {
                 FetchSkillsFromDatabase();
+                    var matchedSkill = Skills.FirstOrDefault(s => s.ID == skill.ID);
+                    if (matchedSkill != null)
+                        SelectedSkillObj = matchedSkill; 
             }
             catch (Exception ex)
             {
@@ -184,18 +226,27 @@ namespace macaroni_dev.ViewModels
             }
         }
 
+        
         private void FilterSkills()
         {
-            if (string.IsNullOrWhiteSpace(SearchText))
+            FilteredSkills.Clear();
+
+            if (string.IsNullOrWhiteSpace(SearchTextSkill))
             {
-                FilteredSkills = new ObservableCollection<Skill>(Skills);
+                foreach (var skill in Skills)
+                    FilteredSkills.Add(skill);
+
                 IsSuggestionsVisible = false;
             }
             else
             {
-                FilteredSkills = new ObservableCollection<Skill>(
-                    Skills.Where(skill => skill.Name.ToLower().Contains(SearchText.ToLower()))
-                );
+                var filtered = Skills
+                    .Where(skill => skill.Name.ToLower().Contains(SearchTextSkill.ToLower()))
+                    .ToList();
+
+                foreach (var skill in filtered)
+                    FilteredSkills.Add(skill);
+
                 IsSuggestionsVisible = FilteredSkills.Count > 0;
             }
         }
@@ -205,12 +256,13 @@ namespace macaroni_dev.ViewModels
             if (newValue != null)
             {
                 Console.WriteLine($"Selected Skill: {newValue.Name}, ID: {newValue.ID}");
-                SearchText = newValue.Name;
+                SearchTextSkill = newValue.Name;
                 SelectedSkillObj = newValue;
                 IsSuggestionsVisible = false;
             }
         }
 
+        
         private bool ValidateForm()
         {
             bool isValid = true;
@@ -309,15 +361,10 @@ namespace macaroni_dev.ViewModels
             IsButtonEnabled = false;
             await MopupService.Instance.PushAsync(new ProcessingPopup());
 
-            if (!ValidateForm())
-            {
-                await MopupService.Instance.PopAsync();
-                IsButtonEnabled = true;
-                return;
-            }
+          
                
             bool noChanges =
-                nonEditedSkill.ID == SelectedSkillObj.ID &&
+                nonEditedSkill.Name == SearchTextSkill &&
                 nonEditedJobPost.JobName == JobTitle &&
                 nonEditedJobPost.JobDetail == JobDetail &&
                 nonEditedJobPost.Location == Location &&
@@ -330,7 +377,12 @@ namespace macaroni_dev.ViewModels
                 await ShowAlertAsync("No changes detected.", "Please modify at least one field to update.");
                 return;
             }
-            
+            if (!ValidateForm())
+            {
+                await MopupService.Instance.PopAsync();
+                IsButtonEnabled = true;
+                return;
+            }
             
             var supabaseClient = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
 

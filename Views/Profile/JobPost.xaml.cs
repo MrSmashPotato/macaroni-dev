@@ -1,4 +1,8 @@
+using System.ComponentModel;
 using macaroni_dev.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
+using macaroni_dev.Messengers;
+using Syncfusion.Maui.Core;
 
 namespace macaroni_dev.Views.Profile;
 
@@ -11,11 +15,12 @@ public partial class JobPost : ContentPage
 		InitializeComponent();
 		jobPost = null;
 		CreateButton.IsVisible = true;
+		vm = new JobPostViewModel();
 		CreateLabel.IsVisible = true;
 		EditLabel.IsVisible = false;
-		BindingContext = new JobPostViewModel();
+		BindingContext = vm;
 	}
-
+	
 	
 	public JobPost(Models.JobPost jobPost, Models.Skill skill)
 	{
@@ -42,4 +47,5 @@ public partial class JobPost : ContentPage
 			Console.WriteLine($"Error in JobPost constructor: {ex.Message}");
 		}
 	}
+	
 }
