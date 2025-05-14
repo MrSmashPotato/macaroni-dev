@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using macaroni_dev.ViewModels;
+using Mopups.Services;
 
 namespace macaroni_dev.Views.Popup;
 
-public partial class UsersListPopup 
+public partial class UsersListPopup
 {
-    MessagesPageViewModel vm = new MessagesPageViewModel();
+    private MessagesPageViewModel viewm;
     public UsersListPopup(MessagesPageViewModel  vm)
     {
         InitializeComponent();
-        vm = this.vm;
-        BindingContext = vm;
+        viewm = vm;
+        BindingContext = viewm;
         vm.LoadUserList();
         if (BindingContext is MessagesPageViewModel viewModel)
         {
@@ -23,6 +24,12 @@ public partial class UsersListPopup
                 UserAutoComplete.IsDropDownOpen = false;
             };
         }
+    }
+    
+    public void  ClosePopup(Object o, EventArgs e)
+    {
+        viewm.ButtonEnabled = true; 
+        MopupService.Instance.PopAsync();
     }
     
 }

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using macaroni_dev.Services;
+using macaroni_dev.ViewModels;
 using Sharpnado.MaterialFrame;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.Toolkit.Hosting;
@@ -49,10 +50,12 @@ public static class MauiProgram
 		var supabaseClientProvider = new SupabaseClientProvider(supabaseClient);
 		var authService = new AuthService(supabaseClient);
 		var profileService = new ProfileService(supabaseClient);
+		var MessagesPageViewModel = new MessagesPageViewModel();	
 		builder.Services.AddSingleton(profileService);
 		builder.Services.AddSingleton<Supabase.Client>();
 		builder.Services.AddSingleton(supabaseClientProvider);
 		builder.Services.AddSingleton(authService);
+		builder.Services.AddSingleton(MessagesPageViewModel);
 		
 #if DEBUG
 		builder.Logging.AddDebug();

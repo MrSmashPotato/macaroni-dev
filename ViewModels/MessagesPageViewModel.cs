@@ -21,7 +21,7 @@ public partial class MessagesPageViewModel : ObservableObject
     private ObservableCollection<User> usersList = new ObservableCollection<User>();
     private HashSet<Guid> _queriedUserIds = new HashSet<Guid>(); 
     private bool NoMoreItems = false;
-
+    [ObservableProperty] bool buttonEnabled = true;
     public MessagesPageViewModel()
     {
     }   
@@ -141,9 +141,10 @@ private async Task LoadMore()
     {
         try
         {
+            ButtonEnabled = true;
             await MopupService.Instance.PopAsync(); 
             CloseAutocompleteDropdown.Invoke();
-
+            
             await Shell.Current.Navigation.PushAsync(new ConversationPage(user)); 
         }
         catch (Exception ex)
@@ -153,7 +154,7 @@ private async Task LoadMore()
             await ShowAlertAsync("Error", $"An error occurred while opening the user list: {ex.Message}");
         }
     }
-
+    
     public async void LoadUserList()
     {
         try
@@ -185,6 +186,7 @@ private async Task LoadMore()
     {
         try
         {
+            ButtonEnabled = false;
             await MopupService.Instance.PushAsync(new UsersListPopup(this));
         }
         catch (Exception ex)
@@ -192,5 +194,6 @@ private async Task LoadMore()
             await ShowAlertAsync("Error", $"An error occurred while opening the user list: {ex.Message}");
         }
     }
+    
     
 }

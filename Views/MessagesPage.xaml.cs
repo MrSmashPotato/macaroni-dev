@@ -66,6 +66,7 @@ public partial class MessagesPage : ContentPage
     {
         base.OnNavigatedTo(args);
         var vm = BindingContext as MessagesPageViewModel;
+        vm.ButtonEnabled = true;
         await vm.Initialize();
     }
     

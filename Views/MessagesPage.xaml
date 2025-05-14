@@ -97,6 +97,7 @@
             WidthRequest="80"
             HorizontalOptions="End"
             VerticalOptions="End"
+            IsEnabled="{Binding ButtonEnabled,Mode=TwoWay}"
             Margin="10,30"
             Padding="0"
             Command="{Binding UsersPopupCommand}"
