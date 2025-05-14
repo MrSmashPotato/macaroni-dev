@@ -45,12 +45,11 @@ private async Task LoadMore()
         var server = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
         var currentUserId = ServiceHelper.GetService<ProfileService>().CurrentUser.ID;
         Console.WriteLine($"Fetching messages for user {currentUserId}");
-        // Step 1: Fetch recent messages involving the current user
         var messages = await server
             .From<Message>()
             .Where(x => x.ReceiverId == currentUserId || x.SenderId == currentUserId)
             .Order(x => x.CreatedAt, Constants.Ordering.Descending)
-            .Limit(50) // You can paginate messages this way
+            .Limit(50) 
             .Get();
 
         var messageList = messages.Models;
@@ -116,12 +115,10 @@ private async Task LoadMore()
 [RelayCommand]
     private async Task Conversation(User user)
     {
+        Console.WriteLine($"Opening conversation with {user.FirstName}");
         try
         {
-            var mes = user.LastMessage;
-            var client = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
             user.LastMessage.IsRead = true;
-            await user.LastMessage.Update<Message>();
             await Shell.Current.Navigation.PushAsync(new ConversationPage(user));
         }
         catch (Exception ex)
@@ -172,7 +169,8 @@ private async Task LoadMore()
 
             var curruser = ServiceHelper.GetService<ProfileService>().CurrentUser;
             models.RemoveAll(x => x.ID == curruser.ID);
-
+            var userIds = new HashSet<Guid>(Users.Select(u => u.ID));
+            models.RemoveAll(x => userIds.Contains(x.ID));
             UsersList = models.ToObservableCollection();
         }
         catch (Exception ex)

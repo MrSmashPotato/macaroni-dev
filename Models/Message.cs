@@ -15,25 +15,11 @@ public class Message : BaseModel
     public Guid SenderId { get; set; }
     [Column("message")]
     public string Value { get; set; }
-    [Column("created_at")]
-    public DateTime CreatedAt { get; set; }
+    
+    [Column("created_at",ignoreOnInsert:true,ignoreOnUpdate:true)]
+    public DateTime? CreatedAt { get; set; }
     [Column("is_read")]
     public bool IsRead { get; set; }
     [Column("is_archived")]
     public bool IsArchived { get; set; }
-    
-    
-    // === RPC-only fields ===
-
-    [IgnoreDataMember]
-    public string? SenderFullName { get; set; }
-
-    [IgnoreDataMember]
-    public string? SenderProfileImage { get; set; }
-
-    [IgnoreDataMember]
-    public string? ReceiverFullName { get; set; }
-
-    [IgnoreDataMember]
-    public string? ReceiverProfileImage { get; set; }
 }

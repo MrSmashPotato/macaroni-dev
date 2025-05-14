@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 
 public class MessageWithUsers
 {
+    [JsonPropertyName("id")]
     public int Id { get; set; }
 
     [JsonPropertyName("sender_id")]
@@ -27,4 +28,6 @@ public class MessageWithUsers
 
     [JsonPropertyName("receiver_profile_image")]
     public string ReceiverProfileImage { get; set; }
+    [JsonPropertyName("is_read")]
+    public bool IsRead { get; set; }
 }

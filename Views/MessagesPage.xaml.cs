@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using macaroni_dev.Models;
+using macaroni_dev.Services;
 using macaroni_dev.ViewModels;
 using Syncfusion.Maui.DataSource;
 
@@ -49,8 +50,21 @@ public partial class MessagesPage : ContentPage
             KeySelector = (object obj) =>
             {
                 var item = obj as User; // Replace with your actual class name
+                var cur = ServiceHelper.GetService<ProfileService>().CurrentUser;
+
+                if (item?.LastMessage == null)
+                    return "";
+
+                if (item.LastMessage.SenderId == cur.ID)
+                {
+                    return "";
+                }
                 
-                return item?.LastMessage?.IsRead == true ? "" : "Unread Messages";
+
+                if (item.LastMessage.IsRead == false)
+                    return "Unread Messages";
+
+                return "";
             },
         });
         this.listView.DataSource.SortDescriptors.Add(new SortDescriptor()
