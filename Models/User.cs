@@ -40,5 +40,7 @@ namespace macaroni_dev.Models
         public string ProfileImage { get; set; } = "";
         [IgnoreDataMember]
         public JobApplication? Application { get; set; }
+        [IgnoreDataMember]
+        public Message LastMessage { get; set; }
     }
 }

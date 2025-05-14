@@ -1,14 +1,15 @@
-﻿using macaroni_dev.Services;
+﻿using IO.Ably;
+using macaroni_dev.Services;
 using macaroni_dev.Views;
 using Supabase.Gotrue;
 namespace macaroni_dev;
-
+using IO.Ably;
+using IO.Ably.Realtime;
 public partial class App : Application
 {
     public App()
     {
         Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgwODAyM0AzMjM5MmUzMDJlMzAzYjMyMzkzYmNNMHl1RlFMUi8zRzk1UEVqUTlyVnkzVXpwVm1rM2tSeGR4RW1iSG5VbkE9");
-
         InitializeComponent();
         MainPage = new AppShell();
     }

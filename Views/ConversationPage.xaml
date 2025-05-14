@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chat="http://schemas.syncfusion.com/maui"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             x:Class="macaroni_dev.Views.ConversationPage">
+
+    <chat:SfChat
+        AllowMultilineInput="True"
+        x:DataType="vm:ConversationViewModel"
+        CurrentUser="{Binding Sender, Mode=TwoWay}"
+        Margin="0,0,0,0"
+        MessageShape="DualTearDrop"
+        MessageSpacing="15"
+        Messages="{Binding Messages}"
+        SendMessageCommand="{Binding EchoCommand}"
+        ShowIncomingMessageAuthorName="True"
+        ShowIncomingMessageAvatar="True"
+        ShowIncomingMessageTimestamp="True"
+        ShowMessageInputView="True"
+        ShowOutgoingMessageTimestamp="True"
+        ShowTimeBreak="True"
+        ShowTypingIndicator="True" />
+
+</ContentPage>

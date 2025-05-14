@@ -1,11 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Shell.BackgroundColor="MediumAquamarine"
+<ContentPage
+    Shell.BackgroundColor="MediumAquamarine"
+    x:Class="macaroni_dev.Views.MessagesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:data="clr-namespace:Syncfusion.Maui.DataSource;assembly=Syncfusion.Maui.DataSource"
+    xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-             x:Class="macaroni_dev.Views.MessagesPage">
-    <ContentPage.Content>
+    <ContentPage.BindingContext>
+        <vm:MessagesPageViewModel />
+    </ContentPage.BindingContext>
+
+    <listView:SfListView
+        AutoFitMode="DynamicHeight"
+        x:Name="listView"
+        ItemsSource="{Binding Users}"
+        ItemsSourceChangeCachingStrategy="RecycleItems"
+        CanMaintainScrollPosition="True"
+        SelectionMode="Single"
         
-    </ContentPage.Content>
+        LoadMoreCommand="{Binding LoadMoreCommand}"
+        LoadMoreOption="Auto">
+        <listView:SfListView.ItemTemplate>
+            <DataTemplate>
+                <Border BackgroundColor="WhiteSmoke" Stroke="Transparent" Padding="10">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding BindingContext.ConversationCommand, Source={x:Reference listView}}"
+                            CommandParameter="{Binding .}" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto">
+                        <!-- Profile image in Column 0 -->
+                        <Border Grid.Column="0"
+                                HeightRequest="60"
+                                WidthRequest="60"
+                                Stroke="Transparent"
+                                BackgroundColor="Transparent"
+                                StrokeShape="Ellipse"
+                                VerticalOptions="Start"
+                                HorizontalOptions="Start">
+                            <Image
+                                Source="{Binding ProfileImage}"
+                                Aspect="AspectFill" />
+                        </Border>
+
+                        <!-- Text content in Column 1 -->
+                        <Grid Grid.Column="1" RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto" Margin="10,0,0,0">
+                            <!-- First Name -->
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="{Binding FirstName}" 
+                                   TextColor="Black" 
+                                   FontAttributes="Bold" 
+                                   FontSize="15" />
+
+                            <!-- Timestamp -->
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding LastMessage.CreatedAt}" 
+                                   TextColor="Gray"
+                                   Opacity="0.7"
+                                   FontSize="11"
+                                   VerticalOptions="Center" />
+
+                            <!-- Last Message -->
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                   Text="{Binding LastMessage.Value}" 
+                                   TextColor="Grey" 
+                                   FontAttributes="None" 
+                                   VerticalOptions="End"
+                                   FontSize="15" 
+                                   Opacity="0.8" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </listView:SfListView.ItemTemplate>
+        <listView:SfListView.DataSource>
+            <data:DataSource LiveDataUpdateMode="AllowDataShaping">
+             
+                <data:DataSource.SortDescriptors>
+                    <data:SortDescriptor PropertyName="LastMessage.CreatedAt" Direction="Descending"/>
+                </data:DataSource.SortDescriptors>
+            </data:DataSource>
+
+        </listView:SfListView.DataSource>
+    </listView:SfListView>
+
 </ContentPage>
