@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Runtime.Serialization;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 

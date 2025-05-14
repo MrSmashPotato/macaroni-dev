@@ -7,13 +7,15 @@
     xmlns:data="clr-namespace:Syncfusion.Maui.DataSource;assembly=Syncfusion.Maui.DataSource"
     xmlns:listView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui">
 
     <ContentPage.BindingContext>
         <vm:MessagesPageViewModel />
     </ContentPage.BindingContext>
 
-    <listView:SfListView
+    <Grid >
+        <listView:SfListView
         AutoFitMode="DynamicHeight"
         x:Name="listView"
         ItemsSource="{Binding Users}"
@@ -85,6 +87,30 @@
             </data:DataSource>
 
         </listView:SfListView.DataSource>
+        
+            
     </listView:SfListView>
+        <Button
+            BackgroundColor="#78d389"
+            CornerRadius="5" 
+            HeightRequest="50"
+            WidthRequest="80"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="10,30"
+            Padding="0"
+            Command="{Binding UsersPopupCommand}"
+            StyleClass="FilledButton"
+            x:Name="CreateBtn">
+            <Button.ImageSource>
+                <FontImageSource
+                    Color="Black"
+                    FontFamily="MaterialSharp"
+                    Glyph="{x:Static uranium:MaterialRounded.Pen_size_4}"
+                    Size="30" />
+            </Button.ImageSource>
+        </Button>
+    </Grid>
+    
 
 </ContentPage>

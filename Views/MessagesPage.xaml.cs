@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using macaroni_dev.Models;
+using macaroni_dev.ViewModels;
 using Syncfusion.Maui.DataSource;
 
 namespace macaroni_dev.Views;
@@ -59,6 +60,13 @@ public partial class MessagesPage : ContentPage
         });
        
       
+    }
+    
+    protected async override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        var vm = BindingContext as MessagesPageViewModel;
+        await vm.Initialize();
     }
     
     

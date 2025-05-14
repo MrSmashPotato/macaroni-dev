@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             BackgroundInputTransparent="True"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             xmlns:models="clr-namespace:macaroni_dev.Models"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+
+             x:Class="macaroni_dev.Views.Popup.UsersListPopup">
+    <Grid WidthRequest="300" HeightRequest="100" Margin="80" BackgroundColor="Orange" VerticalOptions="Start"
+          RowDefinitions="Auto, *">
+        <Label Text="Search for a User" FontAttributes="Bold" HorizontalOptions="Center" Grid.Row="0"/>
+        <editors:SfAutocomplete 
+                                x:Name="UserAutoComplete"
+                                Placeholder="Name"
+                                TextMemberPath="FirstName"
+                                DisplayMemberPath="FirstName"
+                                SelectionMode="Multiple"
+                                Grid.Row="1"
+                                HeightRequest="50"
+                                ItemsSource="{Binding UsersList}"
+                                WidthRequest="280">
+            <editors:SfAutocomplete.ItemTemplate>
+                <DataTemplate x:DataType="models:User">
+                    <HorizontalStackLayout HeightRequest="50"
+                                           Spacing="10"
+                                           BackgroundColor="Transparent"
+                                           Padding="0,5">
+                        <HorizontalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Path=UserPopupSelectedCommand, 
+                             Source={RelativeSource AncestorType={x:Type vm:MessagesPageViewModel}}}"
+                                    CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <Image Source="{Binding ProfileImage}"
+                               WidthRequest="50"
+                               HeightRequest="50"
+                               Aspect="AspectFit"/>
+                        <VerticalStackLayout>
+                            <Label Text="{Binding FirstName}"/>
+                            <Label Text="{Binding Username}"/>
+                        </VerticalStackLayout>
+                       
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </editors:SfAutocomplete.ItemTemplate>
+        </editors:SfAutocomplete>
+    </Grid>
+  
+</mopups:PopupPage>
