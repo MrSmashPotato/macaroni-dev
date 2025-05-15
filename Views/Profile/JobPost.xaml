@@ -22,7 +22,7 @@
             <converters:DecimalConverter x:Key="DecimalConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView x:Name="MainScrollView">
+    <ScrollView x:Name="MainScrollView"  VerticalScrollBarVisibility="Always">
         <StackLayout Padding="20" Spacing="15">
             <Label Text="Post a Job" FontSize="24" x:Name="CreateLabel" FontAttributes="Bold" HorizontalOptions="Center" />
             <Label Text="Edit Job Post" FontSize="24" x:Name="EditLabel" FontAttributes="Bold" HorizontalOptions="Center" />
@@ -130,12 +130,13 @@ IsFilteringEnabled="True"
 
 
             <sf:SfTextInputLayout Hint="Location" TrailingViewPosition="Inside"
+                                  x:Name="LocationWrapper"
                                   x:DataType="vm:JobPostViewModel"
                                   HeightRequest="60"
                                   ContainerType="Outlined" ContainerBackground="Transparent"
                                   ReserveSpaceForAssistiveLabels="False"
                                  >
-                <Entry Text="{Binding Location}" MaxLength="30" />
+                <Entry Text="{Binding Location}" Focused="OnInputFocused" MaxLength="30" />
                 <sf:SfTextInputLayout.LeadingView>
                     <Label 
                         Text="&#xe7f1;" 
@@ -162,6 +163,8 @@ IsFilteringEnabled="True"
 
             <sf:SfTextInputLayout Hint="Salary" TrailingViewPosition="Inside"
                                   x:DataType="vm:JobPostViewModel"
+                                  x:Name="SalaryWrapper"
+
                                   HeightRequest="60"
                                   ContainerType="Outlined" ContainerBackground="Transparent"
                                   ReserveSpaceForAssistiveLabels="False"
@@ -170,6 +173,7 @@ IsFilteringEnabled="True"
                     <editors:SfNumericEntry 
                         Value="{Binding Salary}" 
                         ShowClearButton="False"
+                        Focused="OnInputFocused"
                         AllowNull="False"/>
                 <sf:SfTextInputLayout.LeadingView>
                     <Label 
@@ -179,6 +183,7 @@ IsFilteringEnabled="True"
                 </sf:SfTextInputLayout.LeadingView>
                 <sf:SfTextInputLayout.TrailingView>
                     <Label 
+                        
                         Text="&#xe5c9;" 
                         FontFamily="MaterialOutlined"
                         FontSize="20">

@@ -47,5 +47,21 @@ public partial class JobPost : ContentPage
 			Console.WriteLine($"Error in JobPost constructor: {ex.Message}");
 		}
 	}
-	
+	private async void OnInputFocused(object sender, FocusEventArgs e)
+	{
+		await Task.Delay(100);
+    
+		if (sender == SalaryWrapper) // optional: name your entries
+		{
+			await MainScrollView.ScrollToAsync(SalaryWrapper, ScrollToPosition.Center, true);
+		}
+		else if (sender == LocationWrapper)
+		{
+			await MainScrollView.ScrollToAsync(LocationWrapper, ScrollToPosition.Center, true);
+		}
+		else if (sender is VisualElement ve)
+		{
+			await MainScrollView.ScrollToAsync(ve, ScrollToPosition.Center, true);
+		}
+	}
 }
