@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
+    HideSoftInputOnTapped="True"
     x:Class="macaroni_dev.Views.ConversationPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:chat="http://schemas.syncfusion.com/maui"
     xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <chat:SfChat
-        AllowMultilineInput="True"
-        CurrentUser="{Binding Sender, Mode=TwoWay}"
-        Margin="0,0,0,0"
-        MessageShape="DualTearDrop"
-        MessageSpacing="15"
-        Messages="{Binding Messages}"
-        SendMessageCommand="{Binding SendCommand}"
-        ShowIncomingMessageAuthorName="True"
-        ShowIncomingMessageAvatar="True"
-        ShowIncomingMessageTimestamp="True"
-        ShowMessageInputView="True"
-        ShowOutgoingMessageTimestamp="True"
-        ShowTimeBreak="True"
-        ShowTypingIndicator="True"
-        x:DataType="vm:ConversationViewModel" />
+    <Grid>
+        <chat:SfChat
+            AllowMultilineInput="True"
+            CanAutoScrollToBottom="True"
+            CurrentUser="{Binding Sender, Mode=TwoWay}"
+            DisableLayout="True"
+            Margin="0,0,0,0"
+            MessageShape="DualTearDrop"
+            MessageSpacing="15"
+            Messages="{Binding Messages}"
+            SendMessageCommand="{Binding SendCommand}"
+            ShowIncomingMessageAuthorName="True"
+            ShowIncomingMessageAvatar="True"
+            ShowIncomingMessageTimestamp="True"
+            ShowMessageInputView="True"
+            ShowOutgoingMessageTimestamp="True"
+            ShowTimeBreak="True"
+            ShowTypingIndicator="True"
+            x:DataType="vm:ConversationViewModel"
+            x:Name="ChatLayout" />
+
+    </Grid>
 
 </ContentPage>

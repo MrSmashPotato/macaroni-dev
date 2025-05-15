@@ -56,6 +56,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton(supabaseClientProvider);
 		builder.Services.AddSingleton(authService);
 		builder.Services.AddSingleton(MessagesPageViewModel);
+
+#if ANDROID
+		builder.Services.AddSingleton<IKeyboardService, KeyboardService>();
+#endif
 		
 #if DEBUG
 		builder.Logging.AddDebug();

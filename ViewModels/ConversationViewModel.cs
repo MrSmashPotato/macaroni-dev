@@ -22,7 +22,8 @@ public partial class ConversationViewModel : ObservableObject
     [ObservableProperty]
     private Author sender;
     public ObservableCollection<object> Messages { get; set; } = new();
-    
+    public Action AdjustLayoutMargin { get; set; }
+
     public ConversationViewModel(User user)
     {
         OtherUser = user;
@@ -174,6 +175,8 @@ public partial class ConversationViewModel : ObservableObject
             };
             await client.From<Message>().Insert(newMessage);
         }
+        AdjustLayoutMargin?.Invoke();
+
     }
     private async Task SubscribeToMessages(Guid currentUserId, Guid otherUserId)
     {
