@@ -11,7 +11,7 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
-        App.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().
-            UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Pan);
+        App.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+
     }
 }

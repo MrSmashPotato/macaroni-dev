@@ -20,7 +20,7 @@
             <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
 
             <Button Text="Sign In" Clicked="OnSignInClicked" />
-            <Button Text="Sign in with Google" Clicked="PartySignInClicked" CommandParameter="Google" />
+           <Button Text="Sign in with Google" Clicked="PartySignInClicked" CommandParameter="Google" />
             <Button Text="Sign in with Facebook" Clicked="PartySignInClicked" CommandParameter="Facebook" />
 
             <Button Text="Go to Register" Clicked="OnGoToRegisterClicked" />
