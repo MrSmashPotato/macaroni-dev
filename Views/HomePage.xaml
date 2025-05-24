@@ -71,7 +71,7 @@
                     <popup:SfPopup.HeaderTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Label Text="Filter by Location" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
+                                <Label Text="Filter by Skill" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
                                 <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Skills_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
                             </Grid>
                           
@@ -119,7 +119,7 @@
                     <popup:SfPopup.HeaderTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Label Text="Filter by Location" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
+                                <Label Text="Filter by Salary" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
                                 <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Salary_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
                             </Grid>
                           
