@@ -90,7 +90,16 @@ public partial class ConversationPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        Shell.SetTabBarIsVisible(this, false);
         var sender = ServiceHelper.GetService<ProfileService>().CurrentUser;
         await vm.Init(sender.ID, reciever.ID);
+    }
+    
+   
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        Shell.SetTabBarIsVisible(this, true);
     }
 }
