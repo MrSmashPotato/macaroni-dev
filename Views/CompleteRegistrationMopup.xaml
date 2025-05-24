@@ -11,7 +11,7 @@
     <ContentPage.BindingContext>
         <vm:CompleteRegistrationViewModel />
     </ContentPage.BindingContext>
-    <Border HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="400" HeightRequest="800" BackgroundColor="Aquamarine">
+    <Border HorizontalOptions="Center" VerticalOptions="Center" Margin="20,60" BackgroundColor="Aquamarine">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="40,40,40,40"/>
         </Border.StrokeShape>
