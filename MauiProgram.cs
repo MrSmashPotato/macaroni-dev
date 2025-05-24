@@ -15,10 +15,35 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
+		// ⬇️ Add custom SearchBar icon color mapping here
+		Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping("CustomIconColor", (handler, view) =>
+		{
+#if ANDROID
+			var searchView = handler.PlatformView;
+
+			if (searchView != null)
+			{
+				int searchIconId = searchView.Context.Resources.GetIdentifier("android:id/search_mag_icon", null, null);
+				var searchIcon = searchView.FindViewById<Android.Widget.ImageView>(searchIconId);
+
+				if (searchIcon != null)
+				{
+					searchIcon.SetColorFilter(Android.Graphics.Color.Red, Android.Graphics.PorterDuff.Mode.SrcIn); // Change color here
+				}
+			}
+#elif IOS
+        var searchBar = handler.PlatformView;
+
+        if (searchBar != null)
+        {
+            searchBar.SearchTextField.LeftView.TintColor = UIKit.UIColor.Red; // Change color here
+        }
+#endif
+		});
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
-			.UseAcrylicView()  //*********2.添加此扩展方法使用 | Usage
+			.UseAcrylicView()  
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
 			.UseSharpnadoMaterialFrame(loggerEnable: false)
@@ -35,6 +60,7 @@ public static class MauiProgram
 
 
 			});
+		
 		var options = new Supabase.SupabaseOptions
 		{
 			AutoRefreshToken = true,
@@ -59,6 +85,7 @@ public static class MauiProgram
 
 #if ANDROID
 		builder.Services.AddSingleton<IKeyboardService, KeyboardService>();
+		
 #endif
 		
 #if DEBUG

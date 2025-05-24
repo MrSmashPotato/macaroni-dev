@@ -7,23 +7,67 @@ using macaroni_dev.Views;
 using macaroni_dev.Views.LoadingPopup;
 using Mopups.Services;
 using Supabase.Gotrue;
+using Supabase.Postgrest.Responses;
+using Constants = Supabase.Postgrest.Constants;
 
 namespace macaroni_dev.ViewModels;
 
 public partial class HomePageViewModel : ObservableObject
 {
+    private string filterMode = "No Filter";
+    [ObservableProperty]
+    private List<Skill> _skillsList = new List<Skill>();
+    [ObservableProperty]
+    private int _filterSkillId = 0;
+    [ObservableProperty]
+    private decimal _filterStartSalary = 0;
+    [ObservableProperty]
+    private decimal _filterEndSalary = 0;
+
+    [ObservableProperty] private string _filterLocation = "";
+    private ObservableCollection<JobPost> _container; 
     [ObservableProperty]
     private ObservableCollection<JobPost> _jobFeed;
     [ObservableProperty]
     private ObservableCollection<JobPost> _savedJobs = new ObservableCollection<JobPost>();
     [ObservableProperty] 
     private bool _owned;
+    [ObservableProperty]
+    private string _searchText;
+    [ObservableProperty]
+    private List<JobPost> _searchResults = new List<JobPost>();
     
+    [ObservableProperty] private JobPost _selectedSearch;
 
+    partial void OnSelectedSearchChanged(JobPost? oldval, JobPost newval)
+    {
+        ApplyCommand.ExecuteAsync(newval);
+    }
+    partial void OnSearchTextChanged(string? oldval, string newval)
+    {
+        Task.Run(async () =>
+        {
+            var client = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
+            
+            var res = await client
+                .From<JobPost>()
+                .Filter(x => x.JobName, Constants.Operator.ILike, $"%{SearchText}%")
+                .Get();
+            
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                SearchResults = res.Models;
+            });
+        });
+
+    }
+    
+    
     [ObservableProperty]
     private bool _blur;
     public HomePageViewModel()
-    {
+    { 
+        
         Blur = false;
         var profile = ServiceHelper.GetService<ProfileService>();
         var user = profile.CurrentUser;
@@ -40,6 +84,27 @@ public partial class HomePageViewModel : ObservableObject
         }
     }
 
+    public async Task ChangeFilter(string filter)
+    {
+        JobFeed.Clear();
+        if (filter == "No Filter")
+        {
+            _container = JobFeed;
+            filterMode = filter;
+            await FetchAsync();
+            return;
+        } 
+        filterMode = filter;
+        await FetchAsync();
+        
+    }
+
+    public async Task FetchSkills()
+    {
+        var client = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
+        var res = await client.From<Skill>().Get();
+        SkillsList = res.Models;
+    }
     public async Task FetchAsync()
     {
         var profile = ServiceHelper.GetService<ProfileService>();
@@ -48,10 +113,56 @@ public partial class HomePageViewModel : ObservableObject
         try
         {
             var client = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
-            var jobResponse = await client
-                .From<JobPost>()
-                .Get();
+            ModeledResponse<JobPost> jobResponse = null;
+            if (filterMode == "No Filter")
+            {
+                 jobResponse = await client
+                    .From<JobPost>()
+                    .Get();
+            }
+            else if (filterMode == "Filter by Skills")
+            {
+                try
+                {
+                    var js = await client.From<JobSkill>()
+                        .Where(x => x.SkillID == FilterSkillId)
+                        .Get();
 
+                    // Ensure js.Models is not empty before building the IN filter
+                    var jobIds = js.Models.Select(n => n.JobID).ToList();
+                    if (jobIds.Count == 0)
+                    {
+                        Console.WriteLine("No job IDs found for the selected skill.");
+                    }
+                    else
+                    {
+                        jobResponse = await client
+                            .From<JobPost>()
+                            .Filter(x => x.Id, Constants.Operator.In, jobIds)
+                            .Get();
+
+                        Console.WriteLine("Gabii Count: " + jobResponse.Models.Count);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error while filtering by skills: " + ex.Message);
+                    if (ex.InnerException != null)
+                        Console.WriteLine("Inner exception: " + ex.InnerException.Message);
+                }
+            }
+            else if (filterMode == "Filter by Location")
+            {
+                jobResponse = await client.From<JobPost>().Filter(x => x.Location, Constants.Operator.ILike, FilterLocation).Get();
+            } else if (filterMode == "Filter by Salary")
+            {
+                Console.WriteLine("Salary Filteringers");
+                jobResponse = await client.From<JobPost>()
+                    .Filter(x => x.Salary, Constants.Operator.GreaterThanOrEqual, (float)FilterStartSalary)
+                    .Filter(x => x.Salary, Constants.Operator.LessThanOrEqual, (float)FilterEndSalary)
+                    .Get();
+                Console.WriteLine("Salary Filtered: " + jobResponse.Models.Count);
+            }
             if (jobResponse.Models.Count > 0)
             {
                 var applicationResponse = await client

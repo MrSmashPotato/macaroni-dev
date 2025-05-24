@@ -43,7 +43,7 @@ namespace macaroni_dev.Models
         [IgnoreDataMember]
         public bool IsApplied { get; set; } = false;
         [IgnoreDataMember]
-        public string ApplyButtonText => IsApplied ? "Applied" : "Apply Now";
+        public string ApplyButtonText => IsApplied ? "Applied" : "Check";
         [IgnoreDataMember]
         public Color ApplyButtonColor => IsApplied ? Colors.Gray : Colors.CornflowerBlue;
         [IgnoreDataMember]
