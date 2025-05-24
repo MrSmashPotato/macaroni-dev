@@ -37,7 +37,8 @@
                           TextColor="Gray" />  
 
                    <Button Text="Edit Profile"   
-                           BackgroundColor="#007AFF"   
+                           BackgroundColor="#007AFF" 
+                           Command="{Binding EditCommand}"
                            TextColor="White"   
                            Margin="0,10"   
                            HorizontalOptions="Center" />  
