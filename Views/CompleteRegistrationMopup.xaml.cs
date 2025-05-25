@@ -23,4 +23,13 @@ public partial class CompleteRegistrationMopup
 		_homePageViewModel.Blur = false;
 		MopupService.Instance.PopAsync();
 	}
+	private async void OnInputFocused(object sender, FocusEventArgs e)
+	{
+		await Task.Delay(100);
+    
+		
+			await MainScrollView.ScrollToAsync(sender as Entry, ScrollToPosition.Start, true);
+		
+		
+	}
 }

@@ -11,18 +11,19 @@
     <ContentPage.BindingContext>
         <vm:CompleteRegistrationViewModel />
     </ContentPage.BindingContext>
-    <Border HorizontalOptions="Center" VerticalOptions="Center" Margin="20,60" BackgroundColor="Aquamarine">
+    <Border HorizontalOptions="Center" VerticalOptions="Center" Margin="20,60" BackgroundColor="#303e63">
         <Border.StrokeShape>
             <RoundRectangle CornerRadius="40,40,40,40"/>
         </Border.StrokeShape>
-        <ScrollView>
+        <ScrollView x:Name="MainScrollView">
             <VerticalStackLayout Padding="20" Spacing="15">
                 <Label Text="Complete Your Registration" 
                        FontSize="24" 
                        HorizontalOptions="Center" />
             
                 <!-- Profile Image with Preview -->
-                <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="20">
+                    <Label Text="Profile Picture" FontAttributes="Bold" HorizontalOptions="Center"/>
                     <Border WidthRequest="150" HeightRequest="150" StrokeThickness="10">
                         <Border.StrokeShape>
                             <Ellipse/>
@@ -41,25 +42,25 @@
                 </StackLayout>
 
                 <!-- First Name -->
-                <Label Text="First Name" />
+                <Label Text="First Name" FontAttributes="Bold" />
                 <Entry Text="{Binding FirstName}" Placeholder="Enter your first name" />
 
                 <!-- Middle Name -->
-                <Label Text="Middle Name" />
-                <Entry Text="{Binding MiddleName}" Placeholder="Enter your middle name" />
+                <Label Text="Middle Name" FontAttributes="Bold" />
+                <Entry x:Name="MiddleNEntry" Text="{Binding MiddleName}" Focused="OnInputFocused" Placeholder="Enter your middle name" />
 
                 <!-- Last Name -->
-                <Label Text="Last Name" />
-                <Entry Text="{Binding LastName}" Placeholder="Enter your last name" />
+                <Label Text="Last Name"  FontAttributes="Bold"/>
+                <Entry x:Name="LastNEntry" Text="{Binding LastName}" Focused="OnInputFocused" Placeholder="Enter your last name" />
 
-                <Label Text="Location" />
-                <Entry Text="{Binding Location}" Placeholder="Enter your location" />
+                <Label Text="Location" FontAttributes="Bold" />
+                <Entry Text="{Binding Location}" Focused="OnInputFocused" Placeholder="Enter your location" />
                 
-                <Label Text="Occupation" />
+                <Label Text="Occupation" FontAttributes="Bold" />
                 <HorizontalStackLayout Spacing="10">
-                    <Entry Text="{Binding Occupation}" Placeholder="Enter your occupation" />
+                    <Entry Text="{Binding Occupation}" Focused="OnInputFocused" Placeholder="Enter your occupation" />
                     <Label Text="at" VerticalOptions="Center"/>
-                    <Entry Text="{Binding Company}" Placeholder="Company Name" WidthRequest="180"/>
+                    <Entry Text="{Binding Company}" Focused="OnInputFocused" Placeholder="Company Name" WidthRequest="180"/>
 
                 </HorizontalStackLayout>
                 <!-- Submit Button -->
@@ -68,6 +69,8 @@
                         Command="{Binding SubmitCommand}" 
                         BackgroundColor="#007AFF" 
                         TextColor="White" />
+                <BoxView HeightRequest="100" Opacity="0"/>
+                <BoxView HeightRequest="100" Opacity="0"/>
             </VerticalStackLayout>
         </ScrollView>
     </Border>

@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		  xmlns:and="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+		  and:Application.WindowSoftInputModeAdjust="Resize"
 		  package="com.xylo.jobilis">
 
 	<application>

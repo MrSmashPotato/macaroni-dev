@@ -24,13 +24,6 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView x:Name="MainScrollView"  VerticalScrollBarVisibility="Always">
-        <ScrollView.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Color="#2F9BDF" Offset="0.0"/>
-                <GradientStop Color="#51F1F2" Offset="0.1"/>
-                <GradientStop Color="White" Offset="1"/>
-            </LinearGradientBrush>
-        </ScrollView.Background>
         <Grid>
             <BoxView HeightRequest="500" VerticalOptions="Start">
                 <BoxView.Background>
