@@ -14,13 +14,6 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid RowDefinitions="*,*, *,*, *" BackgroundColor="Transparent">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                    <GradientStop Color="#2F9BDF" Offset="0.0"/>
-                    <GradientStop Color="#51F1F2" Offset="0.1"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Grid.Background>
             <BoxView Grid.Row="0" Grid.RowSpan="2">
                 <BoxView.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
