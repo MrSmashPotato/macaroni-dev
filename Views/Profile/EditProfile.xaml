@@ -44,9 +44,9 @@
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
                                        Aspect="AspectFit"
-                                       ImageSource="{Binding User.ProfileImage}" />
+                                       ImageSource="{Binding ProfileImage}" />
                 </core:SfBadgeView>
-                <Button Grid.Row="1" Margin="20" Text="Change Profile Picture" FontSize="12" BackgroundColor="RoyalBlue" WidthRequest="180" HorizontalOptions="Center"/>
+                <Button Grid.Row="1" Margin="20" Command="{Binding AddPhotoCommand}" Text="Change Profile Picture" FontSize="12" BackgroundColor="RoyalBlue" WidthRequest="180" HorizontalOptions="Center"/>
             </Grid>
             <ScrollView x:Name="MainScrollView" Grid.Row="2" Margin="20" Grid.RowSpan="4">
                 <VerticalStackLayout>

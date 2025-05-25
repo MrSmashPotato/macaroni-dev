@@ -19,10 +19,15 @@ public partial class EditProfileViewModel : ObservableObject
     private string _company = String.Empty;
     [ObservableProperty]
     private string _occupation = String.Empty;
-    [ObservableProperty]
-    private string _profileImage = String.Empty;
+
+    [ObservableProperty] private ImageSource _profileImage;
     [ObservableProperty]
     private User _user;
+    private MemoryStream _memoryStream = new MemoryStream();
+    private string _imageFileName;
+    private bool imagechanged;
+    [ObservableProperty]
+    private ProfileViewModel profileViewModel;
 
     [ObservableProperty] private bool _isChanging = false;
     public EditProfileViewModel()
@@ -78,13 +83,11 @@ public partial class EditProfileViewModel : ObservableObject
         }
     }
 
-    partial void OnProfileImageChanged(string value)
+    partial void OnProfileImageChanged(ImageSource value)
     {
-        if (value != _user.ProfileImage)
-        {
-            IsChanging = true;
-        }
+        IsChanging = true;
     }
+    
 
     [RelayCommand]
     private async Task Update()
@@ -102,15 +105,58 @@ public partial class EditProfileViewModel : ObservableObject
            User.LastName = LastName;
            User.Company = Company;
            User.Occupation = Occupation;
-           User.ProfileImage = ProfileImage;
            User.Location = Location;
            User.IsComplete = true;
+           if (imagechanged)
+           {
+               if (ProfileImage != null) 
+               {
+                   byte[] imageBytes = _memoryStream.ToArray();
+                        
+                   string fileExtension = Path.GetExtension(_imageFileName); 
+                   string fileName = $"profile_images/{Guid.NewGuid()}{fileExtension}";
+                   var supabaseClient = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
+
+                   var storage = supabaseClient.Storage;
+                   var bucket = storage.From("profileimages");
+
+                   await bucket.Upload(imageBytes, fileName, new Supabase.Storage.FileOptions
+                   {
+                       Upsert = true
+                   });
+
+                   string publicUrl = bucket.GetPublicUrl(fileName);
+                   _user.ProfileImage = publicUrl;
+                   ProfileViewModel.ProfileImageUrl = publicUrl;
+               }
+           }
            await User.Update<User>();
+           ProfileViewModel.Name = $"{User.FirstName} {User.MiddleName} {User.LastName}";
+           ProfileViewModel.Occupation = User.Occupation + " at " + User.Company;;
+           ProfileViewModel.Location = User.Location;
            await Application.Current.MainPage.DisplayAlert("Update Success", "Changed values are now updated", "OK");
            await Application.Current.MainPage.Navigation.PopAsync();
        }
     }
 
+   
+    [RelayCommand]
+    private async Task AddPhoto()
+    {
+        var result = await FilePicker.PickAsync(new PickOptions
+        {
+            PickerTitle = "Choose Photo",
+            FileTypes = FilePickerFileType.Images
+        });
+        _imageFileName = result.FileName;
+        if (result != null)
+        {
+            var stream = await result.OpenReadAsync();
+            await stream.CopyToAsync(_memoryStream);
+            _memoryStream.Position = 0; 
+            imagechanged = true;
+            ProfileImage = ImageSource.FromStream(() => new MemoryStream(_memoryStream.ToArray()));            }
+    }
     private async Task<bool> Validate()
     {
         if (User.FirstName == FirstName &&
@@ -118,8 +164,7 @@ public partial class EditProfileViewModel : ObservableObject
             User.LastName == LastName &&
             User.Location == Location &&
             User.Company == Company &&
-            User.ProfileImage == ProfileImage &&
-            User.Occupation == Occupation
+            User.Occupation == Occupation && imagechanged == false
            )
         {
             return false;

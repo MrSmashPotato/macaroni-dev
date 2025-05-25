@@ -58,7 +58,7 @@ namespace macaroni_dev.ViewModels
         [RelayCommand]
         private async Task Edit()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new Views.Profile.EditProfile());
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.Profile.EditProfile(this));
         }
     }
 }
