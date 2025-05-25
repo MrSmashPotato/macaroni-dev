@@ -85,21 +85,22 @@ namespace macaroni_dev.Views
         
         private async void Location_OnClicked(object? sender, EventArgs e)
         {
-            await vm.ChangeFilter("No Filter");
             locationpopup.IsOpen = false;
+            await vm.ChangeFilter("No Filter");
             Chippy.SelectedItem = Default;
         }
         private async void Skills_OnClicked(object? sender, EventArgs e)
         {
-            await vm.ChangeFilter("No Filter");
             skillpopup.IsOpen = false;
+            await vm.ChangeFilter("No Filter");
             Chippy.SelectedItem = Default;
         }
         private async void Salary_OnClicked(object? sender, EventArgs e)
         {
-            await vm.ChangeFilter("No Filter");
             salarypopup.IsOpen = false;
+            await vm.ChangeFilter("No Filter");
             Chippy.SelectedItem = Default;
         }
+        
     }
     }

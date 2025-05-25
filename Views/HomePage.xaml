@@ -4,7 +4,7 @@
              xmlns:m="clr-namespace:macaroni_dev.Models"
              xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
              Shell.TitleColor="White"
-             Shell.BackgroundColor="MediumAquamarine"
+             Shell.BackgroundColor="#2F9BDF"
              xmlns:chip="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
              xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
@@ -15,6 +15,7 @@
 
              Title=""
              x:Class="macaroni_dev.Views.HomePage">
+   
     <Shell.SearchHandler>
         <SearchHandler  SelectedItem="{Binding SelectedSearch}"
             ClearIcon="close" QueryIcon="search" Query="{Binding SearchText}" ItemsSource="{Binding SearchResults, Mode=OneWay}" ShowsResults="True">
@@ -57,7 +58,23 @@
     </Shell.SearchHandler>
     <ContentPage.Content>
         <Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                    <GradientStop Color="#51F1F2" Offset="0.1"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid RowDefinitions="Auto, *">
+                <BoxView  VerticalOptions="Start">
+                    <BoxView.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                            <GradientStop Color="#51F1F2" Offset="0.4"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </BoxView.Background>
+                </BoxView>
                 <popup:SfPopup x:Name="skillpopup" ShowCloseButton="False"  StaysOpen="True" >
                     <popup:SfPopup.ContentTemplate>
                         <DataTemplate x:DataType="vm:HomePageViewModel">
@@ -84,7 +101,7 @@
                         <DataTemplate x:DataType="vm:HomePageViewModel">
                             <VerticalStackLayout Margin="20">
                                 <material:TextField Text="{Binding FilterLocation}" Margin="5" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Location_city}}" />
-                                <Button Text="Filter" StyleClass="FilledButton" Clicked="Button_OnClicked" HorizontalOptions="Center"/>
+                                <Button Text="Filter"  StyleClass="FilledButton" Clicked="Button_OnClicked" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </popup:SfPopup.ContentTemplate>
@@ -92,7 +109,7 @@
                         <DataTemplate>
                             <Grid>
                                 <Label Text="Filter by Location" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
-                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Location_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
+                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Location_OnClicked" Margin="15, 0" Padding="15" VerticalOptions="End" HorizontalOptions="End" />
                             </Grid>
                           
                         </DataTemplate>
@@ -103,16 +120,25 @@
                     <popup:SfPopup.ContentTemplate>
                         <DataTemplate x:DataType="vm:HomePageViewModel">
                             <VerticalStackLayout Margin="20">
-                                <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6">
-                                    <editors:SfNumericEntry WidthRequest="100"
-                                                            Value="{Binding FilterStartSalary}"
-                                                            AllowNull="False" />
-                                    <editors:SfNumericEntry WidthRequest="100"
-                                                            Value="{Binding FilterEndSalary}"
-                                                            AllowNull="False" />
-                                </HorizontalStackLayout>
+                                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                                   <HorizontalStackLayout Spacing="5">
+                                       <Label Text="Min" VerticalOptions="Center"/>
+                                       <editors:SfNumericEntry WidthRequest="200"
+                                                            
+                                                               Value="{Binding FilterStartSalary}"
+                                                               AllowNull="False" />
+                                   </HorizontalStackLayout>
+                                 
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="Max" VerticalOptions="Center"/>
+                                        <editors:SfNumericEntry WidthRequest="200"
+                                                                Value="{Binding FilterEndSalary}"
+                                                                AllowNull="False" />
+                                    </HorizontalStackLayout>
+                                 
+                                </VerticalStackLayout>
                                 
-                                <Button Text="Filter" StyleClass="FilledButton" Clicked="Sal_Button_OnClicked" HorizontalOptions="Center"/>
+                                <Button Text="Filter" StyleClass="FilledButton" Margin="15" WidthRequest="100" Clicked="Sal_Button_OnClicked" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </popup:SfPopup.ContentTemplate>
@@ -120,7 +146,7 @@
                         <DataTemplate>
                             <Grid>
                                 <Label Text="Filter by Salary" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
-                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Salary_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
+                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Padding="20" Clicked="Salary_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
                             </Grid>
                           
                         </DataTemplate>
@@ -129,15 +155,15 @@
                 
                 <ScrollView Grid.Row="0"  Orientation="Horizontal" HorizontalScrollBarVisibility="Always" Margin="20">
                     <chip:SfChipGroup Margin="0, 20" SelectedChipTextColor="White" SelectedChipBackground="#6495ed"
-                                       ChipBackground="#f2f2f2" ChipTextColor="Black" ChipTextSize="15" ChipFontAttributes="Bold"
+                                      ChipBackground="White"
                                        ChipType="Choice" ChoiceMode="SingleOrNone"
                                        x:Name="Chippy"
                                        x:DataType="vm:HomePageViewModel">
                         <chip:SfChipGroup.Items >
-                            <chip:SfChip Clicked="ButtonBase_OnClicked" Text="No Filter" x:Name="Default"/>
-                            <chip:SfChip Clicked="ButtonBase_OnClicked" Text="Filter by Skills"/>
-                            <chip:SfChip Clicked="ButtonBase_OnClicked" Text="Filter by Location"/>
-                            <chip:SfChip Clicked="ButtonBase_OnClicked" Text="Filter by Salary"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold"  Clicked="ButtonBase_OnClicked" Text="No Filter" x:Name="Default"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold" Clicked="ButtonBase_OnClicked" Text="Filter by Skills"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold" Clicked="ButtonBase_OnClicked" Text="Filter by Location"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold" Clicked="ButtonBase_OnClicked" Text="Filter by Salary"/>
                           
                         </chip:SfChipGroup.Items>
                     </chip:SfChipGroup>
@@ -150,7 +176,7 @@
                           <CollectionView x:DataType="vm:HomePageViewModel" ItemsSource="{Binding JobFeed}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:JobPost">
-                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto">
+                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto" BackgroundColor="White">
                         <!-- BoxView for the top border -->
                         <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.ColumnSpan="2">
                             <BoxView.Shadow>
@@ -162,8 +188,7 @@
                         <Frame BorderColor="Transparent" Padding="10" Margin="0,10" BackgroundColor="White" Grid.Row="1">
                             <StackLayout>
                                 <Label Text="{Binding JobName}" FontAttributes="Bold"  FontSize="15" />
-                                <Label Text="{Binding JobDetail}" FontSize="11" />
-                                <Label Text="{Binding Location, StringFormat='📍 {0}'}"/>
+                                <Label Text="{Binding JobDetail, StringFormat='Description: {0}'}" FontSize="11" MaxLines="2"/>                                <Label Text="{Binding Location, StringFormat='📍 {0}'}"/>
                                 <Label Text="{Binding Salary, StringFormat='Salary: ₱ {0}'}" TextColor="RoyalBlue" />
                             </StackLayout>
                         </Frame>
@@ -203,7 +228,7 @@
                     <CollectionView x:DataType="vm:HomePageViewModel" ItemsSource="{Binding SavedJobs}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="m:JobPost">
-                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto">
+                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto" BackgroundColor="White">
                         <!-- BoxView for the top border -->
                         <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.ColumnSpan="2">
                             <BoxView.Shadow>

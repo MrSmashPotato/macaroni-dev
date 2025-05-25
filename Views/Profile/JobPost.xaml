@@ -8,6 +8,7 @@
               xmlns:sf="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
               xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
               xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             Shell.BackgroundColor="#2F9BDF"
 
               xmlns:ms="clr-namespace:UraniumUI.Icons.MaterialSymbols;assembly=UraniumUI.Icons.MaterialSymbols"
              xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
@@ -23,11 +24,24 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ScrollView x:Name="MainScrollView"  VerticalScrollBarVisibility="Always">
-        <StackLayout Padding="20" Spacing="15">
-            <Label Text="Post a Job" FontSize="24" x:Name="CreateLabel" FontAttributes="Bold" HorizontalOptions="Center" />
-            <Label Text="Edit Job Post" FontSize="24" x:Name="EditLabel" FontAttributes="Bold" HorizontalOptions="Center" />
-            
-            <!-- Skill -->
+        <ScrollView.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                <GradientStop Color="#51F1F2" Offset="0.1"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </ScrollView.Background>
+        <Grid>
+            <BoxView HeightRequest="500" VerticalOptions="Start">
+                <BoxView.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                        <GradientStop Color="#51F1F2" Offset="0.4"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
+            <StackLayout Padding="20" Spacing="15">
             <Label Text="Select a Skill" FontAttributes="Bold" FontSize="16" />
 
             <sf:SfTextInputLayout Hint="Skill" 
@@ -215,5 +229,7 @@ IsFilteringEnabled="True"
             </Grid>
    
         </StackLayout>
+        </Grid>
+        
     </ScrollView>
 </ContentPage>

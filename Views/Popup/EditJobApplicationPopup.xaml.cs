@@ -17,4 +17,9 @@ public partial class EditJobApplicationPopup
         BindingContext = vm;
         InitializeComponent();
     }
+
+    private void Button_OnClicked(object? sender, EventArgs e)
+    {
+        Mopups.Services.MopupService.Instance.PopAsync();
+    }
 }

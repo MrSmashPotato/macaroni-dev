@@ -1,23 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
-             BackgroundColor="Transparent"
-             CloseWhenBackgroundIsClicked="False"
-             x:Class="macaroni_dev.Views.LoadingPopup.ProcessingPopup">
-    <Border HeightRequest="400" WidthRequest="400" Padding="20" BackgroundColor="White" 
-             VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <Border.StrokeShape>
-            <RoundRectangle CornerRadius="20,20,20,20"/>
-        </Border.StrokeShape>
-        <!-- Image for loading GIF -->
-        <Grid RowDefinitions="*, Auto">
-            <Image Grid.Row="0" Source="loading.gif" HorizontalOptions="Center" VerticalOptions="Center" />
-            <Label
-                Grid.Row="1"
-                x:Name="LoadingLabel"
-                Text="Loading" FontSize="40" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center"/>
-        </Grid>
-    </Border>
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+                  x:Class="macaroni_dev.Views.LoadingPopup.ProcessingPopup"
+                  BackgroundColor="Transparent"
+                  CloseWhenBackgroundIsClicked="False">
+
+    <Grid BackgroundColor="Black">
+        <Border HeightRequest="250"
+                WidthRequest="250"
+                BackgroundColor="White"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Margin="20">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout Spacing="10" Padding="20">
+                <Image Source="loading.gif" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center"/>
+                <Label x:Name="LoadingLabel"
+                       Text="Loading"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
 </mopups:PopupPage>

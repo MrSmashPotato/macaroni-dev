@@ -16,8 +16,7 @@ public partial class JobPost : ContentPage
 		jobPost = null;
 		CreateButton.IsVisible = true;
 		vm = new JobPostViewModel();
-		CreateLabel.IsVisible = true;
-		EditLabel.IsVisible = false;
+		this.Title = "Create Job Post";
 		BindingContext = vm;
 	}
 	
@@ -36,8 +35,7 @@ public partial class JobPost : ContentPage
 
 			EditButton.IsVisible = true;
 			DeleteButton.IsVisible = true;
-			EditLabel.IsVisible = true;
-			CreateLabel.IsVisible = false;
+			this.Title = "Edit Job Post";
 			vm = new JobPostViewModel(jobPost, skill);
 			Console.WriteLine("The Job Post Id is:" + jobPost.Id);
 			BindingContext = vm;

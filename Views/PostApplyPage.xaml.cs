@@ -14,11 +14,23 @@ public partial class PostApplyPage : ContentPage
     {
         InitializeComponent();
     }
-
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        AnimateThrob(ApplyNowButton);
+    }
     public PostApplyPage(JobPost post, Skill skill, HomePageViewModel homePageViewModel)
     {
         InitializeComponent();
         
         this.BindingContext = new PostApplyViewModel(post,skill,homePageViewModel);
+    }
+    private async void AnimateThrob(View view)
+    {
+        while (true)
+        {
+            await view.ScaleTo(1.05, 500, Easing.SinInOut);
+            await view.ScaleTo(1.0, 500, Easing.SinInOut);
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
-    Shell.BackgroundColor="MediumAquamarine"
+    Shell.BackgroundColor="#2F9BDF"
     x:Class="macaroni_dev.Views.MessagesPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:data="clr-namespace:Syncfusion.Maui.DataSource;assembly=Syncfusion.Maui.DataSource"
@@ -15,6 +15,13 @@
     </ContentPage.BindingContext>
 
     <Grid >
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                <GradientStop Color="#51F1F2" Offset="0.1"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <listView:SfListView
         AutoFitMode="DynamicHeight"
         x:Name="listView"
@@ -34,7 +41,6 @@
                             CommandParameter="{Binding .}" />
                     </Border.GestureRecognizers>
                     <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto">
-                        <!-- Profile image in Column 0 -->
                         <Border Grid.Column="0"
                                 HeightRequest="60"
                                 WidthRequest="60"
@@ -48,7 +54,6 @@
                                 Aspect="AspectFill" />
                         </Border>
 
-                        <!-- Text content in Column 1 -->
                         <Grid Grid.Column="1" RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto" Margin="10,0,0,0">
                             <!-- First Name -->
                             <Label Grid.Row="0" Grid.Column="0"

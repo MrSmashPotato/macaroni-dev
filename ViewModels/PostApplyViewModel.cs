@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using macaroni_dev.Models;
 using macaroni_dev.Services;
+using macaroni_dev.Views;
 using Supabase.Postgrest.Exceptions;
 using Supabase.Postgrest.Responses;
 
@@ -22,6 +23,18 @@ public partial class PostApplyViewModel : ObservableObject
         if (_homePage.SavedJobs.Any(j => j.Id == post.Id))
         {
             Saveable = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task Message()
+    {
+        var client = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
+        var employer = await client.From<User>().Where(x => x.ID == Job.UserID).Single();
+        if (employer != null)
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
+            await Application.Current.MainPage.Navigation.PushAsync( new ConversationPage(employer)); 
         }
     }
 

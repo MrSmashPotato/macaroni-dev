@@ -11,14 +11,6 @@ public partial class ProcessingPopup
     public ProcessingPopup()
     {
         InitializeComponent();
-        ApplyWavingAnimation();
     }
-    private async void ApplyWavingAnimation()
-    {
-        while (true)
-        {
-            await LoadingLabel.RotateTo(10, 500, Easing.CubicInOut); 
-            await LoadingLabel.RotateTo(-10, 500, Easing.CubicInOut); 
-        }
-    }
+   
 }
