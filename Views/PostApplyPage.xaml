@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:material="clr-namespace:UraniumUI.Material;assembly=UraniumUI.Material"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             x:Class="macaroni_dev.Views.PostApplyPage"
+             x:DataType="vm:PostApplyViewModel"
+             Shell.BackgroundColor="#2F9BDF">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Contact Now" Command="{Binding MessageCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,Auto">
+            <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                        <GradientStop Color="#51F1F2" Offset="0.1"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+            </Grid.Background>
+            <ScrollView>
+                <VerticalStackLayout Padding="20" Spacing="20">
+                    <Grid ColumnDefinitions="*,Auto" Padding="0,0,0,10">
+                        <Label Text="{Binding Job.JobName}" 
+                               FontSize="30" 
+                               FontAttributes="Bold" 
+                               TextColor="Black"
+                               
+                               VerticalOptions="Center" />
+
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="End">
+                            <Button Text="Save"
+                                    StyleClass="TextButton"
+                                    TextColor="Black"
+                                    BackgroundColor="GreenYellow"
+                                    IsVisible="{Binding Saveable}"
+                                    Command="{Binding SaveCommand}"
+                                    Margin="0,0,10,0" />
+                            <Button Text="Saved"
+                                    StyleClass="TextButton"
+                                    TextColor="Black"
+                                    BackgroundColor="LightGray"
+                                    IsEnabled="False"
+                                    IsVisible="{Binding Saveable, Converter={StaticResource InvertedBoolToVis}}" />
+                        </StackLayout>
+                    </Grid>
+
+                   
+                    <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" />
+
+                    <!-- Requirements Section -->
+                    <Label Text="Requirements"
+                           FontAttributes="Italic"
+                           FontSize="20"
+                           TextColor="Black" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Location" FontSize="20" TextColor="Black" FontAttributes="Italic"/>
+                            <Label Text="{Binding Job.Location}" FontSize="16" TextColor="RoyalBlue"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="Skill" FontSize="20" TextColor="Black" FontAttributes="Italic"/>
+                            <Label Text="{Binding Skill.Name}" FontSize="16" TextColor="RoyalBlue"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" />
+
+                    <!-- Salary Section -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Salary"
+                               FontSize="20"
+                               FontAttributes="Italic"
+                               TextColor="Black" />
+                        <Label Text="{Binding Job.Salary, StringFormat='₱ {0:N0}'}"
+                               FontSize="18"
+                               TextColor="RoyalBlue" />
+                    </VerticalStackLayout>
+                    
+                    <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" />
+
+                    <!-- Job Details -->
+                    <Label Text="Job Detail"
+                           FontAttributes="Italic"
+                           FontSize="20"
+                           TextColor="Black" />
+                    <Label Text="{Binding Job.JobDetail}" 
+                           TextColor="RoyalBlue"
+                           FontSize="16"
+                           HorizontalTextAlignment="Start"
+                           LineBreakMode="WordWrap" />
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Apply Now Button -->
+            <Button
+                x:Name="ApplyNowButton"
+                    Text="Apply Now"
+                    Grid.Row="1"
+                    StyleClass="FilledButton"
+                    Command="{Binding ApplyCommand}"
+                    TextColor="White"
+                    BackgroundColor="CornflowerBlue"
+                    Margin="30"
+                    HeightRequest="50"
+                    CornerRadius="10"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -11,43 +11,63 @@ namespace macaroni_dev.Views
 {
     public partial class LoadingPage : ContentPage
     {
-        private AuthService _authService;
+        private readonly AuthService _authService;
 
         public LoadingPage()
         {
             InitializeComponent();
-            CheckLoginStatus();
+            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Disabled);
+            Shell.SetNavBarIsVisible(this, false);
+            _authService = ServiceHelper.GetService<AuthService>();
         }
 
+        protected override  void OnAppearing()
+        {
+            base.OnAppearing();
+            CheckLoginStatus();
+
+        }
         private async void CheckLoginStatus()
         {
-            var sessionToken = await SecureStorage.GetAsync("session_token");
-            var refreshToken = await SecureStorage.GetAsync("refresh_token");
-            if (!string.IsNullOrEmpty(sessionToken) && !string.IsNullOrEmpty(refreshToken))
+            try
             {
-                var authService = ServiceHelper.GetService<AuthService>();
-                var user = await authService.RestoreSessionAsync(sessionToken, refreshToken);
-                if (user != null)
-                {
-                    if (user.ConfirmedAt == null)
-                    {
-                        await Navigation.PushAsync(new OtpVerificationPage(user.Email));
-                    }
-                    else
-                    {
-                        var profile = ServiceHelper.GetService<ProfileService>();
-                        await profile.InitializeProfileAsync(user.Id);
-                        await Shell.Current.GoToAsync("//homePage");
+                var sessionToken = await SecureStorage.GetAsync("session_token");
+                var refreshToken = await SecureStorage.GetAsync("refresh_token");
 
-                    }
-                }
-                else
+                if (!string.IsNullOrEmpty(sessionToken) && !string.IsNullOrEmpty(refreshToken))
                 {
-                    await Shell.Current.GoToAsync("//loginPage");  
+                    int attempts = 0;
+                    const int maxAttempts = 5;
+
+                    while (attempts < maxAttempts)
+                    {
+                        var user = await _authService.RestoreSessionAsync(sessionToken, refreshToken);
+                        if (user != null)
+                        {
+                            if (user.ConfirmedAt == null)
+                            {
+                                await Navigation.PushAsync(new OtpVerificationPage(user.Email));
+                            }
+                            else
+                            {
+                                var profile = ServiceHelper.GetService<ProfileService>();
+                                await profile.InitializeProfileAsync(user.Id);
+                                await Shell.Current.GoToAsync("//homePage");
+                            }
+                            return;
+                        }
+
+                        attempts++;
+                        await Task.Delay(500); // Optional delay
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error restoring session: {ex.Message}");
+            }
 
+            Application.Current.MainPage = new LoginPage();
         }
     }
 }
-

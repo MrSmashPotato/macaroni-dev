@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using macaroni_dev.Services;
+using macaroni_dev.ViewModels;
 using Sharpnado.MaterialFrame;
 using Syncfusion.Maui.Core.Hosting;
 using Syncfusion.Maui.Toolkit.Hosting;
@@ -14,24 +15,52 @@ public static class MauiProgram
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
+		// ⬇️ Add custom SearchBar icon color mapping here
+		Microsoft.Maui.Handlers.SearchBarHandler.Mapper.AppendToMapping("CustomIconColor", (handler, view) =>
+		{
+#if ANDROID
+			var searchView = handler.PlatformView;
+
+			if (searchView != null)
+			{
+				int searchIconId = searchView.Context.Resources.GetIdentifier("android:id/search_mag_icon", null, null);
+				var searchIcon = searchView.FindViewById<Android.Widget.ImageView>(searchIconId);
+
+				if (searchIcon != null)
+				{
+					searchIcon.SetColorFilter(Android.Graphics.Color.Red, Android.Graphics.PorterDuff.Mode.SrcIn); // Change color here
+				}
+			}
+#elif IOS
+        var searchBar = handler.PlatformView;
+
+        if (searchBar != null)
+        {
+            searchBar.SearchTextField.LeftView.TintColor = UIKit.UIColor.Red; // Change color here
+        }
+#endif
+		});
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
-			.UseAcrylicView()  //*********2.添加此扩展方法使用 | Usage
+			.UseAcrylicView()  
 			.UseUraniumUI()
 			.UseUraniumUIMaterial()
 			.UseSharpnadoMaterialFrame(loggerEnable: false)
 			.ConfigureSyncfusionCore()
 			.ConfigureSyncfusionToolkit()
-			
+		
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFontAwesomeIconFonts(); 
 				fonts.AddMaterialIconFonts();
+				fonts.AddMaterialSymbolsFonts(); // 👈 Add this line
+
 
 			});
+		
 		var options = new Supabase.SupabaseOptions
 		{
 			AutoRefreshToken = true,
@@ -47,10 +76,17 @@ public static class MauiProgram
 		var supabaseClientProvider = new SupabaseClientProvider(supabaseClient);
 		var authService = new AuthService(supabaseClient);
 		var profileService = new ProfileService(supabaseClient);
+		var MessagesPageViewModel = new MessagesPageViewModel();	
 		builder.Services.AddSingleton(profileService);
 		builder.Services.AddSingleton<Supabase.Client>();
 		builder.Services.AddSingleton(supabaseClientProvider);
 		builder.Services.AddSingleton(authService);
+		builder.Services.AddSingleton(MessagesPageViewModel);
+
+#if ANDROID
+		builder.Services.AddSingleton<IKeyboardService, KeyboardService>();
+		
+#endif
 		
 #if DEBUG
 		builder.Logging.AddDebug();

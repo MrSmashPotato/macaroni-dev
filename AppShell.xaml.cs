@@ -9,6 +9,8 @@ public partial class AppShell : Shell
 	public AppShell()
 	{
 		InitializeComponent();
+		Routing.RegisterRoute("homePage", typeof(HomePage));
+		
 	}
 	
 	private async void OnLogoutClicked(object sender, EventArgs e)

@@ -25,7 +25,11 @@ namespace macaroni_dev
             }
 
             bool isVerified = await _authService.VerifyEmailOtpAsync(_email, otpCode);
+            var _supabaseClient = ServiceHelper.GetService<SupabaseClientProvider>().GetSupabaseClient();
 
+            await SecureStorage.SetAsync("session_token", _supabaseClient.Auth.CurrentSession.AccessToken);
+            await SecureStorage.SetAsync("refresh_token",_supabaseClient.Auth.CurrentSession.RefreshToken);
+            
             if (isVerified)
             {
                 Application.Current.MainPage = new AppShell();

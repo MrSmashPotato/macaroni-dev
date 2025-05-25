@@ -1,16 +1,22 @@
-﻿using macaroni_dev.Services;
+﻿using IO.Ably;
+using macaroni_dev.Services;
 using macaroni_dev.Views;
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 using Supabase.Gotrue;
-namespace macaroni_dev;
+using Application = Microsoft.Maui.Controls.Application;
 
+namespace macaroni_dev;
+using IO.Ably;
+using IO.Ably.Realtime;
 public partial class App : Application
 {
     public App()
     {
         Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgwODAyM0AzMjM5MmUzMDJlMzAzYjMyMzkzYmNNMHl1RlFMUi8zRzk1UEVqUTlyVnkzVXpwVm1rM2tSeGR4RW1iSG5VbkE9");
-
         InitializeComponent();
         MainPage = new AppShell();
+        Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+
     }
     protected override async void OnStart()
     {

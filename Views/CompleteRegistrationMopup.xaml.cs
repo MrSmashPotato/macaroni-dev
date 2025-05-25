@@ -13,9 +13,28 @@ public partial class CompleteRegistrationMopup
 		InitializeComponent();
 	}
 
+	protected override void OnDisappearing()
+	{
+		_homePageViewModel.Blur = false;
+	}
+
 	public void Exit(Object o, EventArgs e)
 	{
 		_homePageViewModel.Blur = false;
 		MopupService.Instance.PopAsync();
+	}
+	private async void OnInputFocused(object sender, FocusEventArgs e)
+	{
+		await Task.Delay(100);
+    
+		
+			await MainScrollView.ScrollToAsync(sender as Entry, ScrollToPosition.Start, true);
+		
+		
+	}
+
+	private void Button_OnClicked(object? sender, EventArgs e)
+	{
+		Mopups.Services.MopupService.Instance.PopAsync();
 	}
 }

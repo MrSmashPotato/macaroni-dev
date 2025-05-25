@@ -1,0 +1,30 @@
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+                  x:Class="macaroni_dev.Views.LoadingPopup.ProcessingPopup"
+                  BackgroundColor="Transparent"
+                  CloseWhenBackgroundIsClicked="False">
+
+    <Grid BackgroundColor="Black">
+        <Border HeightRequest="250"
+                WidthRequest="250"
+                BackgroundColor="White"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Margin="20">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="20"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout Spacing="10" Padding="20">
+                <Image Source="loading.gif" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center"/>
+                <Label x:Name="LoadingLabel"
+                       Text="Loading"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</mopups:PopupPage>

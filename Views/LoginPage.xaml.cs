@@ -1,8 +1,10 @@
+using CommunityToolkit.Mvvm.Input;
 using macaroni_dev.Services;
 using Microsoft.Maui.Controls;
 using Supabase.Gotrue;
 using Supabase.Postgrest.Exceptions;
 using macaroni_dev.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace macaroni_dev.Views
 {
@@ -19,42 +21,92 @@ namespace macaroni_dev.Views
         {
             _authService = ServiceHelper.GetService<AuthService>();
         }
-        private async void OnSignInClicked(object sender, EventArgs e)
+      private async void OnSignInClicked(object sender, EventArgs e)
+{
+    var email = EmailEntry.Text;
+    var password = PasswordEntry.Text;
+
+    if (email.IsNullOrEmpty() || password.IsNullOrEmpty())
+    {
+        StatusLabel.Text = "Please fill all fields";
+        return;
+    }
+
+    int maxAttempts = 5;
+    int attempts = 0;
+
+    while (attempts < maxAttempts)
+    {
+        try
         {
-            var email = EmailEntry.Text;
-            var password = PasswordEntry.Text;
-            try
+            StatusLabel.Text = $"Signing in... (Attempt {attempts + 1}/{maxAttempts})";
+
+            var user = await _authService.SignInAsync(email, password);
+
+            if (user == null)
             {
-                var user = await _authService.SignInAsync(email, password);
-
-                if (user == null) return;
-                Console.WriteLine(user.Email);
-                var curruser = _authService.GetCurrentUser();
-                if (curruser.ConfirmedAt == null)
-                {
-                    await Navigation.PushAsync(new OtpVerificationPage(curruser.Email));
-                }
-                else
-                {
-                    await Shell.Current.GoToAsync("//home");
-
-                }
+                StatusLabel.Text = "Sign-in failed. Please try again.";
+                return;
             }
-            catch (Exception ex)
-            {
-                if (ex.Message.Contains("email_not_confirmed"))  // Check    for confirmation error
-                {
-                    await DisplayAlert("Email Not Confirmed", 
-                        "Please confirm your email before signing in.", "OK");
 
-                    await Navigation.PushAsync(new OtpVerificationPage(EmailEntry.Text));
-                }
-                else
-                {
-                    StatusLabel.Text = "Sign-in failed: " + ex.Message;
-                }
+            Console.WriteLine(user.Email);
+            var profile = ServiceHelper.GetService<ProfileService>();
+            await profile.InitializeProfileAsync(user.Id);
+
+            var curruser = _authService.GetCurrentUser();
+            if (curruser.ConfirmedAt == null)
+            {
+                await Navigation.PushAsync(new OtpVerificationPage(curruser.Email));
+            }
+            else
+            {
+                Application.Current.MainPage = new AppShell();
+                await Shell.Current.GoToAsync("//homePage");
+            }
+
+            return; // success
+        }
+        catch (Exception ex)
+        {
+            if (ex.Message.Contains("email_not_confirmed"))
+            {
+                await DisplayAlert("Email Not Confirmed", 
+                    "Please confirm your email before signing in.", "OK");
+
+                await Navigation.PushAsync(new OtpVerificationPage(email));
+                return;
+            }
+
+            // Retry on transient errors only
+            if (IsTransientError(ex))
+            {
+                attempts++;
+                await Task.Delay(800); // Optional delay between retries
+                continue;
+            }
+            else
+            {
+                StatusLabel.Text = "Sign-in failed: " + ex.Message.Replace("error: ", "");
+                return;
             }
         }
+    }
+
+    StatusLabel.Text = "Failed to sign in after multiple attempts. Please try again later.";
+}
+
+private async void Forgot(Object sender, EventArgs e)
+{
+    await Navigation.PushAsync(new ForgotPage());
+    
+}
+private bool IsTransientError(Exception ex)
+{
+    return ex is TimeoutException ||
+           ex.Message.Contains("timeout", StringComparison.OrdinalIgnoreCase) ||
+           ex.Message.Contains("network", StringComparison.OrdinalIgnoreCase) ||
+           ex.Message.Contains("connection", StringComparison.OrdinalIgnoreCase);
+}
         private async Task<bool> IsEmailRegisteredAsync(string email)
         {
             try
@@ -74,6 +126,7 @@ namespace macaroni_dev.Views
                 return false;
             }
         }
+
         private void PartySignInClicked(object sender, EventArgs e)
         {
             if (sender is Button button && button.CommandParameter is string provider)
@@ -102,6 +155,9 @@ namespace macaroni_dev.Views
                 if (user != null)
                 {
                     Console.WriteLine("Third Party SignIn Success");
+                    var profile = ServiceHelper.GetService<ProfileService>();
+                    await profile.InitializeProfileAsync(user.Id);
+                    Application.Current.MainPage = new AppShell();
                     await Shell.Current.GoToAsync("//homePage");
     
                 }
@@ -116,9 +172,9 @@ namespace macaroni_dev.Views
             }
         }
       
-        private async void OnGoToRegisterClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new RegisterPage());
+        private void OnGoToRegisterClicked(object sender, EventArgs e)
+        { 
+            Navigation.PushAsync(new RegisterPage());
         }
     }
 }

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="macaroni_dev.Views.LoginPage"
-             Title="Login">
+             xmlns:core="http://schemas.syncfusion.com/maui"
+             x:Class="macaroni_dev.Views.LoginPage">
     <ContentPage.Content>
         <VerticalStackLayout Padding="20" Spacing="10">
+            <VerticalStackLayout.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="White" Offset="0.4"/>
+                    <GradientStop Color="#51F1F2" Offset="0.6"/>
+
+                    <GradientStop Color="#2F9BDF" Offset="1"/>
+
+                </LinearGradientBrush>
+            </VerticalStackLayout.Background>
             <Grid HorizontalOptions = "FillAndExpand" VerticalOptions="Center" Padding="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /> <!-- Empty space for centering -->
@@ -12,19 +21,80 @@
                     <ColumnDefinition Width="*" /> <!-- Empty space for centering -->
                 </Grid.ColumnDefinitions>
 
-                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="Center">
-                    <Image Source="sample.png" HeightRequest="24" WidthRequest="24" />
-                    <Label Text="Jobilis" FontSize="20" VerticalOptions="Center" />
-                </HorizontalStackLayout>
+                    <Image Source="splash" Grid.Column="1" HorizontalOptions="Center" HeightRequest="250" WidthRequest="250" />
+                  
             </Grid>
-            <Entry x:Name="EmailEntry" Placeholder="Email" />
-            <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+            <core:SfTextInputLayout Hint="Email"
+                                            HeightRequest="80"
+                                            HelperText="E.g: Test@gmail.com"
+                                            TrailingViewPosition="Inside"
+                                            LeadingViewPosition="Inside"
+                                            FocusedStrokeThickness="3"
+                                            UnfocusedStrokeThickness="1"
+                                            Stroke="RoyalBlue"
+                                            OutlineCornerRadius="8"
+                                            ContainerType="Outlined">
+                <Entry x:Name="EmailEntry" ClearButtonVisibility="WhileEditing"/>
+                <core:SfTextInputLayout.LeadingView>
+                    <Label
+                        Text="&#xe158;"
+                        FontFamily="MaterialOutlined">
+                    </Label>
+                </core:SfTextInputLayout.LeadingView>
+            </core:SfTextInputLayout>
+            
+            <core:SfTextInputLayout Hint="Password"
+                                    HeightRequest="80"
 
-            <Button Text="Sign In" Clicked="OnSignInClicked" />
-            <Button Text="Sign in with Google" Clicked="PartySignInClicked" CommandParameter="Google" />
-            <Button Text="Sign in with Facebook" Clicked="PartySignInClicked" CommandParameter="Facebook" />
+                                    HelperText="E.g: #SecurePass123"
+                                    TrailingViewPosition="Inside"
+                                    EnablePasswordVisibilityToggle="True"
+                                    Stroke="RoyalBlue"
+                                    OutlineCornerRadius="8"
+                                    FocusedStrokeThickness="3"
+                                    UnfocusedStrokeThickness="1"
+                                    LeadingViewPosition="Inside"
+                                    ContainerType="Outlined">
+                <Entry x:Name="PasswordEntry" IsPassword="True"/>
+                <core:SfTextInputLayout.LeadingView>
+                    <Label
+                        Text="&#xf042;"
+                        FontFamily="MaterialOutlined">     
+                    </Label>
+                </core:SfTextInputLayout.LeadingView>
+            </core:SfTextInputLayout>
 
-            <Button Text="Go to Register" Clicked="OnGoToRegisterClicked" />
+            <Button Text="Sign In" Clicked="OnSignInClicked" 
+                    StyleClass="FilledButton" BackgroundColor="#303e63" 
+                    TextColor="White" CornerRadius="4" Margin="30,0">
+                <Button.ImageSource>
+                    <FontImageSource FontFamily="MaterialOutlined" Glyph="&#xea77;"/>
+                </Button.ImageSource>
+            </Button>
+           <Button Text="Sign in with Google" Clicked="PartySignInClicked" 
+                   BackgroundColor="#303e63" 
+                   CommandParameter="Google" CornerRadius="4" StyleClass="FilledButton" Margin="30,0"
+                   ContentLayout="Left, 10"
+                   ImageSource="gmail_icon"
+                   >
+               
+           </Button>
+            <Button Text="Sign in with Facebook" 
+                    BackgroundColor="#303e63" 
+                    Clicked="PartySignInClicked" CommandParameter="Facebook"
+                    CornerRadius="4" StyleClass="FilledButton" Margin="30,0"
+                    ContentLayout="Left, 10"
+                    ImageSource="fb_icon"
+                    />
+
+            <Label Text="Dont have Account? Register here"
+                   HorizontalOptions="Center"
+                   TextDecorations="Underline"
+                   TextColor="Blue">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnGoToRegisterClicked" />
+                </Label.GestureRecognizers>
+            </Label>
             <Label x:Name="StatusLabel" Text="" TextColor="Red" />
         </VerticalStackLayout>
     </ContentPage.Content>

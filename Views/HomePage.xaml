@@ -1,25 +1,292 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:macaroni_dev.Models"
              xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
              Shell.TitleColor="White"
-             Shell.BackgroundColor="MediumAquamarine"
+             Shell.BackgroundColor="#2F9BDF"
+             xmlns:chip="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
              xmlns:ui="clr-namespace:Xe.AcrylicView;assembly=Xe.AcrylicView"
+             xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             xmlns:popup="http://schemas.syncfusion.com/maui"
+             xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+
              Title=""
              x:Class="macaroni_dev.Views.HomePage">
+   
+    <Shell.SearchHandler>
+        <SearchHandler  SelectedItem="{Binding SelectedSearch}"
+            ClearIcon="close" QueryIcon="search" Query="{Binding SearchText}" ItemsSource="{Binding SearchResults, Mode=OneWay}" ShowsResults="True">
+            <SearchHandler.ItemTemplate>
+                <DataTemplate x:DataType="m:JobPost">
+                    <Border
+                        Stroke="DarkGray"
+                        StrokeThickness="2"
+                        BackgroundColor="White"
+                        Padding="10"
+                        Margin="10"
+                        StrokeShape="RoundRectangle 10">
+                        <VerticalStackLayout Spacing="8">
+        
+                            <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                                <Label 
+                                    Text="{Binding JobName}" 
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    TextColor="Black"/>
+            
+                                <Label 
+                                    Text="{Binding Salary}" 
+                                    FontSize="16"
+                                    TextColor="DarkGreen"/>
+                            </HorizontalStackLayout>
+        
+                            <Label 
+                                Text="{Binding Location}" 
+                                FontSize="14"
+                                TextColor="Gray"
+                                HorizontalOptions="Center"/>
+        
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </SearchHandler.ItemTemplate>
+        </SearchHandler>
+        
+    </Shell.SearchHandler>
     <ContentPage.Content>
-            <Grid>
-                <Label Text="Welcome to Home Page!" FontSize="24" HorizontalOptions="Center" />
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                    <GradientStop Color="#51F1F2" Offset="0.1"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid RowDefinitions="Auto, *">
+                <BoxView  VerticalOptions="Start">
+                    <BoxView.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                            <GradientStop Color="#51F1F2" Offset="0.4"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </BoxView.Background>
+                </BoxView>
+                <popup:SfPopup x:Name="skillpopup"  ShowCloseButton="False"  StaysOpen="True" >
+                    <popup:SfPopup.ContentTemplate>
+                        <DataTemplate x:DataType="vm:HomePageViewModel" >
+                            <editors:SfAutocomplete x:Name="autocomplete" ShowBorder="True" 
+                                                    SelectionMode="Single" SelectionChanged="Autocomplete_OnSelectionChanged"
+                                                    HorizontalOptions="Center" VerticalOptions="Center" 
+                                                    Margin="15,30" DisplayMemberPath="Name" ItemsSource="{Binding SkillsList}"/>
+                        </DataTemplate>
+                    </popup:SfPopup.ContentTemplate>
+                    <popup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid BackgroundColor="#303e63">
+                                <Label Text="Filter by Skill" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
+                                <Button Text="X" CornerRadius="15" BackgroundColor="White" TextColor="Black" HeightRequest="30" WidthRequest="30" Clicked="Skills_OnClicked" Margin="15, 0" VerticalOptions="Center" HorizontalOptions="End" />
+                            </Grid>
+                          
+                        </DataTemplate>
+                    </popup:SfPopup.HeaderTemplate>
+                </popup:SfPopup>
+
+                <popup:SfPopup x:Name="locationpopup"  ShowCloseButton="False" AutoSizeMode="Height" StaysOpen="True" >
+                    <popup:SfPopup.ContentTemplate>
+                        <DataTemplate x:DataType="vm:HomePageViewModel">
+                            <VerticalStackLayout Margin="20">
+                                <material:TextField Text="{Binding FilterLocation}" Margin="5" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Location_city}}" />
+                                <Button Text="Filter" BackgroundColor="#6495ed" TextColor="White"  StyleClass="FilledButton" Clicked="Button_OnClicked" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </popup:SfPopup.ContentTemplate>
+                    <popup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid BackgroundColor="#303e63">
+                                <Label Text="Filter by Location" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
+                                <Button Text="X" CornerRadius="15" BackgroundColor="White" TextColor="Black" HeightRequest="30" WidthRequest="30" Clicked="Location_OnClicked" Margin="15, 0" Padding="15" VerticalOptions="Center" HorizontalOptions="End" />
+                            </Grid>
+                          
+                        </DataTemplate>
+                    </popup:SfPopup.HeaderTemplate>
+                </popup:SfPopup>
+                
+                <popup:SfPopup x:Name="salarypopup"  ShowCloseButton="False" AutoSizeMode="Height" StaysOpen="True" >
+                    <popup:SfPopup.ContentTemplate>
+                        <DataTemplate x:DataType="vm:HomePageViewModel">
+                            <VerticalStackLayout Margin="20" >
+                                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
+                                   <HorizontalStackLayout Spacing="5">
+                                       <Label Text="Min" VerticalOptions="Center"/>
+                                       <editors:SfNumericEntry WidthRequest="200"
+                                                            
+                                                               Value="{Binding FilterStartSalary}"
+                                                               AllowNull="False" />
+                                   </HorizontalStackLayout>
+                                 
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="Max" VerticalOptions="Center"/>
+                                        <editors:SfNumericEntry WidthRequest="200"
+                                                                Value="{Binding FilterEndSalary}"
+                                                                AllowNull="False" />
+                                    </HorizontalStackLayout>
+                                 
+                                </VerticalStackLayout>
+                                
+                                <Button Text="Filter" BackgroundColor="#6495ed" TextColor="White" StyleClass="FilledButton" Margin="15" WidthRequest="100" Clicked="Sal_Button_OnClicked" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </popup:SfPopup.ContentTemplate>
+                    <popup:SfPopup.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid BackgroundColor="#303e63">
+                                <Label Text="Filter by Salary" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
+                                <Button Text="X" CornerRadius="15" BackgroundColor="White" TextColor="Black" HeightRequest="30" WidthRequest="30" Padding="20" Clicked="Salary_OnClicked" Margin="15, 0" VerticalOptions="Center" HorizontalOptions="End" />
+                            </Grid>
+                          
+                        </DataTemplate>
+                    </popup:SfPopup.HeaderTemplate>
+                </popup:SfPopup>
+                
+                <ScrollView Grid.Row="0"  Orientation="Horizontal" HorizontalScrollBarVisibility="Always" Margin="20">
+                    <chip:SfChipGroup Margin="0, 20" SelectedChipTextColor="White" SelectedChipBackground="#6495ed"
+                                      ChipBackground="White"
+                                       ChipType="Choice" ChoiceMode="SingleOrNone"
+                                       x:Name="Chippy"
+                                       x:DataType="vm:HomePageViewModel">
+                        <chip:SfChipGroup.Items >
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold"  Clicked="ButtonBase_OnClicked" Text="No Filter" x:Name="Default"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold" Clicked="ButtonBase_OnClicked" Text="Filter by Skills"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold" Clicked="ButtonBase_OnClicked" Text="Filter by Location"/>
+                            <chip:SfChip Background="White" TextColor="Black" FontSize="15" FontAttributes="Bold" Clicked="ButtonBase_OnClicked" Text="Filter by Salary"/>
+                          
+                        </chip:SfChipGroup.Items>
+                    </chip:SfChipGroup>
+                </ScrollView>
+               
+                <tabView:SfTabView x:Name="tabView" Grid.Row="1">
+            <tabView:SfTabView.Items>
+                <tabView:SfTabItem Header="All Jobs">
+                    <tabView:SfTabItem.Content>
+                          <CollectionView x:DataType="vm:HomePageViewModel" ItemsSource="{Binding JobFeed}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:JobPost">
+                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto" BackgroundColor="White">
+                        <!-- BoxView for the top border -->
+                        <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.ColumnSpan="2">
+                            <BoxView.Shadow>
+                                <Shadow Brush="Gray" Offset="0,20" Radius="5" Opacity="0.5"/>
+                            </BoxView.Shadow>
+                        </BoxView>
+
+                        <!-- Post content with top and bottom visible sides -->
+                        <Frame BorderColor="Transparent" Padding="10" Margin="0,10" BackgroundColor="White" Grid.Row="1">
+                            <StackLayout>
+                                <Label Text="{Binding JobName}" FontAttributes="Bold"  FontSize="15" />
+                                <Label Text="{Binding JobDetail, StringFormat='Description: {0}'}" FontSize="11" MaxLines="2"/>                                <Label Text="{Binding Location, StringFormat='📍 {0}'}"/>
+                                <Label Text="{Binding Salary, StringFormat='Salary: ₱ {0}'}" TextColor="RoyalBlue" />
+                            </StackLayout>
+                        </Frame>
+                        <Button Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="20" ClassId="FilledButton" 
+                                WidthRequest="100" BackgroundColor="{Binding ApplyButtonColor}"
+                                TextColor="Black" FontAttributes="Bold" Text="{Binding ApplyButtonText}"
+                                IsEnabled="{Binding IsApplied, Converter={StaticResource InvertedBoolToVis}}"
+                                IsVisible="{Binding IsNotCurrentUser}"
+                                Command="{Binding ApplyCommand, Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}}"
+                                CommandParameter="{Binding .}"
+                               />
+                        
+                        <Button Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="20" ClassId="FilledButton" 
+                                WidthRequest="100" BackgroundColor="PaleGoldenrod"
+                                TextColor="Black" FontAttributes="Bold" Text="Edit"
+                                IsVisible="{Binding IsNotCurrentUser, Converter={StaticResource InvertedBoolToVis}}"
+                                Command="{Binding EditCommand, Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}}"
+                                CommandParameter="{Binding .}"
+                        />
+
+
+                        <!-- BoxView for the bottom border -->
+                        <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.ColumnSpan="2">
+                            <BoxView.Shadow>
+                                <Shadow Brush="Gray" Offset="0,-20" Radius="5" Opacity="0.5"/>
+                            </BoxView.Shadow>
+                        </BoxView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+                    </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+
+                <tabView:SfTabItem Header="Saved">
+                     <tabView:SfTabItem.Content>
+                    <CollectionView x:DataType="vm:HomePageViewModel" ItemsSource="{Binding SavedJobs}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:JobPost">
+                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto" BackgroundColor="White">
+                        <!-- BoxView for the top border -->
+                        <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.ColumnSpan="2">
+                            <BoxView.Shadow>
+                                <Shadow Brush="Gray" Offset="0,20" Radius="5" Opacity="0.5"/>
+                            </BoxView.Shadow>
+                        </BoxView>
+
+                        <!-- Post content with top and bottom visible sides -->
+                        <Frame BorderColor="Transparent" Padding="10" Margin="0,10" BackgroundColor="White" Grid.Row="1">
+                            <StackLayout>
+                                <Label Text="{Binding JobName}" FontAttributes="Bold"  FontSize="15" />
+                                <Label Text="{Binding JobDetail}" FontSize="11" />
+                                <Label Text="{Binding Location, StringFormat='📍 {0}'}"/>
+                                <Label Text="{Binding Salary, StringFormat='Salary: ₱ {0}'}" TextColor="RoyalBlue" />
+                            </StackLayout>
+                        </Frame>
+                        <VerticalStackLayout  Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="20" Spacing="5">
+                            <Button  ClassId="FilledButton" 
+                                    WidthRequest="100" BackgroundColor="CornflowerBlue"
+                                    TextColor="Black" FontAttributes="Bold" Text="Check"
+                                    Command="{Binding ApplyCommand, Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                            />
+                            <Button  ClassId="FilledButton" 
+                                    WidthRequest="100" BackgroundColor="PaleVioletRed"
+                                    TextColor="Black" FontAttributes="Bold" Text="Remove"
+                                    Command="{Binding RemoveSavedCommand, Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}}"
+                                    CommandParameter="{Binding .}"
+                            />
+                        </VerticalStackLayout>
+                      
+
+                        <!-- BoxView for the bottom border -->
+                        <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.ColumnSpan="2">
+                            <BoxView.Shadow>
+                                <Shadow Brush="Gray" Offset="0,-20" Radius="5" Opacity="0.5"/>
+                            </BoxView.Shadow>
+                        </BoxView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+                </tabView:SfTabItem.Content>
+                </tabView:SfTabItem>
+            </tabView:SfTabView.Items>
+        </tabView:SfTabView>
                 <Label x:Name="StatusLabel" Text="" TextColor="Red" />
-                <ui:AcrylicView
-                    EffectStyle="Dark"
-                    HorizontalOptions="Fill"
-                    x:DataType="vm:HomePageViewModel"
-                    IsVisible="{Binding Blur}"
-                    Margin="0"
-                    TintOpacity=".15 "
-                    VerticalOptions="Fill"
-                />
+               
             </Grid>
+            <ui:AcrylicView
+                EffectStyle="Dark"
+                HorizontalOptions="Fill"
+                x:DataType="vm:HomePageViewModel"
+                IsVisible="{Binding Blur}"
+                Margin="0"
+                TintOpacity=".15 "
+                VerticalOptions="Fill"
+            />
+        </Grid>
+       
     </ContentPage.Content>
 </ContentPage>

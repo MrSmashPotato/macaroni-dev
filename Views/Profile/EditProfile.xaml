@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             xmlns:core="http://schemas.syncfusion.com/maui"
+             Shell.BackgroundColor="#2F9BDF"
+             x:Class="macaroni_dev.Views.Profile.EditProfile">
+    <ContentPage.BindingContext>
+        <vm:EditProfileViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Update" IsEnabled="{Binding IsChanging}" Command="{Binding UpdateCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,*, *,*, *" BackgroundColor="Transparent">
+            <BoxView Grid.Row="0" Grid.RowSpan="2">
+                <BoxView.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                        <GradientStop Color="#51F1F2" Offset="0.4"/>
+                        <GradientStop Color="White" Offset="1"/>
+
+                    </LinearGradientBrush>
+                </BoxView.Background>
+            </BoxView>
+            <BoxView Grid.Row="2" Color="White" />
+            <Grid Grid.Row="1" RowDefinitions="*,*" RowSpacing="25" VerticalOptions="Start" HorizontalOptions="Center">
+                <core:SfBadgeView Grid.Row="0">
+                    
+                    <core:SfBadgeView.BadgeSettings>
+                        <core:BadgeSettings
+                            Position="BottomRight"
+                            Type="Success"
+                            Icon="Available"
+                        />
+                    </core:SfBadgeView.BadgeSettings>
+
+                    <core:SfAvatarView ContentType="Custom"  
+                                       AvatarShape="Circle"
+                                       AvatarSize="ExtraLarge"
+                                       StrokeThickness="1"
+                                       Stroke="Black"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Aspect="AspectFit"
+                                       ImageSource="{Binding User.ProfileImage}" />
+                </core:SfBadgeView>
+                <Button Grid.Row="1" Margin="20" Text="Change Profile Picture" FontSize="12" BackgroundColor="RoyalBlue" WidthRequest="180" HorizontalOptions="Center"/>
+            </Grid>
+            <ScrollView x:Name="MainScrollView" Grid.Row="2" Margin="20" Grid.RowSpan="4">
+                <VerticalStackLayout>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Name" FontAttributes="Bold" FontSize="16" />
+                        <Label Text="Maximum 25 characters"  FontSize="10" />
+                    </VerticalStackLayout>
+           
+
+
+                    <core:SfTextInputLayout Hint="First Name" TrailingViewPosition="Inside"
+                                            x:Name="FirstNameWrapper"
+                                            HeightRequest="60"
+                                            ContainerType="Outlined" ContainerBackground="Transparent"
+                                            ReserveSpaceForAssistiveLabels="False"
+                    >
+                        <Entry Text="{Binding FirstName, Mode=TwoWay}" x:Name="FirstNameEntry" Focused="OnInputFocused" MaxLength="30" />
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label 
+                                Text="&#xf4ca;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20"/>
+                        </core:SfTextInputLayout.LeadingView>
+                        <core:SfTextInputLayout.TrailingView>
+                            <Label 
+                                Text="&#xe5c9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClearCommand}" CommandParameter="FirstName" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </core:SfTextInputLayout.TrailingView>
+                
+                    </core:SfTextInputLayout>
+                    
+                    <core:SfTextInputLayout Hint="Middle Name" TrailingViewPosition="Inside"
+                                            x:Name="MiddleNameWrapper"
+                                            HeightRequest="60"
+                                            ContainerType="Outlined" ContainerBackground="Transparent"
+                                            ReserveSpaceForAssistiveLabels="False"
+                    >
+                        <Entry Text="{Binding MiddleName, Mode=TwoWay}" x:Name="MiddleNameEntry" Focused="OnInputFocused" MaxLength="30" />
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label 
+                                Text="&#xf4ca;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20"/>
+                        </core:SfTextInputLayout.LeadingView>
+                        <core:SfTextInputLayout.TrailingView>
+                            <Label 
+                                Text="&#xe5c9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClearCommand}" CommandParameter="MiddleName" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </core:SfTextInputLayout.TrailingView>
+                
+                    </core:SfTextInputLayout>
+                    
+                    <core:SfTextInputLayout Hint="Last Name" TrailingViewPosition="Inside"
+                                            x:Name="LastNameWrapper"
+                                            HeightRequest="60"
+                                            ContainerType="Outlined" ContainerBackground="Transparent"
+                                            ReserveSpaceForAssistiveLabels="False"
+                    >
+                        <Entry Text="{Binding LastName, Mode=TwoWay}" x:Name="LastNameEntry" Focused="OnInputFocused" MaxLength="30" />
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label 
+                                Text="&#xf4ca;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20"/>
+                        </core:SfTextInputLayout.LeadingView>
+                        <core:SfTextInputLayout.TrailingView>
+                            <Label 
+                                Text="&#xe5c9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClearCommand}" CommandParameter="LastName" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </core:SfTextInputLayout.TrailingView>
+                
+                    </core:SfTextInputLayout>
+                    
+                    <core:SfTextInputLayout Hint="Location" TrailingViewPosition="Inside"
+                                            x:Name="LocationWrapper"
+                                            HeightRequest="60"
+                                            ContainerType="Outlined" ContainerBackground="Transparent"
+                                            ReserveSpaceForAssistiveLabels="False"
+                    >
+                        <Entry Text="{Binding Location, Mode=TwoWay}" x:Name="LocationEntry" Focused="OnInputFocused" MaxLength="30" />
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label 
+                                Text="&#xe0c8;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20"/>
+                        </core:SfTextInputLayout.LeadingView>
+                        <core:SfTextInputLayout.TrailingView>
+                            <Label 
+                                Text="&#xe5c9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClearCommand}" CommandParameter="Location" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </core:SfTextInputLayout.TrailingView>
+                
+                    </core:SfTextInputLayout>
+                    
+                    <core:SfTextInputLayout Hint="Company" TrailingViewPosition="Inside"
+                                            x:Name="CompanyWrapper"
+                                            HeightRequest="60"
+                                            ContainerType="Outlined" ContainerBackground="Transparent"
+                                            ReserveSpaceForAssistiveLabels="False"
+                    >
+                        <Entry Text="{Binding Company, Mode=TwoWay}" x:Name="CompanyEntry" Focused="OnInputFocused" MaxLength="30" />
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label 
+                                Text="&#xe7ee;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20"/>
+                        </core:SfTextInputLayout.LeadingView>
+                        <core:SfTextInputLayout.TrailingView>
+                            <Label 
+                                Text="&#xe5c9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClearCommand}" CommandParameter="Company" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </core:SfTextInputLayout.TrailingView>
+                
+                    </core:SfTextInputLayout>
+                    
+                    
+                    <core:SfTextInputLayout Hint="Occupation" TrailingViewPosition="Inside"
+                                            x:Name="OccupationWrapper"
+                                            HeightRequest="60"
+                                            ContainerType="Outlined" ContainerBackground="Transparent"
+                                            ReserveSpaceForAssistiveLabels="False"
+                    >
+                        <Entry Text="{Binding Occupation, Mode=TwoWay}" x:Name="OccupationEntry" Focused="OnInputFocused" MaxLength="30" />
+                        <core:SfTextInputLayout.LeadingView>
+                            <Label 
+                                Text="&#xe8f9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20"/>
+                        </core:SfTextInputLayout.LeadingView>
+                        <core:SfTextInputLayout.TrailingView>
+                            <Label 
+                                Text="&#xe5c9;" 
+                                FontFamily="MaterialOutlined"
+                                FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ClearCommand}" CommandParameter="Occupation" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </core:SfTextInputLayout.TrailingView>
+                
+                    </core:SfTextInputLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

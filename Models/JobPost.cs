@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+using macaroni_dev.Services;
 using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
@@ -7,7 +10,7 @@ namespace macaroni_dev.Models
     [Table("job_post")] 
     public class JobPost : BaseModel
     {
-        [PrimaryKey("Id", false)]
+        [PrimaryKey("id", false)]
         public int Id { get; set; }
 
 
@@ -33,6 +36,22 @@ namespace macaroni_dev.Models
         public Guid UserID { get; set; }
         [Column("salary")]
         public decimal Salary { get; set; }
+
+        [JsonIgnore]
+        private User user = ServiceHelper.GetService<ProfileService>().CurrentUser;
+        
+        [IgnoreDataMember]
+        public bool IsApplied { get; set; } = false;
+        [IgnoreDataMember]
+        public string ApplyButtonText => IsApplied ? "Applied" : "Check";
+        [IgnoreDataMember]
+        public Color ApplyButtonColor => IsApplied ? Colors.Gray : Colors.CornflowerBlue;
+        [IgnoreDataMember]
+        public bool IsNotCurrentUser => UserID != user.ID;
+        [IgnoreDataMember]
+        public JobApplication? Application { get; set; }
+
     }
+    
 }
 

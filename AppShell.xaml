@@ -6,10 +6,18 @@
     xmlns:local="clr-namespace:macaroni_dev"
     xmlns:views="clr-namespace:macaroni_dev.Views"
     Shell.FlyoutBehavior="Flyout"
-    FlyoutBackground="#B3E5FC"
     Padding="15"
+    TabBarForegroundColor="RoyalBlue"
+    TabBarTitleColor="RoyalBlue"
     Shell.FlyoutWidth="300">
     
+    <Shell.FlyoutBackground>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#2F9BDF" Offset="0.0"/>
+            <GradientStop Color="#51F1F2" Offset="0.1"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Shell.FlyoutBackground>
     <ShellContent Route="loading" 
                   ContentTemplate="{DataTemplate views:LoadingPage}"
                   FlyoutItemIsVisible="False"
@@ -21,7 +29,7 @@
         FlyoutItemIsVisible="False"
         Route="loginPage"
     />
-	<FlyoutItem FlyoutDisplayOptions="AsSingleItem" Title="Dashboard">
+	<FlyoutItem FlyoutDisplayOptions="AsSingleItem" Icon="dashboard" Title="Dashboard">
         <ShellContent
             Title="Job Search"
             Icon="job_search"
@@ -54,6 +62,6 @@
     </FlyoutItem>
    
     <Shell.FlyoutFooter>
-        <Button Clicked="OnLogoutClicked" Text="Logout" HorizontalOptions="Center" Padding="10" Margin="15,15,15,25"/>
+        <Button Clicked="OnLogoutClicked" Text="Logout" BackgroundColor="IndianRed" TextColor="Black"  HorizontalOptions="Center" StyleClass="FilledButton" Margin="15,15,15,25"/>
     </Shell.FlyoutFooter>
 </Shell>

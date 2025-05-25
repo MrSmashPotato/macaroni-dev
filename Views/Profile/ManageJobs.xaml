@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:macaroni_dev.ViewModels"
+             xmlns:m="clr-namespace:macaroni_dev.Models"
+             Title="Manage Job Post"
+             Shell.BackgroundColor="#2F9BDF"
+
+             x:Class="macaroni_dev.Views.Profile.ManageJobs">
+    
+    <ContentPage.BindingContext>
+        <vm:ManageJobsViewmodel />
+    </ContentPage.BindingContext>
+    <ScrollView Orientation="Vertical" VerticalScrollBarVisibility="Always">
+        <StackLayout>
+            <StackLayout.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                    <GradientStop Color="#51F1F2" Offset="0.1"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </StackLayout.Background>
+            <CollectionView x:DataType="vm:ManageJobsViewmodel" ItemsSource="{Binding MyPosts}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:JobPost">
+                    <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*, Auto" BackgroundColor="White">
+                        <!-- BoxView for the top border -->
+                        <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.ColumnSpan="2">
+                            <BoxView.Shadow>
+                                <Shadow Brush="Gray" Offset="0,20" Radius="5" Opacity="0.5"/>
+                            </BoxView.Shadow>
+                        </BoxView>
+
+                        <!-- Post content with top and bottom visible sides -->
+                        <Frame BorderColor="Transparent" Padding="10" Margin="0,10" BackgroundColor="White" Grid.Row="1">
+                            <StackLayout>
+                                <Label Text="{Binding JobName}" FontAttributes="Bold"  FontSize="15" />
+                                <Label Text="{Binding JobDetail}" FontSize="11" />
+                                <Label Text="{Binding Location, StringFormat='📍 {0}'}"/>
+                                <Label Text="{Binding Salary, StringFormat='Salary: ₱ {0}'}" TextColor="RoyalBlue" />
+                            </StackLayout>
+                        </Frame>
+                        <Button Grid.Row="1" Grid.Column="1" VerticalOptions="Start" Margin="20" ClassId="FilledButton" 
+                                WidthRequest="100" BackgroundColor="WhiteSmoke"
+                                IsEnabled="{Binding IsEditEnabled, Source={RelativeSource AncestorType={x:Type vm:ManageJobsViewmodel}}}"
+                                TextColor="Black" FontAttributes="Bold" Text="Edit"
+                                Command="{Binding EditButtonCommand, Source={RelativeSource AncestorType={x:Type vm:ManageJobsViewmodel}}}"
+                                CommandParameter="{Binding .}"
+                                />
+
+                        <!-- BoxView for the bottom border -->
+                        <BoxView HeightRequest="1" BackgroundColor="Grey" Opacity="0.3" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.ColumnSpan="2">
+                            <BoxView.Shadow>
+                                <Shadow Brush="Gray" Offset="0,-20" Radius="5" Opacity="0.5"/>
+                            </BoxView.Shadow>
+                        </BoxView>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="No Created Posts Yet" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center" IsVisible="{Binding NoPost}"/>
+    </StackLayout>
+    </ScrollView>
+    
+  
+</ContentPage>

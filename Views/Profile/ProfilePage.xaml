@@ -2,12 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
             x:Class="macaroni_dev.Views.ProfilePage"  
-            Shell.BackgroundColor="MediumAquamarine"
+            Shell.BackgroundColor="#2F9BDF"
             Title="Profile Page"
             xmlns:vm="clr-namespace:macaroni_dev.ViewModels">  
 
-   <ScrollView>  
-       <StackLayout Padding="20" BackgroundColor="#F5F5F5">  
+   <ScrollView>
+       <Grid>
+           <BoxView HeightRequest="400" VerticalOptions="Start">
+               <BoxView.Background>
+                   <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                       <GradientStop Color="#2F9BDF" Offset="0.0"/>
+                       <GradientStop Color="#51F1F2" Offset="0.4"/>
+                       <GradientStop Color="White" Offset="1"/>
+                   </LinearGradientBrush>
+               </BoxView.Background>
+           </BoxView>
+                  <StackLayout Padding="20">
+       
 
            <!-- Profile Section -->  
            <Border BackgroundColor="White" Padding="15" Margin="0,0,0,20">
@@ -29,7 +40,6 @@
                           FontSize="24"   
                           HorizontalOptions="Center"
                           FontAutoScalingEnabled="True"
-                          
                           FontAttributes="Bold" />  
 
                    <Label Text="{Binding Location}"   
@@ -38,7 +48,8 @@
                           TextColor="Gray" />  
 
                    <Button Text="Edit Profile"   
-                           BackgroundColor="#007AFF"   
+                           BackgroundColor="#007AFF" 
+                           Command="{Binding EditCommand}"
                            TextColor="White"   
                            Margin="0,10"   
                            HorizontalOptions="Center" />  
@@ -197,5 +208,7 @@
 
             </StackLayout>  
        </StackLayout>  
+
+       </Grid>  
    </ScrollView>  
 </ContentPage>
