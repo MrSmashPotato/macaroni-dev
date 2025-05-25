@@ -104,6 +104,7 @@ public partial class EditProfileViewModel : ObservableObject
            User.Occupation = Occupation;
            User.ProfileImage = ProfileImage;
            User.Location = Location;
+           User.IsComplete = true;
            await User.Update<User>();
            await Application.Current.MainPage.DisplayAlert("Update Success", "Changed values are now updated", "OK");
            await Application.Current.MainPage.Navigation.PopAsync();

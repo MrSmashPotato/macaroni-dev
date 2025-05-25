@@ -16,11 +16,15 @@
             <RoundRectangle CornerRadius="40,40,40,40"/>
         </Border.StrokeShape>
         <ScrollView x:Name="MainScrollView">
-            <VerticalStackLayout Padding="20" Spacing="15">
-                <Label Text="Complete Your Registration" 
-                       FontSize="24" 
-                       HorizontalOptions="Center" />
-            
+            <Grid>
+                <Button Text="X" CornerRadius="15"
+                        BackgroundColor="White"
+                        Clicked="Button_OnClicked"
+                        TextColor="Black"
+                        WidthRequest="30"
+                        HeightRequest="30" HorizontalOptions="End" VerticalOptions="Start" Margin="15,15"/>
+                            <VerticalStackLayout Padding="20" Spacing="15">
+                                
                 <!-- Profile Image with Preview -->
                 <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Spacing="20">
                     <Label Text="Profile Picture" FontAttributes="Bold" HorizontalOptions="Center"/>
@@ -72,6 +76,8 @@
                 <BoxView HeightRequest="100" Opacity="0"/>
                 <BoxView HeightRequest="100" Opacity="0"/>
             </VerticalStackLayout>
+
+            </Grid>
         </ScrollView>
     </Border>
    

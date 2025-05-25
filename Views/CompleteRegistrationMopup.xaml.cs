@@ -32,4 +32,9 @@ public partial class CompleteRegistrationMopup
 		
 		
 	}
+
+	private void Button_OnClicked(object? sender, EventArgs e)
+	{
+		Mopups.Services.MopupService.Instance.PopAsync();
+	}
 }

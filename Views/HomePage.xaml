@@ -75,11 +75,10 @@
                         </LinearGradientBrush>
                     </BoxView.Background>
                 </BoxView>
-                <popup:SfPopup x:Name="skillpopup" ShowCloseButton="False"  StaysOpen="True" >
+                <popup:SfPopup x:Name="skillpopup"  ShowCloseButton="False"  StaysOpen="True" >
                     <popup:SfPopup.ContentTemplate>
-                        <DataTemplate x:DataType="vm:HomePageViewModel">
+                        <DataTemplate x:DataType="vm:HomePageViewModel" >
                             <editors:SfAutocomplete x:Name="autocomplete" ShowBorder="True" 
-                                                    BackgroundColor="Transparent"
                                                     SelectionMode="Single" SelectionChanged="Autocomplete_OnSelectionChanged"
                                                     HorizontalOptions="Center" VerticalOptions="Center" 
                                                     Margin="15,30" DisplayMemberPath="Name" ItemsSource="{Binding SkillsList}"/>
@@ -87,39 +86,39 @@
                     </popup:SfPopup.ContentTemplate>
                     <popup:SfPopup.HeaderTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid BackgroundColor="#303e63">
                                 <Label Text="Filter by Skill" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
-                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Skills_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
+                                <Button Text="X" CornerRadius="15" BackgroundColor="White" TextColor="Black" HeightRequest="30" WidthRequest="30" Clicked="Skills_OnClicked" Margin="15, 0" VerticalOptions="Center" HorizontalOptions="End" />
                             </Grid>
                           
                         </DataTemplate>
                     </popup:SfPopup.HeaderTemplate>
                 </popup:SfPopup>
 
-                <popup:SfPopup x:Name="locationpopup" ShowCloseButton="False" AutoSizeMode="Height" StaysOpen="True" >
+                <popup:SfPopup x:Name="locationpopup"  ShowCloseButton="False" AutoSizeMode="Height" StaysOpen="True" >
                     <popup:SfPopup.ContentTemplate>
                         <DataTemplate x:DataType="vm:HomePageViewModel">
                             <VerticalStackLayout Margin="20">
                                 <material:TextField Text="{Binding FilterLocation}" Margin="5" Icon="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static uranium:MaterialRegular.Location_city}}" />
-                                <Button Text="Filter"  StyleClass="FilledButton" Clicked="Button_OnClicked" HorizontalOptions="Center"/>
+                                <Button Text="Filter" BackgroundColor="#6495ed" TextColor="White"  StyleClass="FilledButton" Clicked="Button_OnClicked" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </popup:SfPopup.ContentTemplate>
                     <popup:SfPopup.HeaderTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid BackgroundColor="#303e63">
                                 <Label Text="Filter by Location" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
-                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Clicked="Location_OnClicked" Margin="15, 0" Padding="15" VerticalOptions="End" HorizontalOptions="End" />
+                                <Button Text="X" CornerRadius="15" BackgroundColor="White" TextColor="Black" HeightRequest="30" WidthRequest="30" Clicked="Location_OnClicked" Margin="15, 0" Padding="15" VerticalOptions="Center" HorizontalOptions="End" />
                             </Grid>
                           
                         </DataTemplate>
                     </popup:SfPopup.HeaderTemplate>
                 </popup:SfPopup>
                 
-                <popup:SfPopup x:Name="salarypopup" ShowCloseButton="False" AutoSizeMode="Height" StaysOpen="True" >
+                <popup:SfPopup x:Name="salarypopup"  ShowCloseButton="False" AutoSizeMode="Height" StaysOpen="True" >
                     <popup:SfPopup.ContentTemplate>
                         <DataTemplate x:DataType="vm:HomePageViewModel">
-                            <VerticalStackLayout Margin="20">
+                            <VerticalStackLayout Margin="20" >
                                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
                                    <HorizontalStackLayout Spacing="5">
                                        <Label Text="Min" VerticalOptions="Center"/>
@@ -138,15 +137,15 @@
                                  
                                 </VerticalStackLayout>
                                 
-                                <Button Text="Filter" StyleClass="FilledButton" Margin="15" WidthRequest="100" Clicked="Sal_Button_OnClicked" HorizontalOptions="Center"/>
+                                <Button Text="Filter" BackgroundColor="#6495ed" TextColor="White" StyleClass="FilledButton" Margin="15" WidthRequest="100" Clicked="Sal_Button_OnClicked" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </popup:SfPopup.ContentTemplate>
                     <popup:SfPopup.HeaderTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid BackgroundColor="#303e63">
                                 <Label Text="Filter by Salary" FontSize="25" FontAttributes="Bold" VerticalOptions="End" Margin="15" HorizontalOptions="Start"/>
-                                <Button Text="X" CornerRadius="15" HeightRequest="30" WidthRequest="30" Padding="20" Clicked="Salary_OnClicked" Margin="15, 0" VerticalOptions="End" HorizontalOptions="End" />
+                                <Button Text="X" CornerRadius="15" BackgroundColor="White" TextColor="Black" HeightRequest="30" WidthRequest="30" Padding="20" Clicked="Salary_OnClicked" Margin="15, 0" VerticalOptions="Center" HorizontalOptions="End" />
                             </Grid>
                           
                         </DataTemplate>
