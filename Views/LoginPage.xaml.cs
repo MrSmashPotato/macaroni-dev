@@ -172,9 +172,9 @@ private bool IsTransientError(Exception ex)
             }
         }
       
-        private async void OnGoToRegisterClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new RegisterPage());
+        private void OnGoToRegisterClicked(object sender, EventArgs e)
+        { 
+            Navigation.PushAsync(new RegisterPage());
         }
     }
 }

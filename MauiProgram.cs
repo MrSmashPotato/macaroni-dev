@@ -49,7 +49,7 @@ public static class MauiProgram
 			.UseSharpnadoMaterialFrame(loggerEnable: false)
 			.ConfigureSyncfusionCore()
 			.ConfigureSyncfusionToolkit()
-			
+		
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

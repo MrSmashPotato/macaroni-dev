@@ -29,7 +29,7 @@
         FlyoutItemIsVisible="False"
         Route="loginPage"
     />
-	<FlyoutItem FlyoutDisplayOptions="AsSingleItem" Title="Dashboard">
+	<FlyoutItem FlyoutDisplayOptions="AsSingleItem" Icon="dashboard" Title="Dashboard">
         <ShellContent
             Title="Job Search"
             Icon="job_search"
@@ -62,6 +62,6 @@
     </FlyoutItem>
    
     <Shell.FlyoutFooter>
-        <Button Clicked="OnLogoutClicked" Text="Logout" BackgroundColor="IndianRed" TextColor="White"  HorizontalOptions="Center" Padding="20" Margin="15,15,15,25"/>
+        <Button Clicked="OnLogoutClicked" Text="Logout" BackgroundColor="IndianRed" TextColor="Black"  HorizontalOptions="Center" StyleClass="FilledButton" Margin="15,15,15,25"/>
     </Shell.FlyoutFooter>
 </Shell>

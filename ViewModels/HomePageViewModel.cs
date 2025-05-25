@@ -178,8 +178,8 @@ public partial class HomePageViewModel : ObservableObject
                 {
                     job.IsApplied = appliedJobIds.Contains(job.Id);
                 }
-
-                JobFeed = new ObservableCollection<JobPost>(jobResponse.Models);
+                
+                JobFeed = new ObservableCollection<JobPost>(jobResponse.Models.OrderByDescending(job => job.CreatedAt));
             }
             
             var saved = await client

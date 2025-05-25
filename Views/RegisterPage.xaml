@@ -1,17 +1,89 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:core="http://schemas.syncfusion.com/maui"
              x:Class="macaroni_dev.Views.RegisterPage"
-             Title="Register">
+             >
 
     <VerticalStackLayout Padding="20" Spacing="10">
-    
-        <Entry x:Name="UserEntry" Placeholder="Username"/>
-        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
-        <Entry x:Name="EmailEntry" Placeholder="Recovery Email" />
+        <VerticalStackLayout.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="White" Offset="0.4"/>
+                <GradientStop Color="#51F1F2" Offset="0.6"/>
 
-        <Button Text="Sign Up" Clicked="OnSignUpClicked" />
-        <Button Text="Go to Login" Clicked="OnGoToLoginClicked" />
+                <GradientStop Color="#2F9BDF" Offset="1"/>
+
+            </LinearGradientBrush>
+        </VerticalStackLayout.Background>
+        <core:SfTextInputLayout Hint="Username"
+                                HeightRequest="80"
+                                HelperText="E.g: Slayer123"
+                                TrailingViewPosition="Inside"
+                                LeadingViewPosition="Inside"
+                                FocusedStrokeThickness="3"
+                                UnfocusedStrokeThickness="1"
+                                Stroke="RoyalBlue"
+                                OutlineCornerRadius="8"
+                                ContainerType="Outlined">
+            <Entry x:Name="UserEntry" ClearButtonVisibility="WhileEditing"/>
+            <core:SfTextInputLayout.LeadingView>
+                <Label
+                    Text="&#xe7fd;"
+                    FontFamily="MaterialOutlined">
+                </Label>
+            </core:SfTextInputLayout.LeadingView>
+        </core:SfTextInputLayout>
+        <core:SfTextInputLayout Hint="Email"
+                                HeightRequest="80"
+                                HelperText="E.g: Test@gmail.com"
+                                TrailingViewPosition="Inside"
+                                LeadingViewPosition="Inside"
+                                FocusedStrokeThickness="3"
+                                UnfocusedStrokeThickness="1"
+                                Stroke="RoyalBlue"
+                                OutlineCornerRadius="8"
+                                ContainerType="Outlined">
+            <Entry x:Name="EmailEntry" ClearButtonVisibility="WhileEditing"/>
+            <core:SfTextInputLayout.LeadingView>
+                <Label
+                    Text="&#xe158;"
+                    FontFamily="MaterialOutlined">
+                </Label>
+            </core:SfTextInputLayout.LeadingView>
+        </core:SfTextInputLayout>
+
+        <core:SfTextInputLayout Hint="Password"
+                                HeightRequest="80"
+
+                                HelperText="E.g: #SecurePass123"
+                                TrailingViewPosition="Inside"
+                                EnablePasswordVisibilityToggle="True"
+                                Stroke="RoyalBlue"
+                                OutlineCornerRadius="8"
+                                FocusedStrokeThickness="3"
+                                UnfocusedStrokeThickness="1"
+                                LeadingViewPosition="Inside"
+                                ContainerType="Outlined">
+            <Entry x:Name="PasswordEntry" IsPassword="True"/>
+            <core:SfTextInputLayout.LeadingView>
+                <Label
+                    Text="&#xf042;"
+                    FontFamily="MaterialOutlined">     
+                </Label>
+            </core:SfTextInputLayout.LeadingView>
+        </core:SfTextInputLayout>
+        
+        <Button Text="Sign Up" Clicked="OnSignUpClicked"                   
+                BackgroundColor="#303e63" 
+        />
+        <Label Text="Already Have An Account? Login Instead"
+               HorizontalOptions="Center"
+               TextDecorations="Underline"
+               TextColor="Blue">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnGoToLoginClicked" />
+            </Label.GestureRecognizers>
+        </Label>
         <Label x:Name="StatusLabel" Text="" TextColor="Red" />
     </VerticalStackLayout>
 </ContentPage>
