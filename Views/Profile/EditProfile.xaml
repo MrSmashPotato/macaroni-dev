@@ -43,7 +43,7 @@
                                        Stroke="Black"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
-                                       Aspect="AspectFit"
+                                       Aspect="AspectFill"
                                        ImageSource="{Binding ProfileImage}" />
                 </core:SfBadgeView>
                 <Button Grid.Row="1" Margin="20" Command="{Binding AddPhotoCommand}" Text="Change Profile Picture" FontSize="12" BackgroundColor="RoyalBlue" WidthRequest="180" HorizontalOptions="Center"/>
