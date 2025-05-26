@@ -10,10 +10,11 @@ namespace macaroni_dev.Views.Profile;
 
 public partial class EditProfile : ContentPage
 {
-    public EditProfile()
+    public EditProfile(ProfileViewModel vm)
     {
-        InitializeComponent(); 
-
+        InitializeComponent();
+        var r = BindingContext as EditProfileViewModel;
+        r.ProfileViewModel = vm;
     }
     private async void OnInputFocused(object sender, FocusEventArgs e)
     {

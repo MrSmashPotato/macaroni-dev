@@ -24,6 +24,7 @@
                     <Image Source="splash" Grid.Column="1" HorizontalOptions="Center" HeightRequest="250" WidthRequest="250" />
                   
             </Grid>
+            <Label x:Name="StatusLabel" Text="" TextColor="Red" />
             <core:SfTextInputLayout Hint="Email"
                                             HeightRequest="80"
                                             HelperText="E.g: Test@gmail.com"
@@ -95,7 +96,6 @@
                     <TapGestureRecognizer Tapped="OnGoToRegisterClicked" />
                 </Label.GestureRecognizers>
             </Label>
-            <Label x:Name="StatusLabel" Text="" TextColor="Red" />
         </VerticalStackLayout>
     </ContentPage.Content>
    

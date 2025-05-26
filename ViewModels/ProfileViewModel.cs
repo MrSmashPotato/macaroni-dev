@@ -24,9 +24,15 @@ namespace macaroni_dev.ViewModels
         {
             _profile = ServiceHelper.GetService<ProfileService>().CurrentUser;
             ProfileImageUrl = _profile.ProfileImage;
-            Name = _profile.FirstName + " " + _profile.MiddleName + " " + _profile.LastName;
-            Occupation = _profile.Occupation + " at " + _profile.Company;
-            Location = _profile.Location;
+            var fullName = $"{_profile.FirstName} {_profile.MiddleName} {_profile.LastName}".Trim();
+            Name = string.IsNullOrWhiteSpace(fullName) ? "Unspecified" : fullName;
+
+            Occupation = string.IsNullOrWhiteSpace(_profile.Occupation) || string.IsNullOrWhiteSpace(_profile.Company)
+                ? "Unspecified"
+                : $"{_profile.Occupation} at {_profile.Company}";
+
+            Location = string.IsNullOrWhiteSpace(_profile.Location) ? "Unspecified" : _profile.Location;
+
             Console.WriteLine("ProfileViewModel");
         }
 
@@ -58,7 +64,7 @@ namespace macaroni_dev.ViewModels
         [RelayCommand]
         private async Task Edit()
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new Views.Profile.EditProfile());
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.Profile.EditProfile(this));
         }
     }
 }
